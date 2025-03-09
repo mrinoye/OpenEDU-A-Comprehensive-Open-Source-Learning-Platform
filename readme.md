@@ -1,8 +1,8 @@
-# Group Name: Group Ezaz
+# Project Name: OpenEdu: A Comprehensive Open-Source Learning Platform
 
-## Project Name: OpenEdu: A Comprehensive Open-Source Learning Platform
+## Group Name: OpenEdu Devs
 
-| **Member Name**            | **ID**     |
+| **Members Name**            | **ID**     |
 | -------------------------- | ---------- |
 | Moontaha Rawshan           | 2221035642 |
 | Mohammad Ishzaz Asif Rafid | 2221370642 |
