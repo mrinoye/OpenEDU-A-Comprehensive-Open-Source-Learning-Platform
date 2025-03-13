@@ -4,7 +4,7 @@ from django.db import models
 class User(AbstractUser):
     contact = models.CharField(max_length=15, blank=True, null=True)
     profilepicture = models.ImageField(upload_to='images/profilepictures', blank=True, null=True,default='images/profilepictures/rafid1.jpg')
-
+    role=models.TextField(default='user')
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='custom_user_set',

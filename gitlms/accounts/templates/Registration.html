@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="registration.css">
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
 </head>
 <body>
     <div class="container" id="Sign Up">
         <h1 class="form-tittle">Register</h1>
-        <form method="post" action="">
+        <form method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
+		  {% if messages %}
+		  <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4" role="alert">
+			 <ul class="messages">
+			  {% for message in messages %}
+					  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+			  {% endfor %}
+			  </ul>
+			</div>
+		   {% endif %}
             <div class="input-group">
                 <i class="fas fa-user"></i>
                 <input type="text" name="fname" id="fname" placeholder="First Name" required>
@@ -31,8 +42,13 @@
 
             <div class="input-group">
                 <i class="fas fa-lock"></i>
-                <input type="password" name="password" id="password" placeholder="Password" required>
+                <input type="password" name="passw" id="password" placeholder="Password" required>
                 <label for="password">Password</label>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="rpassw" id="password" placeholder="Password" required>
+                <label for="password">Retype Password</label>
             </div>
 
             <input type="submit" class="btn" value="Sign Up" name="signup">
@@ -41,7 +57,7 @@
         <p class="or">-------or--------</p>
         <div class="links">
             <p>Already Have An Account ?</p>
-            <button id="signInButton">Sign In</button>
+            <a href="{% url 'login' %}"><button id="signInButton">Sign In</button></a>
         </div>
     </div>
 </body>

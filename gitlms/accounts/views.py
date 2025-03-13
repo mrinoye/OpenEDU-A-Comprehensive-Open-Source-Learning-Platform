@@ -44,14 +44,14 @@ def signup(request):
         Email=data.get('email')
         password=data.get('passw')
         rpassword=data.get('rpassw')
-        username=f"{Firstname} {Lastname}"
+        username=f"{Firstname}_{Lastname}"
         if checkvalidity(request,passw=password,rpassw=rpassword,username=username,email=Email):
             user = User.objects.create(username=Email, email=Email, first_name=Firstname, last_name=Lastname, password=make_password(password))
             user.save()
             messages.success(request, "Registration successful. You can now log in.")
             return redirect('/accounts/login/')
         
-    return render(request,"signup.html")
+    return render(request,"registration.html")
 
 @login_required
 def edit_profile(request):
