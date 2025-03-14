@@ -1,15 +1,11 @@
+{% extends 'Registration.html' %}
+
 {% load static %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>LMS login</title>
-    <link rel="stylesheet" type="text/css" href="{% static "css/login.css" %}"
-    />
-  </head>
-  <body id="loginBody">
-    <div class="container">
-      <div class="loginHeader">
-        <h1>Learnloop</h1>
+
+
+      {% block 'signup' %}
+      <div class="loginHeader" id="Sign Up">
+        <h1 class="form-tittle">Learnloop </br> Login </h1>
       </div>
       <div class="loginBody">
         <form action="{% url 'login'  %}" method="POST">
@@ -23,19 +19,26 @@
 			  </ul>
 			</div>
 		   {% endif %}
-          <div class="loginInputContainer">
-            <label for="">Email</label>
-            <input placeholder="username" name="email" type="text" />
-          </div>
-          <div class="loginInputContainer">
-            <label for="">Password</label>
-            <input placeholder="password" name="password" type="Password" />
-          </div>
+       <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" name="email" id="email" placeholder="Email" required>
+        <label for="email">Email</label>
+    </div>
+
+    <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" name="passw" id="password" placeholder="Password" required>
+        <label for="password">Password</label>
+    </div>
           <div class="loginButtonContainer">
             <button>login</button>
           </div>
         </form>
-      </div>
-    </div>
-  </body>
-</html>
+
+        <p class="or">-------or--------</p>
+        <div class="links">
+            <p>Don't Have An Account ?</p>
+            <a href="{% url 'signup' %}"><button id="signInButton">Sign Up</button></a>
+        </div>
+        {% endblock %}
+    
