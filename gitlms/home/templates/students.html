@@ -1,0 +1,28 @@
+{% extends 'dashboard.html' %} {%block content %}
+
+<div class="p-6 flex-grow">
+  <div class="space-y-6">
+    {%for user in users%}
+    <!-- Student Card 1 -->
+    <div
+      class="flex items-center bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105"
+    >
+      <div class="w-16 h-16 mr-4">
+        <img
+          src="{{user.profilepicture.url}}"
+          class="w-full h-full rounded-full object-cover"
+        />
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold text-blue-900">
+          {{user.first_name}} {{user.last_name}}
+        </h3>
+        <p class="text-gray-600">Email: {{user.email}}</p>
+        <p class="text-gray-600">{{user.role}}</p>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+
+{%endblock%}
