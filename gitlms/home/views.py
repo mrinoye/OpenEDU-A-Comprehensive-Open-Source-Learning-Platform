@@ -6,4 +6,4 @@ from django.contrib.auth.decorators import login_required
 def dashboard(request):
     context={'name':request.user.username}
 
-    return render(request,"dashboard.html",context)
+    return render(request,"departments.html",context)
