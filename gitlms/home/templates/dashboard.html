@@ -39,7 +39,10 @@
           </li>
           {% if request.user.role != 'user' and request.user.role != 'mod' %}
           <li class="mb-4">
-            <a href="#" class="block p-2 hover:bg-blue-700 rounded">
+            <a
+              href="{% url 'appoint'  %}"
+              class="block p-2 hover:bg-blue-700 rounded"
+            >
               Appoint Roles
             </a>
           </li>
