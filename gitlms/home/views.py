@@ -1,15 +1,20 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from accounts.models import User
+from lms.models import Department,Course
+
 @login_required
 # Create your views here.
 def departments(request):
-    context={'name':request.user.username}
+    departments=Department.objects.all().order_by('name')
+    context={'name':request.user.username,'departments':departments}
 
     return render(request,"departments.html",context)
 @login_required
 def courses(request):
-    context={'name':request.user.username}
+    courses = Course.objects.all().order_by('course_name')
+
+    context={'name':request.user.username,'courses':courses}
 
     return render(request,"courses.html",context)
 @login_required

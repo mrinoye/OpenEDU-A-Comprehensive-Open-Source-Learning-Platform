@@ -2,68 +2,17 @@
 
 <div class="p-6 flex-grow">
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    {% for department in departments %}
     <a href="#" class="card bg-white p-6 rounded-lg shadow cursor-pointer">
       <img
-        src="https://shorturl.at/yRfim"
+        src="{{department.image.url}}"
         alt="Computer Science"
         class="card-img mb-4"
       />
-      <h3 class="text-lg font-semibold">Computer Science</h3>
-      <p class="text-gray-600">Explore courses on AI, Programming, and more.</p>
+      <h3 class="text-lg font-semibold">{{department.name}}</h3>
+      <p class="text-gray-600">{{department.description}}</p>
     </a>
-    <a href="#" class="card bg-white p-6 rounded-lg shadow cursor-pointer">
-      <img
-        src="https://shorturl.at/yRfim"
-        alt="Business Administration"
-        class="card-img mb-4"
-      />
-      <h3 class="text-lg font-semibold">Business Administration</h3>
-      <p class="text-gray-600">
-        Learn about marketing, finance, and management.
-      </p>
-    </a>
-    <a href="#" class="card bg-white p-6 rounded-lg shadow cursor-pointer">
-      <img
-        src="https://shorturl.at/yRfim"
-        alt="Engineering"
-        class="card-img mb-4"
-      />
-      <h3 class="text-lg font-semibold">Engineering</h3>
-      <p class="text-gray-600">
-        Dive into electrical, civil, and mechanical fields.
-      </p>
-    </a>
-    <a href="#" class="card bg-white p-6 rounded-lg shadow cursor-pointer">
-      <img
-        src="https://shorturl.at/yRfim"
-        alt="Mathematics"
-        class="card-img mb-4"
-      />
-      <h3 class="text-lg font-semibold">Mathematics</h3>
-      <p class="text-gray-600">
-        Advance your skills in algebra, calculus, and statistics.
-      </p>
-    </a>
-    <a href="#" class="card bg-white p-6 rounded-lg shadow cursor-pointer">
-      <img
-        src="https://shorturl.at/yRfim"
-        alt="Physics"
-        class="card-img mb-4"
-      />
-      <h3 class="text-lg font-semibold">Physics</h3>
-      <p class="text-gray-600">Understand the laws that govern the universe.</p>
-    </a>
-    <a href="#" class="card bg-white p-6 rounded-lg shadow cursor-pointer">
-      <img
-        src="https://shorturl.at/yRfim"
-        alt="Medicine"
-        class="card-img mb-4"
-      />
-      <h3 class="text-lg font-semibold">Medicine</h3>
-      <p class="text-gray-600">
-        Study human health, anatomy, and medical sciences.
-      </p>
-    </a>
+    {% endfor %}
   </div>
 </div>
 {%endblock%}
