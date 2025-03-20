@@ -22,7 +22,7 @@ def students(request):
 @login_required
 def appoint(request):
     if (request.user.role!='admin' and request.user.role!='master'):
-        return redirect('/')
+        return redirect('/errors/unauthorizedaccess')
     admins=User.objects.filter(role='admin')
     
     moderators=User.objects.filter(role='mod')
@@ -35,6 +35,11 @@ def appoint(request):
 
 
 def changerole(request,userid,role):
+    if(request.user.role not in ['admin','master']):
+        return redirect('/errors/illegalactivity')
+        
+    if((role=='master' or role=='admin')and request.user.role!='master'):
+        return redirect('/errors/illegalactivity')
     user=User.objects.get(id=userid)
     user.role=role
     user.save()

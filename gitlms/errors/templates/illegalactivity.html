@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Warning!</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #ffcccc;
+        text-align: center;
+        padding-top: 50px;
+        color: #ff0000;
+      }
+      h1 {
+        font-size: 3em;
+        color: #d10000;
+      }
+      p {
+        font-size: 1.5em;
+        color: #ff3300;
+      }
+      .warning {
+        background-color: #000;
+        color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        display: inline-block;
+        font-size: 1.2em;
+      }
+      .footer {
+        margin-top: 50px;
+        font-size: 1.2em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hey, {{request.user.first_name}} {{request.user.last_name}}!</h1>
+    <p class="warning">
+      Oh, you're trying to hack into this site, huh? You must be REALLY bored!
+    </p>
+    <p>
+      Here’s a little newsflash: What you’re doing right now is illegal. But
+      hey, if you think you can outsmart the system, good luck! 😂
+    </p>
+    <p>
+      Why not spend your time doing something more useful? Like learning to code
+      or, you know, not being a digital criminal?
+    </p>
+    <div class="footer">
+      <p>
+        <strong>Warning:</strong> Keep messing around, and you'll end up in a
+        place where even Google can't help you!
+      </p>
+    </div>
+  </body>
+</html>

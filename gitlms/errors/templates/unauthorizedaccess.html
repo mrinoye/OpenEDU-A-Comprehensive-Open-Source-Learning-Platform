@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Access Denied 🚫</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #1a1a1a;
+        color: white;
+        padding: 50px;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 10px;
+      }
+
+      .error-box {
+        display: inline-block;
+        background: #ff4444;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.5);
+        animation: shake 0.5s infinite alternate;
+      }
+
+      @keyframes shake {
+        0% {
+          transform: rotate(-2deg);
+        }
+        100% {
+          transform: rotate(2deg);
+        }
+      }
+
+      p {
+        font-size: 1.2em;
+        margin-top: 10px;
+      }
+
+      .run-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        background: #ffcc00;
+        color: black;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: 0.3s;
+        position: relative;
+      }
+
+      .run-btn:hover {
+        background: red;
+        color: white;
+        animation: wiggle 0.3s infinite;
+      }
+
+      @keyframes wiggle {
+        0% {
+          transform: translateX(-5px);
+        }
+        50% {
+          transform: translateX(5px);
+        }
+        100% {
+          transform: translateX(-5px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="error-box">
+      <h1>🚨 Unauthorized Access! 🚨</h1>
+      <p>Oops! This area is **TOP SECRET**.</p>
+      <p>Either you got lost, or you're up to something fishy! 🐟</p>
+      <p>Security robots are already on their way. 🤖</p>
+      <a href="/" class="run-btn">🏃 RUN AWAY</a>
+    </div>
+  </body>
+</html>
