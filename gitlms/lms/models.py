@@ -23,6 +23,7 @@ class Course(models.Model):
 class Faculty(models.Model):
     name = models.CharField(max_length=100)
     course = models.ForeignKey('Course', related_name='Faculty', on_delete=models.CASCADE, null=True, blank=True)
+    image = models.ImageField(upload_to='images/faculty/', null=True,default='images/faculty/default.jpg')  
     position = models.CharField(max_length=100)
     # Add other relevant fields
 

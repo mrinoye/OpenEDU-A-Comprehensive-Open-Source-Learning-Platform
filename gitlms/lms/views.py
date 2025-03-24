@@ -16,5 +16,6 @@ def course_facs(request, dept_id, course_id):
     department = Department.objects.get(id=dept_id)
     course = Course.objects.get(id=course_id)
     faculties = Faculty.objects.filter(course=course)
-    context = {'department': department, 'faculties': faculties}
+    print(faculties)
+    context = {'department': department, 'faculties': faculties,'course':course}
     return render(request, 'faculty.html', context)
