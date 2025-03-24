@@ -7,7 +7,7 @@
     {% for course in courses %}
     <!-- Course Card 1 -->
     <a
-      href="#"
+      href="{% url 'course_facs' dept_id=department.id course_id=course.id %}"
       class="card bg-white p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition duration-300 transform hover:scale-105"
     >
       <!-- Course Image -->
