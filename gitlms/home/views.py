@@ -38,7 +38,7 @@ def appoint(request):
     return render(request,"appoint.html",context)
 
 
-
+@login_required
 def changerole(request,userid,role):
     if(request.user.role not in ['admin','master']):
         return redirect('/errors/illegalactivity')
