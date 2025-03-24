@@ -19,3 +19,12 @@ class Course(models.Model):
     image = models.ImageField(upload_to='images/course/', null=True,default='images/course/default.jpg')  
     def __str__(self):
         return self.course_name
+    
+class Faculty(models.Model):
+    name = models.CharField(max_length=100)
+    course = models.ForeignKey('Course', related_name='Faculty', on_delete=models.CASCADE, null=True, blank=True)
+    position = models.CharField(max_length=100)
+    # Add other relevant fields
+
+    def __str__(self):
+        return self.name

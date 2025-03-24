@@ -3,7 +3,10 @@
 <div class="p-6 flex-grow">
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     {% for department in departments %}
-    <a href="#" class="card bg-white p-6 rounded-lg shadow cursor-pointer">
+    <a
+      href="{% url 'deptcourses' id=department.id %}"
+      class="card bg-white p-6 rounded-lg shadow cursor-pointer"
+    >
       <img
         src="{{department.image.url}}"
         alt="Computer Science"
