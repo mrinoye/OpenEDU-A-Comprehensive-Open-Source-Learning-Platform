@@ -7,47 +7,104 @@
   <!-- Faculty Cards -->
   {% if faculties %}
   <div
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
   >
     {% for faculty in faculties %}
     <div
-      class="relative bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105 cursor-pointer"
+      class="relative flex flex-col items-center justify-center bg-white p-8 rounded-full shadow-lg transform transition-transform hover:scale-105 cursor-pointer w-72 h-72"
     >
-      <!-- Three-dot Menu Button -->
-      <div class="absolute top-3 right-3">
+      <!-- Three-dot menu -->
+      <div class="absolute top-3 right-3 dropdown">
         <button
-          onclick="toggleMenu('menu-{{ faculty.id }}')"
-          class="text-gray-500 hover:text-gray-700 focus:outline-none"
+          class="text-gray-600 hover:text-gray-800 focus:outline-none"
+          onclick="toggleMenu('menu-videos-{{ faculty.id }}')"
         >
-          ⋮
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+            />
+          </svg>
         </button>
-        <!-- Dropdown Menu -->
         <div
-          id="menu-{{ faculty.id }}"
-          class="menu-dropdown hidden absolute right-0 mt-2 w-32 bg-white border border-gray-300 rounded-lg shadow-lg"
+          id="menu-videos-{{ faculty.id }}"
+          class="menu-dropdown absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-1 z-10 hidden"
         >
-          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-            >Update</a
+          <button
+            class="block w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-gray-100 flex items-center"
           >
-          <a href="#" class="block px-4 py-2 text-red-600 hover:bg-red-100"
-            >Delete</a
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+              />
+            </svg>
+            Update
+          </button>
+          <button
+            class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100 flex items-center"
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
+            Delete
+          </button>
         </div>
       </div>
 
-      <img
-        src="{{ faculty.image.url }}"
-        alt="{{ faculty.name }}"
-        class="w-full h-56 object-cover rounded-t-lg mb-4"
-      />
-      <h3 class="text-lg font-semibold text-gray-800">{{ faculty.name }}</h3>
-      <p class="text-gray-600">{{ faculty.designation }}</p>
-      <a href="#" class="mt-4 text-blue-500 hover:underline">View Profile</a>
+      <!-- Clickable Card Link -->
+      <a
+        href="{% url 'fac_lecs' department.id course.id faculty.id %}"
+        class="flex flex-col items-center justify-center"
+      >
+        <!-- Enlarged Image -->
+        <img
+          src="{{ faculty.image.url }}"
+          alt="{{ faculty.name }}"
+          class="w-36 h-36 object-cover rounded-full mb-6 border-4 border-blue-500"
+        />
+        <!-- Adjusted Name Position -->
+        <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">
+          {{ faculty.name }}
+        </h3>
+        <p class="text-gray-600 text-center mb-2">{{ faculty.designation }}</p>
+      </a>
+
+      <a href="#" class="mt-4 text-blue-600 hover:underline text-center"
+        >View Profile</a
+      >
     </div>
     {% endfor %}
   </div>
   {% else %}
-  <p class="text-gray-500">No faculty members found in this department.</p>
+  <p class="text-gray-500">No faculty members found in this Course.</p>
   {% endif %}
 
   <!-- Back to Departments Button -->
@@ -55,7 +112,7 @@
     href="{% url 'departments' %}"
     class="mt-6 inline-block bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
   >
-    ← Back to Departments
+    ← Back to Courses
   </a>
 </div>
 
