@@ -1,5 +1,4 @@
-{% extends 'dashboard.html' %} {% block content %}
-
+{% extends 'dashboard.html' %} {% block content %} {% load static %}
 <div class="p-6 flex-grow">
   <h2 class="text-2xl font-bold text-blue-900 mb-6">
     {{ department.name }} - Courses
@@ -10,30 +9,52 @@
     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
   >
     {% if courses %} {% for course in courses %}
-    <a
-      href="{% url 'course_facs' dept_id=department.id course_id=course.id %}"
-      class="card bg-white p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition duration-300 transform hover:scale-105"
+    <div
+      class="card bg-white p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition duration-300 transform hover:scale-105 relative"
     >
-      <img
-        src="{{course.image.url}}"
-        alt="Course Image"
-        class="w-full h-40 object-cover rounded-t-lg mb-4"
-      />
-      <div class="flex items-center mb-4">
-        <span
-          class="text-sm font-semibold text-blue-900 bg-blue-100 px-3 py-1 rounded-full"
+      <!-- Three-dot Menu -->
+      <div class="absolute top-2 right-2">
+        <button
+          onclick="toggleMenu('menu-{{ course.id }}')"
+          class="text-gray-600 hover:text-blue-900 focus:outline-none"
         >
-          {{course.course_code}}
-        </span>
+          &#x2022;&#x2022;&#x2022;
+        </button>
       </div>
-      <h3 class="text-2xl font-semibold text-blue-900 mb-2">
-        {{course.course_name}}
-      </h3>
-      <p class="text-gray-600 text-base mb-4">{{course.description}}</p>
-    </a>
+
+      <!-- Dropdown Menu (hidden by default) -->
+      <div
+        id="menu-{{ course.id }}"
+        class="menu-dropdown hidden absolute top-10 right-0 bg-white shadow-lg p-4 rounded-lg"
+      >
+        <!-- Add your dropdown menu items here -->
+        <a href="#" class="block text-blue-900 hover:text-blue-700">Edit</a>
+        <a href="#" class="block text-blue-900 hover:text-blue-700">Delete</a>
+      </div>
+
+      <a
+        href="{% url 'course_facs' dept_id=department.id course_id=course.id %}"
+      >
+        <img
+          src="{{course.image.url}}"
+          alt="Course Image"
+          class="w-full h-40 object-cover rounded-t-lg mb-4"
+        />
+        <div class="flex items-center mb-4">
+          <span
+            class="text-sm font-semibold text-blue-900 bg-blue-100 px-3 py-1 rounded-full"
+          >
+            {{course.course_code}}
+          </span>
+        </div>
+        <h3 class="text-2xl font-semibold text-blue-900 mb-2">
+          {{course.course_name}}
+        </h3>
+        <p class="text-gray-600 text-base mb-4">{{course.description}}</p>
+      </a>
+    </div>
     {% endfor %} {% else %}
     <h2 class="text-2xl font-bold text-blue-900 mb-6">No Courses to show</h2>
-
     {% endif %}
   </div>
 
@@ -47,5 +68,8 @@
     </a>
   </div>
 </div>
+
+<!-- JavaScript for Menu Toggle -->
+<script src="{% static 'js/cardDropDown.js' %}"></script>
 
 {% endblock %}

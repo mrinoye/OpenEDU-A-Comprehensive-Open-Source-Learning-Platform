@@ -1,28 +1,45 @@
-{% extends 'departments.html' %}
-{% load static %}
-
-{% block content %}
+{% extends 'departments.html' %} {% load static %} {% block content %}
 <div class="p-6 flex-grow">
-  <h2 class="text-2xl font-bold text-blue-900 mb-6">{{ department.name }} - Faculty Members</h2>
+  <h2 class="text-2xl font-bold text-blue-900 mb-6">
+    {{ department.name }} - Faculty Members
+  </h2>
 
   <!-- Faculty Cards -->
   {% if faculties %}
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+  >
     {% for faculty in faculties %}
-    <div class="relative bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105 cursor-pointer">
+    <div
+      class="relative bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105 cursor-pointer"
+    >
       <!-- Three-dot Menu Button -->
       <div class="absolute top-3 right-3">
-        <button onclick="toggleMenu('menu-{{ faculty.id }}')" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+        <button
+          onclick="toggleMenu('menu-{{ faculty.id }}')"
+          class="text-gray-500 hover:text-gray-700 focus:outline-none"
+        >
           ⋮
         </button>
         <!-- Dropdown Menu -->
-        <div id="menu-{{ faculty.id }}" class="menu-dropdown hidden absolute right-0 mt-2 w-32 bg-white border border-gray-300 rounded-lg shadow-lg">
-          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Update</a>
-          <a href="#" class="block px-4 py-2 text-red-600 hover:bg-red-100">Delete</a>
+        <div
+          id="menu-{{ faculty.id }}"
+          class="menu-dropdown hidden absolute right-0 mt-2 w-32 bg-white border border-gray-300 rounded-lg shadow-lg"
+        >
+          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >Update</a
+          >
+          <a href="#" class="block px-4 py-2 text-red-600 hover:bg-red-100"
+            >Delete</a
+          >
         </div>
       </div>
 
-      <img src="{{ faculty.image.url }}" alt="{{ faculty.name }}" class="w-full h-56 object-cover rounded-t-lg mb-4">
+      <img
+        src="{{ faculty.image.url }}"
+        alt="{{ faculty.name }}"
+        class="w-full h-56 object-cover rounded-t-lg mb-4"
+      />
       <h3 class="text-lg font-semibold text-gray-800">{{ faculty.name }}</h3>
       <p class="text-gray-600">{{ faculty.designation }}</p>
       <a href="#" class="mt-4 text-blue-500 hover:underline">View Profile</a>
@@ -34,13 +51,14 @@
   {% endif %}
 
   <!-- Back to Departments Button -->
-  <a href="{% url 'departments' %}" class="mt-6 inline-block bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+  <a
+    href="{% url 'departments' %}"
+    class="mt-6 inline-block bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+  >
     ← Back to Departments
   </a>
 </div>
 
 <!-- JavaScript for Menu Toggle -->
-<script src="{% static 'js/faculty.js' %}">
-  
-</script>
+<script src="{% static 'js/cardDropDown.js' %}"></script>
 {% endblock %}
