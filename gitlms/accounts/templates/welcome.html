@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{% static 'css/Welcome.css' %}">
+</head>
+<body>
+    <div class = "container">
+      <h1 class ="welcome-title">Welcome to OpenEdu</h1>
+      <p class="tagline">A Comprehensive Open-Source Learning Platform</p>
+      <div class="mt-6 flex justify-center space-x-4">
+        <div class="buttons">
+          <button class="btn login" title="Log into your account">Log In</button>
+          <button class="btn signup" title="Sign up on OpenEdu">Sign Up</button>
+      </div>
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+body{
+    background-color: #c9d6ff;
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff)
+}
+.container{
+    background: #fff;
+    width: 800px;
+    padding: 1.5rem;
+    margin: 100px auto;
+    border-radius: 10px;
+    box-shadow: 0 20px 35px rgba(0,0,1,0.9);
+}
+.welcome-title{
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 1.3rem;
+    margin-bottom: 60px;
+}
+.tagline{
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 150px;
+}
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    height: 60;
+    width: 80;
+}
+.login {
+    background-color: rgb(125, 125, 235);;
+    margin-right: 75px;
+}
+.login:hover {
+    background-color: rgb(96, 96, 218);
+}
+.signup {
+    background-color: #10b981;
+    margin-left: 75px;
+}
+.signup:hover {
+    background-color: #059669;
+}
