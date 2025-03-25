@@ -1,143 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lecture Cards List</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-gray-50 p-6">
-    <div class="max-w-3xl mx-auto">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">Lecture List</h1>
-        
-        <!-- Lecture Cards Container -->
-        <div class="space-y-4">
-            <!-- Card 1 -->
-            <div class="bg-white rounded-lg shadow p-4 flex justify-between items-center hover:shadow-md transition-shadow">
-                <div class="flex items-center space-x-4">
-                    <div class="text-blue-500">
-                        <i class="fas fa-slides fa-2x"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-gray-800">Introduction to Computer Science</h3>
-                        <p class="text-sm text-gray-500">Last updated: 2 days ago</p>
-                    </div>
-                </div>
-                <div class="relative">
-                    <button class="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    <div class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-1 z-10 hidden dropdown-menu">
-                        <button class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">
-                            <i class="fas fa-sync-alt mr-2"></i>Update
-                        </button>
-                        <button class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                            <i class="fas fa-trash-alt mr-2"></i>Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Card 2 -->
-            <div class="bg-white rounded-lg shadow p-4 flex justify-between items-center hover:shadow-md transition-shadow">
-                <div class="flex items-center space-x-4">
-                    <div class="text-green-500">
-                        <i class="fas fa-slides fa-2x"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-gray-800">Data Structures and Algorithms</h3>
-                        <p class="text-sm text-gray-500">Last updated: 1 week ago</p>
-                    </div>
-                </div>
-                <div class="relative">
-                    <button class="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    <div class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-1 z-10 hidden dropdown-menu">
-                        <button class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">
-                            <i class="fas fa-sync-alt mr-2"></i>Update
-                        </button>
-                        <button class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                            <i class="fas fa-trash-alt mr-2"></i>Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Card 3 -->
-            <div class="bg-white rounded-lg shadow p-4 flex justify-between items-center hover:shadow-md transition-shadow">
-                <div class="flex items-center space-x-4">
-                    <div class="text-purple-500">
-                        <i class="fas fa-slides fa-2x"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-gray-800">Web Development Fundamentals</h3>
-                        <p class="text-sm text-gray-500">Last updated: 3 hours ago</p>
-                    </div>
-                </div>
-                <div class="relative">
-                    <button class="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    <div class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-1 z-10 hidden dropdown-menu">
-                        <button class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">
-                            <i class="fas fa-sync-alt mr-2"></i>Update
-                        </button>
-                        <button class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                            <i class="fas fa-trash-alt mr-2"></i>Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Card 4 -->
-            <div class="bg-white rounded-lg shadow p-4 flex justify-between items-center hover:shadow-md transition-shadow">
-                <div class="flex items-center space-x-4">
-                    <div class="text-yellow-500">
-                        <i class="fas fa-slides fa-2x"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-gray-800">Machine Learning Basics</h3>
-                        <p class="text-sm text-gray-500">Last updated: 1 month ago</p>
-                    </div>
-                </div>
-                <div class="relative">
-                    <button class="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    <div class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-1 z-10 hidden dropdown-menu">
-                        <button class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">
-                            <i class="fas fa-sync-alt mr-2"></i>Update
-                        </button>
-                        <button class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                            <i class="fas fa-trash-alt mr-2"></i>Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+{% extends 'dashboard.html' %} {% block content %} {% load static %}
+
+<h2 class="text-2xl font-bold text-blue-900 mb-6">
+  {{ department.name }} -> {{ faculty.name }} -> Lectures -> Slides
+</h2>
+
+<!-- Slide Cards Container -->
+<div class="space-y-4">
+  {% if slides %} {% for slide in slides %}
+  <!-- Card for each Slide -->
+  <div
+    class="bg-white rounded-lg shadow p-4 flex justify-between items-center hover:shadow-md transition-shadow relative"
+    onclick="window.location.href='{% url 'show_pdf' department.id course.id faculty.id slide.id %}';"
+  >
+    <div class="flex items-center space-x-4">
+      <div class="text-blue-500">
+        <i class="fas fa-slides fa-2x"></i>
+      </div>
+      <div>
+        <h3 class="font-semibold text-lg text-gray-800">{{ slide.name }}</h3>
+        <p class="text-sm text-gray-500">
+          Last updated: {{ slide.last_updated }}
+        </p>
+      </div>
     </div>
 
-    <script>
-        // Add click event to show/hide dropdown menu
-        document.querySelectorAll('button .fa-ellipsis-v').forEach(button => {
-            button.closest('button').addEventListener('click', function(e) {
-                e.stopPropagation();
-                const menu = this.nextElementSibling;
-                document.querySelectorAll('.dropdown-menu').forEach(m => {
-                    if (m !== menu) m.classList.add('hidden');
-                });
-                menu.classList.toggle('hidden');
-            });
-        });
+    <!-- Three-dot menu for each slide -->
+    <div class="absolute top-5 right-5">
+      <button
+        class="text-gray-500 hover:text-gray-700 focus:outline-none"
+        onclick="toggleMenu('menu-{{ slide.id }}'); event.stopPropagation();"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        </svg>
+      </button>
+      <div
+        id="menu-{{ slide.id }}"
+        class="menu-dropdown absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-1 z-20 hidden"
+      >
+        <button
+          class="block w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-gray-100 flex items-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 mr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+            />
+          </svg>
+          Update
+        </button>
+        <button
+          class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 mr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+            />
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+  {% endfor %} {% else %}
+  <p class="text-gray-500">No slides available.</p>
+  {% endif %}
 
-        // Close dropdown when clicking elsewhere
-        document.addEventListener('click', function() {
-            document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                menu.classList.add('hidden');
-            });
-        });
-    </script>
-</body>
-</html>
+  <!-- Back to Lectures Button -->
+  <a
+    href="{% url 'fac_lecs' department.id course.id faculty.id %}"
+    class="mt-6 inline-block bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+  >
+    ← Back to Lectures
+  </a>
+</div>
+
+<script src="{% static 'js/cardDropDown.js' %}"></script>
+{% endblock %}

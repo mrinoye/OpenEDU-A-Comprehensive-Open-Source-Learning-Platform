@@ -7,7 +7,7 @@
   <!-- Lecture Card -->
   <div
     class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
-    onclick="window.location.href='#'"
+    onclick="window.location.href='{% url 'lec_slides' department.id course.id faculty.id %}'"
   >
     <img
       src="{{ MEDIA_URL }}images\lectures\thubmnails\new1.jpg"
@@ -270,6 +270,13 @@
       </div>
     </div>
   </div>
+  <!-- Back to Faculty Button -->
+  <a
+    href="{% url 'course_facs' dept_id=department.id course_id=course.id %}"
+    class="mt-6 inline-block bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+  >
+    ← Back to Faculty
+  </a>
 </div>
 
 <!-- JavaScript for Menu Toggle -->

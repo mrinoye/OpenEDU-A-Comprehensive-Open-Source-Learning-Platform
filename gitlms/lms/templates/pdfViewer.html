@@ -1,0 +1,56 @@
+{% extends 'dashboard.html' %} {% block content %}
+<!-- Slide Display Block -->
+<div
+  class="flex flex-col items-center justify-center p-6 bg-white shadow-lg rounded-lg"
+>
+  <!-- Back Button -->
+  <button
+    onclick="window.history.back()"
+    class="mb-4 bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+  >
+    &larr; Back
+  </button>
+
+  <!-- Slide Information -->
+  <div class="w-full h-96 overflow-hidden">
+    <h2 class="text-xl font-bold mb-4">{{ slide.name }}</h2>
+
+    <!-- Display content (either PDF, PPTX, or other) -->
+    {% if slide.content.url|slice:"-4:" == '.pdf' %}
+    <!-- PDF Viewer -->
+    <iframe
+      src="{{ slide.content.url }}"
+      width="100%"
+      height="100%"
+      frameborder="0"
+      type="application/pdf"
+    >
+      Your browser does not support displaying PDF files.
+    </iframe>
+    {% elif slide.content.url|slice:"-5:" == '.pptx' %}
+    <!-- PowerPoint Viewer (Microsoft Office Online) -->
+    <iframe
+      src="https://view.officeapps.live.com/op/embed.aspx?src={{ slide.content.url | urlencode }}"
+      width="100%"
+      height="100%"
+      frameborder="0"
+    >
+      Your browser does not support displaying PPTX files.
+    </iframe>
+    {% else %}
+    <p class="text-center text-red-500">Unsupported file format.</p>
+    {% endif %}
+  </div>
+
+  <!-- Download Link -->
+  <div class="mt-4">
+    <a
+      href="{{ slide.content.url }}"
+      download
+      class="text-blue-600 hover:text-blue-800"
+    >
+      Download Slide
+    </a>
+  </div>
+</div>
+{% endblock %}

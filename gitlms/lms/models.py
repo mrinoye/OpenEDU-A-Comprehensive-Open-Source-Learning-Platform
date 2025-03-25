@@ -1,5 +1,5 @@
 from django.db import models
-
+import os
 
 
 class Department(models.Model):
@@ -26,6 +26,29 @@ class Faculty(models.Model):
     image = models.ImageField(upload_to='images/faculty/', null=True,default='images/faculty/default.jpg')  
     position = models.CharField(max_length=100)
     # Add other relevant fields
+
+    def __str__(self):
+        return self.name
+
+
+
+
+def slide_upload_to(instance, filename):
+    # Construct the file path dynamically based on the related Department, Course, and Faculty
+    return os.path.join(
+        'contents', 
+        instance.faculty.course.department.name, 
+        instance.faculty.course.course_name, 
+        instance.faculty.name, 
+        'slides', 
+        filename
+    )
+
+class Slide(models.Model):
+    name = models.CharField(max_length=100)
+    faculty = models.ForeignKey('Faculty', related_name='slides', on_delete=models.CASCADE, null=True, blank=True)
+    content = models.FileField(upload_to=slide_upload_to)  # Use the slide_upload_to function for dynamic upload path
+    last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name

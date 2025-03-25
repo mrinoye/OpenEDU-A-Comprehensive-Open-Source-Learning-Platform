@@ -6,3 +6,5 @@ admin.site.register(Department)
 admin.site.register(Course)
 
 admin.site.register(Faculty)
+
+admin.site.register(Slide)

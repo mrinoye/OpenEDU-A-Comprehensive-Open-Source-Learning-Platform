@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from .models import Department,Course,Faculty
+from .models import Department,Course,Faculty,Slide
 from django.conf import settings
 
 
@@ -37,3 +37,24 @@ def fac_lecs(request, dept_id, course_id,fac_id):
     faculty = Faculty.objects.get(id=fac_id)
     context = {'department': department, 'faculty': faculty,'course':course,'MEDIA_URL':settings.MEDIA_URL}
     return render(request, 'lectures.html', context)
+
+#for slides inside a lecture
+@login_required
+def lec_slides(request,dept_id, course_id,fac_id):
+    department = Department.objects.get(id=dept_id)
+    course = Course.objects.get(id=course_id)
+    faculty = Faculty.objects.get(id=fac_id)
+    slides=Slide.objects.filter(faculty=faculty)
+    context = {'department': department, 'faculty': faculty,'course':course,'slides':slides}
+    
+    return render(request,"slides.html",context)
+
+
+#To view the pdf
+@login_required
+def show_pdf(request,dept_id, course_id,fac_id,slide_id):
+    
+    slide=Slide.objects.get(id=slide_id)
+    context = {'slide':slide}
+    
+    return render(request,"pdfViewer.html",context)
