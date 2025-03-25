@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts','home','errors','lms'
+    'accounts','home','errors','lms', 'notifications',
 ]
 
 MIDDLEWARE = [
@@ -71,7 +71,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'gitlms.wsgi.application'
-
+ASGI_APPLICATION = "gitlms.asgi.application"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",  # Use Redis in production
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
