@@ -71,7 +71,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'gitlms.wsgi.application'
-ASGI_APPLICATION = "gitlms.asgi.application"
+ASGI_APPLICATION = 'gitlms.asgi.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
@@ -140,4 +140,37 @@ AUTH_USER_MODEL = 'accounts.User'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'error': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'ERROR',  # Only log errors
+            'class': 'logging.StreamHandler',
+            'formatter': 'error',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'ERROR',  # Log errors for general Django operations
+            'propagate': True,
+        },
+        'channels': {
+            'handlers': ['console'],
+            'level': 'ERROR',  # Log errors specifically for Channels
+            'propagate': True,
+        },
+        'notifications': {  # Specific logger for the Notification-related code
+            'handlers': ['console'],
+            'level': 'ERROR',  # Only log errors
+            'propagate': True,
+        },
+    },
+}

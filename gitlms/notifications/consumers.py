@@ -1,20 +1,37 @@
 import json
+import logging
 from channels.generic.websocket import AsyncWebsocketConsumer
+
+# Set up logging
+logger = logging.getLogger(__name__)
 
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.user = self.scope['user']
-        self.room_group_name = f"user_{self.user.id}_notifications"
+        logger.debug(f"WebSocket connection attempt by user: {self.scope.get('user', 'Anonymous')}")
 
-        # Join room group
-        await self.channel_layer.group_add(
-            self.room_group_name,
-            self.channel_name
-        )
+        try:
+            # Get the user id (you can get this from the session, JWT, etc.)
+            self.user_id = self.scope['user'].id
+            self.room_group_name = f"user_notifications_{self.user_id}"
 
-        await self.accept()
+            logger.debug(f"User ID: {self.user_id}, Room Group: {self.room_group_name}")
+
+            # Join the room group
+            await self.channel_layer.group_add(
+                self.room_group_name,
+                self.channel_name
+            )
+
+            logger.debug("Successfully joined room group.")
+            await self.accept()
+            logger.debug("WebSocket connection accepted.")
+        except Exception as e:
+            logger.error(f"Error during WebSocket connection: {e}")
+            await self.close()
 
     async def disconnect(self, close_code):
+        logger.debug(f"WebSocket disconnected with code: {close_code}")
+
         # Leave room group
         await self.channel_layer.group_discard(
             self.room_group_name,
@@ -22,11 +39,10 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         )
 
     async def receive(self, text_data):
-        # Handle incoming data from WebSocket (optional)
-        pass
+        logger.debug(f"Received data: {text_data}")
 
     async def send_notification(self, event):
-        # Send notification message to WebSocket
+        notification = event['notification']
         await self.send(text_data=json.dumps({
-            'message': event['message']
+            'notification': notification
         }))

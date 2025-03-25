@@ -3,25 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>WebSocket Notification</title>
   </head>
   <body>
-    hhhhhhhhhhhhhh
+    <h1>Notifications</h1>
+    <div id="notifications"></div>
+
+    <script type="text/javascript">
+      // Open a WebSocket connection
+      const notificationSocket = new WebSocket(
+        "ws://" + window.location.host + "/ws/notifications/"
+      );
+
+      notificationSocket.onopen = function (e) {
+        console.log("WebSocket connection established");
+      };
+
+      notificationSocket.onerror = function (e) {
+        console.error("WebSocket error:", e);
+      };
+
+      notificationSocket.onclose = function (e) {
+        console.error("WebSocket closed unexpectedly", e);
+      };
+
+      // When receiving a message from the WebSocket
+      notificationSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        console.log("Notification received:", data.notification);
+        const notificationElement = document.createElement("div");
+        notificationElement.textContent = data.notification;
+        document
+          .getElementById("notifications")
+          .appendChild(notificationElement);
+      };
+    </script>
   </body>
-  <script>
-    const socket = new WebSocket("ws://127.0.0.1:8000/ws/notifications/");
-
-    socket.onopen = function (event) {
-      console.log("WebSocket connection established!");
-    };
-
-    socket.onmessage = function (event) {
-      const data = JSON.parse(event.data);
-      alert(`New Notification: ${data.message}`);
-    };
-
-    socket.onclose = function (event) {
-      console.error("Notification socket closed unexpectedly");
-    };
-  </script>
 </html>
