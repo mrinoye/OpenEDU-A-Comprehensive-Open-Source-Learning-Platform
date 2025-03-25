@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from .models import Department,Course,Faculty
-
+from django.conf import settings
 
 
 # Create your views here.
@@ -35,5 +35,5 @@ def fac_lecs(request, dept_id, course_id,fac_id):
     department = Department.objects.get(id=dept_id)
     course = Course.objects.get(id=course_id)
     faculty = Faculty.objects.get(id=fac_id)
-    context = {'department': department, 'faculty': faculty,'course':course}
+    context = {'department': department, 'faculty': faculty,'course':course,'MEDIA_URL':settings.MEDIA_URL}
     return render(request, 'lectures.html', context)
