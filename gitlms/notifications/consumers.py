@@ -1,9 +1,8 @@
 import json
-import logging
+
 from channels.generic.websocket import AsyncWebsocketConsumer
 
-# Set up logging
-logger = logging.getLogger(__name__)
+
 
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
