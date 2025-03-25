@@ -8,4 +8,4 @@ class Notification(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_notifications")
     type=models.CharField(max_length=6)
     def __str__(self):
-        return f"Notification for {self.user.username}: {self.message}"
+        return f"Notification for {self.sender.username}: {self.message}"

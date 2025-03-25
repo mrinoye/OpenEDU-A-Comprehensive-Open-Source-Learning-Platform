@@ -25,5 +25,6 @@ urlpatterns = [
     path('lms/', include('lms.urls')),
     path('', include('home.urls')),
     path('errors/', include('errors.urls')),
+    path('notifications/', include('notifications.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

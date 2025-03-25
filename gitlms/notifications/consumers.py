@@ -3,15 +3,30 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        if self.scope["user"].is_authenticated:
-            self.group_name = f"user_{self.scope['user'].id}"
-            await self.channel_layer.group_add(self.group_name, self.channel_name)
-            await self.accept()
-        else:
-            await self.close()
+        self.user = self.scope['user']
+        self.room_group_name = f"user_{self.user.id}_notifications"
+
+        # Join room group
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+
+        await self.accept()
 
     async def disconnect(self, close_code):
-        await self.channel_layer.group_discard(self.group_name, self.channel_name)
+        # Leave room group
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
+
+    async def receive(self, text_data):
+        # Handle incoming data from WebSocket (optional)
+        pass
 
     async def send_notification(self, event):
-        await self.send(text_data=json.dumps({"message": event["message"]}))
+        # Send notification message to WebSocket
+        await self.send(text_data=json.dumps({
+            'message': event['message']
+        }))
