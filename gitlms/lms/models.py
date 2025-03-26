@@ -29,9 +29,7 @@ class Faculty(models.Model):
 
     def __str__(self):
         return self.name
-
-
-
+    
 
 def slide_upload_to(instance, filename):
     # Construct the file path dynamically based on the related Department, Course, and Faculty
@@ -48,6 +46,46 @@ class Slide(models.Model):
     name = models.CharField(max_length=100)
     faculty = models.ForeignKey('Faculty', related_name='slides', on_delete=models.CASCADE, null=True, blank=True)
     content = models.FileField(upload_to=slide_upload_to)  # Use the slide_upload_to function for dynamic upload path
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+    
+    
+def video_upload_to(instance, filename):
+    return os.path.join(
+        'contents',
+        instance.faculty.course.department.name,
+        instance.faculty.course.course_name,
+        instance.faculty.name,
+        'videos',
+        filename
+    )
+
+class Video(models.Model):
+    name = models.CharField(max_length=100)
+    faculty = models.ForeignKey('Faculty', related_name='videos', on_delete=models.CASCADE, null=True, blank=True)
+    content = models.FileField(upload_to=video_upload_to)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+def note_upload_to(instance, filename):
+    return os.path.join(
+        'contents',
+        instance.faculty.course.department.name,
+        instance.faculty.course.course_name,
+        instance.faculty.name,
+        'notes',
+        filename
+    )
+    
+class Note(models.Model):
+    name = models.CharField(max_length=100)
+    faculty = models.ForeignKey('Faculty', related_name='notes', on_delete=models.CASCADE, null=True, blank=True)
+    content = models.FileField(upload_to=note_upload_to)
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
