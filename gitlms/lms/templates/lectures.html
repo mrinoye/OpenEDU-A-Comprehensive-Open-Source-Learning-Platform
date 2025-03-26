@@ -97,7 +97,7 @@
   <!-- Videos Card -->
   <div
     class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
-    onclick="window.location.href='#'"
+    onclick="window.location.href='{% url 'lec_videos' department.id course.id faculty.id %}'"
   >
     <img
       src="{{ MEDIA_URL }}images\lectures\thubmnails\new2.jpg"
@@ -186,7 +186,7 @@
   <!-- Notes Card -->
   <div
     class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
-    onclick="window.location.href='#'"
+    onclick="window.location.href='{% url 'lec_notes' department.id course.id faculty.id %}'"
   >
     <img
       src="{{ MEDIA_URL }}images\lectures\thubmnails\new3.jpg"

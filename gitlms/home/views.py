@@ -3,20 +3,7 @@ from django.contrib.auth.decorators import login_required
 from accounts.models import User
 from lms.models import Department,Course
 
-@login_required
-# Create your views here.
-def departments(request):
-    departments=Department.objects.all().order_by('name')
-    context={'name':request.user.username,'departments':departments}
 
-    return render(request,"pages/departments.html",context)
-@login_required
-def courses(request):
-    courses = Course.objects.all().order_by('course_name')
-
-    context={'name':request.user.username,'courses':courses}
-
-    return render(request,"pages/courses.html",context)
 @login_required
 def students(request):
     users=User.objects.all()

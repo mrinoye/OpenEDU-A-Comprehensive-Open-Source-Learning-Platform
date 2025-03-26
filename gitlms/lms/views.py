@@ -5,6 +5,23 @@ from .models import Department,Course,Faculty,Slide,Video,Note
 from django.conf import settings
 
 
+
+@login_required
+# Create your views here.
+def departments(request):
+    departments=Department.objects.all().order_by('name')
+    context={'name':request.user.username,'departments':departments}
+
+    return render(request,"departments.html",context)
+
+@login_required
+def courses(request):
+    courses = Course.objects.all().order_by('course_name')
+
+    context={'name':request.user.username,'courses':courses}
+
+    return render(request,"courses.html",context)
+
 # Create your views here.
 
 #for Courses inside a Department
