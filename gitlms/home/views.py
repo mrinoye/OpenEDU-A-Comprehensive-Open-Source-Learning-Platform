@@ -3,6 +3,13 @@ from django.contrib.auth.decorators import login_required
 from accounts.models import User
 from lms.models import Department,Course
 
+def home(request):
+    if request.user.is_authenticated:
+        return redirect('departments')
+    else:
+        return redirect('welcome')
+
+
 
 @login_required
 def students(request):

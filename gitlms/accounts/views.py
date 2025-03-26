@@ -9,6 +9,16 @@ from .singleton import UserSingleton
 from .strategies import RegularUserRegistration
 from .observers import UserProfileUpdatedObserver
 
+
+
+def home(request):
+    if request.user.is_authenticated:
+        return redirect('departments')
+    else:
+        return redirect('welcome')
+
+
+
 @log_activity  # Apply the decorator to log activity for login
 def login(request):
     if request.method == "POST":
