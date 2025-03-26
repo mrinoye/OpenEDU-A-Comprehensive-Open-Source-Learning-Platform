@@ -43,3 +43,12 @@ def changerole(request,userid,role):
     user.role=role
     user.save()
     return redirect('appoint')
+
+#For all courses
+@login_required
+def courses(request):
+    courses = Course.objects.all().order_by('course_name')
+
+    context={'name':request.user.username,'courses':courses}
+
+    return render(request,"courses.html",context)
