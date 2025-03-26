@@ -1,0 +1,62 @@
+{% extends 'dashboard.html' %} 
+{% block content %} 
+{% load static %}
+
+<h2 class="text-2xl font-bold text-blue-900 mb-6">
+  {{ department.name }} -> {{ course.course_name }} -> {{ faculty.name }} ->
+  Lectures -> Videos
+</h2>
+
+<!-- Video Cards Container -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {% if videos %} 
+  {% for video in videos %}
+  <!-- Card for each Video -->
+  <div class="bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow relative">
+    <video class="w-full rounded" controls>
+      <source src="{{ video.file.url }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="mt-2">
+      <h3 class="font-semibold text-lg text-gray-800">{{ video.name }}</h3>
+      <p class="text-sm text-gray-500">Last updated: {{ video.last_updated }}</p>
+    </div>
+
+    <!-- Three-dot menu for each video -->
+    <div class="absolute top-5 right-5">
+      <button class="text-gray-500 hover:text-gray-700 focus:outline-none"
+        onclick="toggleMenu('menu-{{ video.id }}'); event.stopPropagation();">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+        </svg>
+      </button>
+      <div id="menu-{{ video.id }}" class="menu-dropdown absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-1 z-20 hidden">
+        <button class="block w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-gray-100 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+          Update
+        </button>
+        <button class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+  {% endfor %} 
+  {% else %}
+  <p class="text-gray-500">No videos available.</p>
+  {% endif %}
+</div>
+
+<!-- Back to Lectures Button -->
+<a href="{% url 'fac_lecs' department.id course.id faculty.id %}"
+  class="mt-6 inline-block bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+  ← Back to Lectures
+</a>
+
+<script src="{% static 'js/cardDropDown.js' %}"></script>
+{% endblock %}
