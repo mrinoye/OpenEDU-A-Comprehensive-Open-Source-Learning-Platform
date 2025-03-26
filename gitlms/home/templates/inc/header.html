@@ -12,7 +12,11 @@
     <span class="text-gray-700 font-semibold">
       {{ request.user.username }}
     </span>
-    <a href="javascript:void(0);" onclick="toggleDropdown()" class="w-10 h-10">
+    <a
+      href="javascript:void(0);"
+      onclick="toggleDropdownProfile()"
+      class="w-10 h-10"
+    >
       <img
         src="{{ request.user.profilepicture.url }}"
         alt="Profile"
@@ -27,7 +31,7 @@
 
 <script>
   // Function to toggle the visibility of the profile dropdown
-  function toggleDropdown() {
+  function toggleDropdownProfile() {
     const dropdown = document.getElementById("profileDropdown");
     dropdown.classList.toggle("hidden");
   }
