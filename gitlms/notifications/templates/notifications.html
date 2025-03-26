@@ -1,0 +1,200 @@
+{% extends 'dashboard.html' %} {% block content %}
+<!-- Notification Center Content -->
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-7xl mx-auto w-full">
+    <!-- Full width container -->
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-2xl font-bold text-gray-800">Notifications</h1>
+      <div class="flex items-center space-x-2">
+        <span class="text-sm text-gray-500">Mark all as read</span>
+        <span class="relative">
+          <i class="fas fa-bell text-gray-600 text-xl"></i>
+          <span
+            class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center"
+            >3</span
+          >
+        </span>
+      </div>
+    </div>
+
+    <!-- Scrollable Notification List -->
+    <div class="overflow-y-auto max-h-[70vh]">
+      <div class="space-y-4">
+        <!-- Sample Notification 1 -->
+        <div
+          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-blue-500 w-full mx-auto"
+        >
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h3 class="font-medium text-gray-900">
+                New Registration Request
+              </h3>
+              <p class="text-gray-600 mt-1">
+                John Doe has requested to join your organization.
+              </p>
+              <div class="flex items-center mt-3 text-sm text-gray-500">
+                <i class="far fa-clock mr-1"></i>
+                <span>10 minutes ago</span>
+              </div>
+            </div>
+            <div class="ml-4 flex space-x-2">
+              <button
+                class="px-4 py-2 bg-green-100 text-green-800 rounded-md hover:bg-green-200 transition-colors"
+              >
+                Approve
+              </button>
+              <button
+                class="px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors"
+              >
+                Reject
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Notification 2 -->
+        <div
+          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-blue-500 w-full mx-auto"
+        >
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h3 class="font-medium text-gray-900">
+                Document Approval Needed
+              </h3>
+              <p class="text-gray-600 mt-1">
+                Quarterly report needs your review and approval.
+              </p>
+              <div class="flex items-center mt-3 text-sm text-gray-500">
+                <i class="far fa-clock mr-1"></i>
+                <span>2 hours ago</span>
+              </div>
+            </div>
+            <div class="ml-4 flex space-x-2">
+              <button
+                class="px-4 py-2 bg-green-100 text-green-800 rounded-md hover:bg-green-200 transition-colors"
+              >
+                Approve
+              </button>
+              <button
+                class="px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors"
+              >
+                Reject
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Notification 3 -->
+        <div
+          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-transparent w-full mx-auto"
+        >
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h3 class="font-medium text-gray-900">Leave Application</h3>
+              <p class="text-gray-600 mt-1">
+                Sarah Smith has applied for leave from 15-20 June.
+              </p>
+              <div class="flex items-center mt-3 text-sm text-gray-500">
+                <i class="far fa-clock mr-1"></i>
+                <span>1 day ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Notification 4 -->
+        <div
+          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-transparent w-full mx-auto"
+        >
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h3 class="font-medium text-gray-900">Payment Request</h3>
+              <p class="text-gray-600 mt-1">
+                Invoice #INV-2023-0456 requires your approval.
+              </p>
+              <div class="flex items-center mt-3 text-sm text-gray-500">
+                <i class="far fa-clock mr-1"></i>
+                <span>3 days ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Sample Notification 3 -->
+        <div
+          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-transparent w-full mx-auto"
+        >
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h3 class="font-medium text-gray-900">Leave Application</h3>
+              <p class="text-gray-600 mt-1">
+                Sarah Smith has applied for leave from 15-20 June.
+              </p>
+              <div class="flex items-center mt-3 text-sm text-gray-500">
+                <i class="far fa-clock mr-1"></i>
+                <span>1 day ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Notification 4 -->
+        <div
+          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-transparent w-full mx-auto"
+        >
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h3 class="font-medium text-gray-900">Payment Request</h3>
+              <p class="text-gray-600 mt-1">
+                Invoice #INV-2023-0456 requires your approval.
+              </p>
+              <div class="flex items-center mt-3 text-sm text-gray-500">
+                <i class="far fa-clock mr-1"></i>
+                <span>3 days ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Sample Notification 3 -->
+        <div
+          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-transparent w-full mx-auto"
+        >
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h3 class="font-medium text-gray-900">Leave Application</h3>
+              <p class="text-gray-600 mt-1">
+                Sarah Smith has applied for leave from 15-20 June.
+              </p>
+              <div class="flex items-center mt-3 text-sm text-gray-500">
+                <i class="far fa-clock mr-1"></i>
+                <span>1 day ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Notification 4 -->
+        <div
+          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-transparent w-full mx-auto"
+        >
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h3 class="font-medium text-gray-900">Payment Request</h3>
+              <p class="text-gray-600 mt-1">
+                Invoice #INV-2023-0456 requires your approval.
+              </p>
+              <div class="flex items-center mt-3 text-sm text-gray-500">
+                <i class="far fa-clock mr-1"></i>
+                <span>3 days ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Sample Notifications -->
+        <!-- Repeat the above structure for more notifications if needed -->
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

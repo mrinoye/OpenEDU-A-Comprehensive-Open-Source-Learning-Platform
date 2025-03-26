@@ -1,0 +1,45 @@
+<div
+  id="profileDropdown"
+  class="absolute left-1/2 transform -translate-x-1/2 mt-[12rem] w-48 bg-white shadow-lg rounded-lg hidden z-50"
+>
+  <ul class="py-2">
+    <li>
+      <a
+        href="/profile"
+        class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-900 rounded-md transition duration-200 ease-in-out"
+      >
+        View Profile
+      </a>
+    </li>
+    <li>
+      <a
+        href="/settings"
+        class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-900 rounded-md transition duration-200 ease-in-out"
+      >
+        Settings
+      </a>
+    </li>
+    <!-- Notification List -->
+    <li class="relative">
+      <a
+        href="{% url 'notifications' %}"
+        class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-900 rounded-md transition duration-200 ease-in-out"
+      >
+        Notifications
+        <span
+          class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center"
+        >
+          3
+        </span>
+      </a>
+    </li>
+    <li>
+      <a
+        href="{% url 'logout' %}"
+        class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-900 rounded-md transition duration-200 ease-in-out"
+      >
+        Logout
+      </a>
+    </li>
+  </ul>
+</div>
