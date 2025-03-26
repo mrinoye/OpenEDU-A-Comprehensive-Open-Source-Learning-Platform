@@ -12,3 +12,9 @@ admin.site.register(Slide)
 admin.site.register(Video)
 
 admin.site.register(Note)
+
+admin.site.register(temp_Slide)
+
+admin.site.register(temp_Video)
+
+admin.site.register(temp_Note)

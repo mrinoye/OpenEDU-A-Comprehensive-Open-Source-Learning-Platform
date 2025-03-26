@@ -3,35 +3,33 @@
   class="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center hidden"
 >
   <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
-    <h2 class="text-xl font-semibold mb-4">Add New Department</h2>
+    <h2 class="text-xl font-semibold mb-4">Add New Faculty</h2>
     <form>
       <div class="mb-4">
-        <label
-          for="departmentName"
-          class="block text-sm font-medium text-gray-700"
-          >Department Name</label
+        <label for="facultyName" class="block text-sm font-medium text-gray-700"
+          >Faculty Name</label
         >
         <input
           type="text"
-          id="departmentName"
-          name="departmentName"
+          id="facultyName"
+          name="facultyName"
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
-          placeholder="Enter department name"
+          placeholder="Enter faculty name"
         />
       </div>
       <div class="mb-4">
-        <label
-          for="departmentDescription"
-          class="block text-sm font-medium text-gray-700"
-          >Description</label
+        <label for="position" class="block text-sm font-medium text-gray-700"
+          >Position</label
         >
-        <textarea
-          id="departmentDescription"
-          name="departmentDescription"
+        <input
+          type="text"
+          id="position"
+          name="position"
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
-          placeholder="Enter department description"
-        ></textarea>
+          placeholder="Enter position"
+        />
       </div>
+
       <div class="flex justify-end">
         <button
           type="button"

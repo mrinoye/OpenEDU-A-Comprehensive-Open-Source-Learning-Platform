@@ -28,7 +28,8 @@
 
     <!-- Always Visible Side Popup (Smaller Card) -->
     {% include 'inc/popup.html' %}
-
+     
+    {% if showAddButton %}
     <!-- Modal Button -->
     <button
       id="openModalBtn"
@@ -36,9 +37,17 @@
     >
       + Add
     </button>
+    {% endif %}
 
+ 
     <!-- Modal -->
-    {% include 'content_modals/deptModal.html' %}
+    {% if showDeptModal %} {% include 'content_modals/deptModal.html' %}
+    {% elif showCourseModal %} {% include 'content_modals/courseModal.html' %} 
+    {% elif showFacultyModal %} {% include 'content_modals/facultyModal.html' %} 
+    {% elif showSlideModal %} {% include 'content_modals/slideModal.html' %} 
+    {% elif showVideoModal %} {% include 'content_modals/videoModal.html' %} 
+    {% elif showNoteModal %} {% include 'content_modals/noteModal.html' %}
+    {%endif%}
 
     <!-- JavaScript to Toggle Modal -->
     <script src="{% static 'js/modal.js' %}"></script>

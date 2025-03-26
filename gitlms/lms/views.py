@@ -10,7 +10,7 @@ from .contentViewers import *
 # Create your views here.
 def departments(request):
     departments=Department.objects.all().order_by('name')
-    context={'name':request.user.username,'departments':departments}
+    context={'name':request.user.username,'departments':departments,'showDeptModal':True,'showAddButton':True}
 
     return render(request,"lms/departments.html",context)
 
@@ -30,7 +30,7 @@ def deptcourses(request,id):
     department=Department.objects.get(id=id)
     courses = Course.objects.filter(department=department).order_by('course_name')
 
-    context={'name':request.user.username,'courses':courses , 'department': department}
+    context={'name':request.user.username,'courses':courses , 'department': department,'showCourseModal':True,'showAddButton':True}
     return render(request,'lms/deptcourses.html',context)
 
 
@@ -41,7 +41,7 @@ def course_facs(request, dept_id, course_id):
     department = Department.objects.get(id=dept_id)
     course = Course.objects.get(id=course_id)
     faculties = Faculty.objects.filter(course=course)
-    context = {'department': department, 'faculties': faculties,'course':course}
+    context = {'department': department, 'faculties': faculties,'course':course,'showFacultyModal':True,'showAddButton':True}
     return render(request, 'lms/faculty.html', context)
 
 
@@ -62,7 +62,7 @@ def lec_slides(request,dept_id, course_id,fac_id):
     course = Course.objects.get(id=course_id)
     faculty = Faculty.objects.get(id=fac_id)
     slides=Slide.objects.filter(faculty=faculty)
-    context = {'department': department, 'faculty': faculty,'course':course,'slides':slides}
+    context = {'department': department, 'faculty': faculty,'course':course,'slides':slides,'showSlideModal':True,'showAddButton':True}
     
     return render(request,"lms/slides.html",context)
 
@@ -75,7 +75,7 @@ def lec_videos(request, dept_id, course_id, fac_id):
     course = Course.objects.get(id=course_id)
     faculty = Faculty.objects.get(id=fac_id)
     videos = Video.objects.filter(faculty=faculty)
-    context = {'department': department, 'faculty': faculty, 'course': course, 'videos': videos}
+    context = {'department': department, 'faculty': faculty, 'course': course, 'videos': videos,'showVideoModal':True,'showAddButton':True}
     return render(request, "lms/videos.html", context)
 
 
@@ -87,6 +87,6 @@ def lec_notes(request, dept_id, course_id, fac_id):
     course = Course.objects.get(id=course_id)
     faculty = Faculty.objects.get(id=fac_id)
     notes = Note.objects.filter(faculty=faculty)
-    context = {'department': department, 'faculty': faculty, 'course': course, 'notes': notes}
+    context = {'department': department, 'faculty': faculty, 'course': course, 'notes': notes,'showNoteModal':True,'showAddButton':True}
     return render(request, "lms/notes.html", context)
 
