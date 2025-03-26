@@ -1,0 +1,38 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<!-- Note Display Block -->
+<div class="flex flex-col items-center justify-center p-6 bg-white shadow-lg rounded-lg">
+  <!-- Back Button -->
+  <button onclick="window.history.back()" class="mb-4 bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+    &larr; Back
+  </button>
+
+  <!-- Note Information -->
+  <div class="w-full h-96 overflow-hidden">
+    <h2 class="text-xl font-bold mb-4">{{ note.name }}</h2>
+
+    <!-- Display content (Note file) -->
+    {% if note.content.url|slice:"-4:" == '.pdf' %}
+    <!-- PDF Viewer -->
+    <iframe src="{{ note.content.url }}" width="100%" height="100%" frameborder="0" type="application/pdf">
+      Your browser does not support displaying PDF files.
+    </iframe>
+    {% elif note.content.url|slice:"-4:" == '.docx' %}
+    <!-- Word Document Viewer (Microsoft Office Online) -->
+    <iframe src="https://view.officeapps.live.com/op/embed.aspx?src={{ note.content.url | urlencode }}" width="100%" height="100%" frameborder="0">
+      Your browser does not support displaying DOCX files.
+    </iframe>
+    {% else %}
+    <p class="text-center text-red-500">Unsupported file format.</p>
+    {% endif %}
+  </div>
+
+  <!-- Download Link -->
+  <div class="mt-4">
+    <a href="{{ note.content.url }}" download class="text-blue-600 hover:text-blue-800">
+      Download Note
+    </a>
+  </div>
+</div>
+{% endblock %}
