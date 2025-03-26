@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from .models import Department,Course,Faculty,Slide
+from .models import Department,Course,Faculty,Slide,Video,Note
 from django.conf import settings
 
 
@@ -58,3 +58,37 @@ def show_pdf(request,dept_id, course_id,fac_id,slide_id):
     context = {'slide':slide}
     
     return render(request,"pdfViewer.html",context)
+
+# For videos inside a lecture
+@login_required
+def lec_videos(request, dept_id, course_id, fac_id):
+    department = Department.objects.get(id=dept_id)
+    course = Course.objects.get(id=course_id)
+    faculty = Faculty.objects.get(id=fac_id)
+    videos = Video.objects.filter(faculty=faculty)
+    context = {'department': department, 'faculty': faculty, 'course': course, 'videos': videos}
+    return render(request, "videos.html", context)
+
+# To view a video
+@login_required
+def show_video(request, dept_id, course_id, fac_id, video_id):
+    video = Video.objects.get(id=video_id)
+    context = {'video': video}
+    return render(request, "videoViewer.html", context)
+
+# For notes inside a lecture
+@login_required
+def lec_notes(request, dept_id, course_id, fac_id):
+    department = Department.objects.get(id=dept_id)
+    course = Course.objects.get(id=course_id)
+    faculty = Faculty.objects.get(id=fac_id)
+    notes = Note.objects.filter(faculty=faculty)
+    context = {'department': department, 'faculty': faculty, 'course': course, 'notes': notes}
+    return render(request, "notes.html", context)
+
+# To view a note
+@login_required
+def show_note(request, dept_id, course_id, fac_id, note_id):
+    note = Note.objects.get(id=note_id)
+    context = {'note': note}
+    return render(request, "noteViewer.html", context)

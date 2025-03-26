@@ -8,3 +8,7 @@ admin.site.register(Course)
 admin.site.register(Faculty)
 
 admin.site.register(Slide)
+
+admin.site.register(Video)
+
+admin.site.register(Note)
