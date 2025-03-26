@@ -1,0 +1,34 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<!-- Video Display Block -->
+<div class="flex flex-col items-center justify-center p-6 bg-white shadow-lg rounded-lg">
+  <!-- Back Button -->
+  <button onclick="window.history.back()" class="mb-4 bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+    &larr; Back
+  </button>
+
+  <!-- Video Information -->
+  <div class="w-full h-96 overflow-hidden">
+    <h2 class="text-xl font-bold mb-4">{{ video.name }}</h2>
+
+    <!-- Display content (video file) -->
+    {% if video.content.url|slice:"-4:" == '.mp4' %}
+    <!-- Video Viewer -->
+    <video width="100%" height="100%" controls>
+      <source src="{{ video.content.url }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    {% else %}
+    <p class="text-center text-red-500">Unsupported video format.</p>
+    {% endif %}
+  </div>
+
+  <!-- Download Link -->
+  <div class="mt-4">
+    <a href="{{ video.content.url }}" download class="text-blue-600 hover:text-blue-800">
+      Download Video
+    </a>
+  </div>
+</div>
+{% endblock %}
