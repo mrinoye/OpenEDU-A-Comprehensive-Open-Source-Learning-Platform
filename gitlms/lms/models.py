@@ -24,7 +24,7 @@ class Course(models.Model):
         default="This course provides a comprehensive overview of essential topics, methodologies, and concepts. Further details will be provided."
     )  # Description of the course
     department = models.ForeignKey('Department', related_name='courses', on_delete=models.CASCADE)  # Foreign key to Department
-    admins = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='courses_administered', blank=True)  # Many-to-many field for admins
+    
     image = models.ImageField(upload_to='images/course/', null=True, default='images/course/default.jpg')  # Course image
 
     def __str__(self):
@@ -36,7 +36,7 @@ class Faculty(models.Model):
     course = models.ForeignKey('Course', related_name='Faculty', on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField(upload_to='images/faculty/', null=True,default='images/faculty/default.jpg')  
     position = models.CharField(max_length=100)
-    moderators= models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='faculty_moderated', blank=True)  # Many-to-many field for admins
+    
     # Add other relevant fields
 
     def __str__(self):
