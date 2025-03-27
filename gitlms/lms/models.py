@@ -2,8 +2,7 @@ from django.db import models
 import os
 from django.conf import settings
 from .contentUploadStratagy import *
-
-
+from .contentUploadAdapter import ContentUploadAdapter
 
 class Department(models.Model):
     id = models.AutoField(primary_key=True)  # Automatically generates a primary key
@@ -41,91 +40,63 @@ class Faculty(models.Model):
 
     def __str__(self):
         return self.name
-    
-
-
-
-
-
-
-
-
-
-
-
-
-import os
-from django.db import models
 
 # Slide Model (Base)
 class Slide(models.Model):
     name = models.CharField(max_length=100)
     faculty = models.ForeignKey('Faculty', related_name='slides', on_delete=models.CASCADE, null=True, blank=True)
-    content = models.FileField(upload_to=SlideUploadStrategy.get_upload_to)  # Basic upload path for slides
+    content = models.FileField(upload_to=ContentUploadAdapter('slide').get_upload_strategy().get_upload_to)  # Adapter used for upload path
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
-
 
 # Video Model (Base)
 class Video(models.Model):
     name = models.CharField(max_length=100)
     faculty = models.ForeignKey('Faculty', related_name='videos', on_delete=models.CASCADE, null=True, blank=True)
-    content = models.FileField(upload_to=VideoUploadStrategy.get_upload_to)  # Basic upload path for videos
+    content = models.FileField(upload_to=ContentUploadAdapter('video').get_upload_strategy().get_upload_to)  # Adapter used for upload path
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
-
 
 # Note Model (Base)
 class Note(models.Model):
     name = models.CharField(max_length=100)
     faculty = models.ForeignKey('Faculty', related_name='notes', on_delete=models.CASCADE, null=True, blank=True)
-    content = models.FileField(upload_to=NoteUploadStrategy.get_upload_to)  # Basic upload path for notes
+    content = models.FileField(upload_to=ContentUploadAdapter('note').get_upload_strategy().get_upload_to)  # Adapter used for upload path
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
-
-
 
 # Temporary Slide Model
 class temp_Slide(models.Model):
     name = models.CharField(max_length=100)
     real = models.ForeignKey(Slide, related_name='temp_versions', on_delete=models.CASCADE, null=True, blank=True)
-    content = models.FileField(upload_to=TempSlideUploadStrategy().get_upload_to)  # Using TempSlideUploadStrategy
+    content = models.FileField(upload_to=ContentUploadAdapter('slide', is_temp=True).get_upload_strategy().get_upload_to)  # Adapter used for temporary upload path
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
-
 
 # Temporary Video Model
 class temp_Video(models.Model):
     name = models.CharField(max_length=100)
     real = models.ForeignKey(Video, related_name='temp_versions', on_delete=models.CASCADE, null=True, blank=True)
-    content = models.FileField(upload_to=TempVideoUploadStrategy().get_upload_to)  # Using TempVideoUploadStrategy
+    content = models.FileField(upload_to=ContentUploadAdapter('video', is_temp=True).get_upload_strategy().get_upload_to)  # Adapter used for temporary upload path
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
-
 
 # Temporary Note Model
 class temp_Note(models.Model):
     name = models.CharField(max_length=100)
     real = models.ForeignKey(Note, related_name='temp_versions', on_delete=models.CASCADE, null=True, blank=True)
-    content = models.FileField(upload_to=TempNoteUploadStrategy().get_upload_to)  # Using TempNoteUploadStrategy
+    content = models.FileField(upload_to=ContentUploadAdapter('note', is_temp=True).get_upload_strategy().get_upload_to)  # Adapter used for temporary upload path
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
-
-
-
-
-
-
-
