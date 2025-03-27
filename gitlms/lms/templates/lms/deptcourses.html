@@ -22,7 +22,6 @@
           alt="Course Image"
           class="w-full h-40 object-cover rounded-t-lg mb-8"
         />
-        <!-- Increased margin-bottom to move image further down -->
       </a>
 
       <div class="flex items-center mb-4">
@@ -65,7 +64,9 @@
           class="menu-dropdown absolute right-0 bottom-full mb-2 w-40 bg-white rounded-md shadow-lg py-1 z-10 hidden"
         >
           <button
-            class="block w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-gray-100 flex items-center"
+            class="block w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-gray-100 flex items-center openUpdateModalBtn"
+            data-type="course"
+            data-id="{{ course.id }}"
           >
             Update
           </button>
@@ -93,6 +94,9 @@
   </div>
 </div>
 
+<!-- Update Modal -->
+
+{% include 'update_content_modals/update_courseModal.html' %}
 <!-- JavaScript for Menu Toggle -->
 <script src="{% static 'js/cardDropDown.js' %}"></script>
 

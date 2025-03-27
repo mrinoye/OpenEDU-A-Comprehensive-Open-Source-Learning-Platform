@@ -38,17 +38,30 @@
     {% endif %}
 
     <!-- Modal -->
-      
-    {% if showDeptModal %} {% include 'content_modals/deptModal.html' %}
-    {% elif showCourseModal %} {% include 'content_modals/courseModal.html' %} 
+
+    {% if showDeptModal %} {% include 'content_modals/deptModal.html' %} 
+    {% elif showCourseModal %} {% include 'content_modals/courseModal.html' %}
     {% elif showFacultyModal %} {% include 'content_modals/facultyModal.html' %} 
     {% elif showSlideModal %} {% include 'content_modals/slideModal.html' %} 
     {% elif showVideoModal %} {% include 'content_modals/videoModal.html' %} 
-    {% elif showNoteModal %} {% include 'content_modals/noteModal.html' %}
-    {%endif%}
+    {% elif showNoteModal %} {% include 'content_modals/noteModal.html' %} {%endif%} 
+    {% include 'content_modals/deptModal.html' %}
 
+    <!--Update_Modal -->
+
+    {% if showUpdateDeptModal %} {% include 'update_content_modals/update_deptModal.html' %} 
+    {% elif showUpdateCourseModal %} {% include 'update_content_modals/update_courseModal.html' %}
+    {% elif showUpdateFacultyModal %} {% include 'update_content_modals/update_facultyModal.html' %} 
+    {% elif showUpdateSlideModal %} {% include 'update_content_modals/update_slideModal.html' %} 
+    {% elif showUpdateVideoModal %} {% include 'update_content_modals/update_videoModal.html' %} 
+    {% elif showUpdateNoteModal %} {% include 'update_content_modals/update_noteModal.html' %} {%endif%} 
+    {% include 'content_modals/deptModal.html' %}
+
+
+    
 
     <!-- JavaScript to Toggle Modal -->
+    <script src="{% static 'js/update_modal.js' %}"></script>
     <script src="{% static 'js/modal.js' %}"></script>
 
     <script src="{% static 'js/popup.js' %}"></script>

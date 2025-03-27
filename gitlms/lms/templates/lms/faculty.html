@@ -34,12 +34,15 @@
             />
           </svg>
         </button>
+        <!-- Menu dropdown positioned above the three-dot button -->
         <div
           id="menu-videos-{{ faculty.id }}"
           class="menu-dropdown absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-1 z-10 hidden"
         >
           <button
-            class="block w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-gray-100 flex items-center"
+            class="block w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-gray-100 flex items-center openUpdateModalBtn"
+            data-type="faculty"
+            data-id="{{ faculty.id }}"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -118,4 +121,5 @@
 
 <!-- JavaScript for Menu Toggle -->
 <script src="{% static 'js/cardDropDown.js' %}"></script>
+
 {% endblock %}

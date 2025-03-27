@@ -1,0 +1,60 @@
+<!-- Update Modal -->
+<div
+  id="update_modal"
+  class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center"
+>
+  <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+    <h2 class="text-xl font-semibold mb-4">Update Slide</h2>
+
+    <!-- Hidden fields for slide, course, department, and faculty -->
+    <input type="hidden" id="slide_id_field" name="slide_id" value="" />
+    <input type="hidden" id="course_id_field" name="course_id" value="" />
+    <input
+      type="hidden"
+      id="department_id_field"
+      name="department_id"
+      value=""
+    />
+    <input type="hidden" id="faculty_id_field" name="faculty_id" value="" />
+
+    <div class="mb-4">
+      <label for="slideName" class="block text-sm font-semibold"
+        >Slide Name</label
+      >
+      <input
+        type="text"
+        id="slideName"
+        name="slideName"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md"
+        placeholder="Enter slide name"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="slideContent" class="block text-sm font-semibold"
+        >Upload Slide</label
+      >
+      <input
+        type="file"
+        id="slideContent"
+        name="slideContent"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md"
+      />
+    </div>
+
+    <div class="flex justify-end">
+      <button
+        id="closeUpdateModalBtn"
+        class="bg-gray-500 text-white px-4 py-2 rounded-lg mr-2"
+      >
+        Close
+      </button>
+      <button
+        class="bg-blue-500 text-white px-4 py-2 rounded-lg"
+        onclick="saveUpdate()"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div>
