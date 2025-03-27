@@ -10,7 +10,6 @@ class UploadStrategy(ABC):
         pass
 
 
-
 # Strategy for Slide model (Base)
 class SlideUploadStrategy(UploadStrategy):
     def get_upload_to(self, instance, filename):
