@@ -1,0 +1,52 @@
+<div
+  id="update_modal"
+  class="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center hidden"
+>
+  <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+    <h2 class="text-xl font-semibold mb-4">Update Department</h2>
+    <form>
+      <div class="mb-4">
+        <label
+          for="departmentName"
+          class="block text-sm font-medium text-gray-700"
+          >Department Name</label
+        >
+        <input
+          type="text"
+          id="departmentName"
+          name="departmentName"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+          placeholder="Enter department name"
+        />
+      </div>
+      <div class="mb-4">
+        <label
+          for="departmentDescription"
+          class="block text-sm font-medium text-gray-700"
+          >Description</label
+        >
+        <textarea
+          id="departmentDescription"
+          name="departmentDescription"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+          placeholder="Enter department description"
+        ></textarea>
+      </div>
+      <div class="flex justify-end">
+        <button
+          type="button"
+          id="closeModalBtn"
+          class="bg-gray-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-gray-400"
+        >
+          Close
+        </button>
+        <button
+          type="submit"
+          class="bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

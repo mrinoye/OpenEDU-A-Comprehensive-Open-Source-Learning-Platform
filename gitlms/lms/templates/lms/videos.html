@@ -1,5 +1,4 @@
-{% extends 'dashboard.html' %} {% block content %} {% load static %}
-
+{% extends 'dashboard.html' %} {% load static %} {% block content %}
 <h2 class="text-2xl font-bold text-blue-900 mb-6">
   {{ department.name }} -> {{ course.course_name }} -> {{ faculty.name }} ->
   Lectures -> Videos
@@ -45,12 +44,18 @@
           />
         </svg>
       </button>
+      <!-- Menu dropdown positioned above the three-dot button -->
       <div
         id="menu-{{ video.id }}"
         class="menu-dropdown absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-1 z-20 hidden"
       >
         <button
-          class="block w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-gray-100 flex items-center"
+          class="block w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-gray-100 flex items-center openUpdateModalBtn"
+          data-type="video"
+          data-id="{{ video.id }}"
+          data-course-id="{{ course.id }}"
+          data-department-id="{{ department.id }}"
+          data-faculty-id="{{ faculty.id }}"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +74,7 @@
           Update
         </button>
         <button
-          class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center"
+          class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100 flex items-center"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -104,4 +109,5 @@
 </a>
 
 <script src="{% static 'js/cardDropDown.js' %}"></script>
+
 {% endblock %}
