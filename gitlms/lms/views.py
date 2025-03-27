@@ -10,7 +10,11 @@ from .contentViewers import *
 # Create your views here.
 def departments(request):
     departments=Department.objects.all().order_by('name')
-    context={'name':request.user.username,'departments':departments,'showDeptModal':True,'showUpdateDeptModal':True,'showAddButton':True}
+    showDeptModal=(request.user.role=='master')
+    showUpdateDeptModal=(request.user.role=='master')
+    showAddButton=(request.user.role=='master')
+    context={'name':request.user.username,'departments':departments,
+             'showDeptModal':showDeptModal,'showUpdateDeptModal':showUpdateDeptModal,'showAddButton':showAddButton}
 
     return render(request,"lms/departments.html",context)
 
@@ -29,8 +33,11 @@ def courses(request):
 def deptcourses(request,id):
     department=Department.objects.get(id=id)
     courses = Course.objects.filter(department=department).order_by('course_name')
-
-    context={'name':request.user.username,'courses':courses , 'department': department,'showCourseModal':True,'showUpdateCourseModal':True,'showAddButton':True}
+    showAddButton=(request.user.role=='master')or(request.user.department==department.id)
+    showUpdateCourseModal=(request.user.role=='master')or(request.user.department==department.id)
+    showCourseModal=(request.user.role=='master')or(request.user.department==department.id)
+    context={'name':request.user.username,'courses':courses , 'department': department,
+             'showCourseModal':showCourseModal,'showUpdateCourseModal':showUpdateCourseModal,'showAddButton':showAddButton}
     return render(request,'lms/deptcourses.html',context)
 
 
@@ -41,7 +48,11 @@ def course_facs(request, dept_id, course_id):
     department = Department.objects.get(id=dept_id)
     course = Course.objects.get(id=course_id)
     faculties = Faculty.objects.filter(course=course)
-    context = {'department': department, 'faculties': faculties,'course':course,'showFacultyModal':True,'showUpdateFacultyModal':True,'showAddButton':True}
+    showFacultyModal=(request.user.role=='master')or(request.user.department==department.id)or(request.user.course==course.id)
+    showUpdateFacultyModal=(request.user.role=='master')or(request.user.department==department.id)or(request.user.course==course.id)
+    showAddButton=(request.user.role=='master')or(request.user.department==department.id)or(request.user.course==course.id)
+    context = {'department': department, 'faculties': faculties,'course':course,
+               'showFacultyModal':showFacultyModal,'showUpdateFacultyModal':showUpdateFacultyModal,'showAddButton':showAddButton}
     return render(request, 'lms/faculty.html', context)
 
 

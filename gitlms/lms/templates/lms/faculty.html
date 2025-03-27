@@ -13,6 +13,7 @@
     <div
       class="relative flex flex-col items-center justify-center bg-white p-8 rounded-full shadow-lg transform transition-transform hover:scale-105 cursor-pointer w-72 h-72"
     >
+      {%if showUpdateFacultyModal %}
       <!-- Three-dot menu -->
       <div class="absolute top-1/2 right-3 transform -translate-y-1/2 dropdown">
         <button
@@ -81,7 +82,7 @@
           </button>
         </div>
       </div>
-
+      {%endif%}
       <!-- Clickable Card Link -->
       <a
         href="{% url 'fac_lecs' department.id course.id faculty.id %}"
