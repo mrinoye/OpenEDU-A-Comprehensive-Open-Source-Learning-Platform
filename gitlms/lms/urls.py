@@ -1,5 +1,9 @@
 from django.urls import path
 from .views import *
+from .add_funcs import *
+from .update_funcs import *
+from .delete_funcs import *
+
 
 urlpatterns = []
 
@@ -19,6 +23,36 @@ path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectu
 path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/notes/note=<int:note_id>', show_note, name='show_note')
 ]
 
+addUrl = [
+    path('delete/<int:dept_id>', add_dept, name='add_dept'),
+    path('department=<int:dept_id>/delete/<int:course_id>', add_course, name='add_course'),
+    path('department=<int:dept_id>/course=<int:course_id>/delete/<int:fac_id>', add_fac, name='add_fac'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/delete/<int:slide_id>', add_slide, name='add_slide'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/videos/delete/<int:video_id>', add_video, name='add_video'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/notes/delete/<int:note_id>', add_note, name='add_note'),
+]
+
+updateUrl = [
+    path('delete/<int:dept_id>', update_dept, name='update_dept'),
+    path('department=<int:dept_id>/delete/<int:course_id>', update_course, name='update_course'),
+    path('department=<int:dept_id>/course=<int:course_id>/delete/<int:fac_id>', update_fac, name='update_fac'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/delete/<int:slide_id>', update_slide, name='update_slide'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/videos/delete/<int:video_id>', update_video, name='update_video'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/notes/delete/<int:note_id>', update_note, name='update_note'),
+]
+
+deleteUrl = [
+    path('delete/<int:dept_id>', delete_dept, name='delete_dept'),
+    path('department=<int:dept_id>/delete/<int:course_id>', delete_course, name='delete_course'),
+    path('department=<int:dept_id>/course=<int:course_id>/delete/<int:fac_id>', delete_fac, name='delete_fac'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/delete/<int:slide_id>', delete_slide, name='delete_slide'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/videos/delete/<int:video_id>', delete_video, name='delete_video'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/notes/delete/<int:note_id>', delete_note, name='delete_note'),
+]
+
 
 urlpatterns+=navigatelms
 urlpatterns+=showcontents
+urlpatterns+=addUrl
+urlpatterns+=updateUrl
+urlpatterns+=deleteUrl
