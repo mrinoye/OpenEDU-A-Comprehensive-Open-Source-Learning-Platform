@@ -2,7 +2,7 @@ from django.db import models
 import os
 from django.conf import settings
 from .contentUploadStratagy import *
-from .solveerror import *
+
 
 
 class Department(models.Model):
