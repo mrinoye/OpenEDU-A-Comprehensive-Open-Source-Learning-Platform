@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import Slide,Video,Note
-
+from .solveerror import *
 # To view a note
 @login_required
 def show_note(request, dept_id, course_id, fac_id, note_id):
