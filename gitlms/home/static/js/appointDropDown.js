@@ -23,12 +23,31 @@ function fetchDepartments() {
       const departmentSelect = document.getElementById("departmentSelect");
       departmentSelect.innerHTML =
         '<option value="">Select Department</option>'; // Reset options
+
       data.forEach((department) => {
         const option = document.createElement("option");
         option.value = department.id;
         option.textContent = department.name;
+
+        if (
+          requestUserRole === "admin" &&
+          department.id === requestUserDepartment
+        ) {
+          option.selected = true;
+        }
+
         departmentSelect.appendChild(option);
       });
+
+      // Lock department selection if current user is an admin
+      if (requestUserRole === "admin") {
+        departmentSelect.disabled = true;
+
+        // Also auto-fetch courses if role is moderator (for safety)
+        if (document.getElementById("roleSelect").value === "moderator") {
+          fetchCourses(requestUserDepartment);
+        }
+      }
     });
 }
 
@@ -75,7 +94,6 @@ function roleChanged() {
   const departmentSelect = document.getElementById("departmentSelect");
   const courseSelect = document.getElementById("courseSelect");
 
-  // Hide or show the department and course selects based on role
   if (role === "user") {
     departmentSelect.classList.add("hidden");
     courseSelect.classList.add("hidden");
@@ -84,13 +102,30 @@ function roleChanged() {
   } else if (role === "admin") {
     departmentSelect.classList.remove("hidden");
     courseSelect.classList.add("hidden");
-    departmentSelect.disabled = false;
+
+    // Force set department to requestUserDepartment if current user is admin
+    if (requestUserRole === "admin") {
+      departmentSelect.value = requestUserDepartment;
+      departmentSelect.disabled = true;
+    } else {
+      departmentSelect.disabled = false;
+    }
+
     courseSelect.disabled = true;
   } else if (role === "moderator") {
     departmentSelect.classList.remove("hidden");
     courseSelect.classList.remove("hidden");
-    departmentSelect.disabled = false;
-    courseSelect.disabled = true;
+
+    if (requestUserRole === "admin") {
+      departmentSelect.value = requestUserDepartment;
+      departmentSelect.disabled = true;
+
+      // Fetch courses for fixed department
+      fetchCourses(requestUserDepartment);
+    } else {
+      departmentSelect.disabled = false;
+      courseSelect.disabled = true;
+    }
   }
 }
 

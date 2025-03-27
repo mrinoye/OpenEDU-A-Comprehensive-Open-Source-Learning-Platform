@@ -4,7 +4,7 @@ from accounts.models import User
 
 def get_courses_by_department(request, department_id):
     department = Department.objects.get(id=department_id)
-    courses = Course.objects.filter(department=department).values('id', 'course_code')
+    courses = Course.objects.filter(department=department).values('id', 'course_code','course_name')
     return JsonResponse(list(courses), safe=False)
 
 def get_departments(request):

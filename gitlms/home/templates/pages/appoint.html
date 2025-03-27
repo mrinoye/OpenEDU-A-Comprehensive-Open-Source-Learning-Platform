@@ -93,8 +93,11 @@
 <!-- Appoint Modal -->
 {% include 'appoint_modals/appointModal.html' %}
 
-<script src={% static 'js/appointDropDown.js' %}>
+<script>
+requestUserRole="{{request.user.role}}";
+requestUserDepartment={{request.user.department}};
 
 </script>
+<script src={% static 'js/appointDropDown.js' %}></script>
 
 {% endblock %}

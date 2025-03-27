@@ -12,7 +12,10 @@
       onchange="roleChanged()"
     >
       <option value="assign">Assign Role</option>
+      {% if request.user.role == 'master' %}
+
       <option value="admin">Admin</option>
+      {%endif%}
       <option value="moderator">Moderator</option>
       <option value="user">User</option>
     </select>
