@@ -7,54 +7,60 @@
     <h2 class="text-xl font-semibold mb-4">Update Note</h2>
 
     <!-- Hidden fields for the note, course, department, and faculty -->
-    <input type="hidden" id="note_id_field" name="note_id" value="" />
-    <input type="hidden" id="course_id_field" name="course_id" value="" />
-    <input
-      type="hidden"
-      id="department_id_field"
-      name="department_id"
-      value=""
-    />
-    <input type="hidden" id="faculty_id_field" name="faculty_id" value="" />
-
-    <div class="mb-4">
-      <label for="noteName" class="block text-sm font-semibold"
-        >Note Name</label
-      >
+    <form id="updateNoteForm" method="POST" enctype="multipart/form-data">
+      <input type="hidden" id="note_id_field" name="note_id" value="" />
+      <input type="hidden" id="course_id_field" name="course_id" value="" />
       <input
-        type="text"
-        id="noteName"
-        name="noteName"
-        class="w-full px-4 py-2 border border-gray-300 rounded-md"
-        placeholder="Enter note name"
+        type="hidden"
+        id="department_id_field"
+        name="department_id"
+        value=""
       />
-    </div>
+      <input type="hidden" id="faculty_id_field" name="faculty_id" value="" />
 
-    <div class="mb-4">
-      <label for="noteContent" class="block text-sm font-semibold"
-        >Upload Note</label
-      >
-      <input
-        type="file"
-        id="noteContent"
-        name="noteContent"
-        class="w-full px-4 py-2 border border-gray-300 rounded-md"
-      />
-    </div>
+      <div class="mb-4">
+        <label for="noteName" class="block text-sm font-semibold"
+          >Note Name</label
+        >
+        <input
+          type="text"
+          id="noteName"
+          name="noteName"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md"
+          placeholder="Enter note name"
+          required
+        />
+      </div>
 
-    <div class="flex justify-end">
-      <button
-        id="closeUpdateModalBtn"
-        class="bg-gray-500 text-white px-4 py-2 rounded-lg mr-2"
-      >
-        Close
-      </button>
-      <button
-        class="bg-blue-500 text-white px-4 py-2 rounded-lg"
-        onclick="saveUpdate()"
-      >
-        Save
-      </button>
-    </div>
+      <div class="mb-4">
+        <label for="noteContent" class="block text-sm font-semibold"
+          >Upload Note</label
+        >
+        <input
+          type="file"
+          id="noteContent"
+          name="noteContent"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md"
+          required
+        />
+      </div>
+
+      <div class="flex justify-end">
+        <button
+          id="closeUpdateModalBtn"
+          type="button"
+          class="bg-gray-500 text-white px-4 py-2 rounded-lg mr-2"
+          onclick="closeUpdateModal()"
+        >
+          Close
+        </button>
+        <button
+          type="submit"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg"
+        >
+          Save
+        </button>
+      </div>
+    </form>
   </div>
 </div>
