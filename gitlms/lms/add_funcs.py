@@ -61,7 +61,7 @@ def add_fac(request, dept_id, course_id):
             if image:
                 faculty.image=image
             faculty.save()
-        
+        messages.success(request, "Faculty has been added")
     return redirect('course_facs',dept_id,course_id)
     
  

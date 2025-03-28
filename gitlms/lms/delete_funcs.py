@@ -36,7 +36,7 @@ def delete_fac(request,dept_id,course_id,fac_id):
          return redirect('illegalactivity')
     faculty=get_object_or_404(Faculty,id=fac_id)
     faculty.delete()
-    messages.success(request, "Course has been deleted")
+    messages.success(request, "Faculty has been deleted")
     return redirect('course_facs',dept_id,course_id)
 
 
