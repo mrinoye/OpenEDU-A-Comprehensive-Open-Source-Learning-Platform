@@ -32,7 +32,28 @@ def update_dept(request, dept_id):
 
 
 def update_course(request,dept_id,course_id):
-    return redirect('depa_course')
+    if (request.user.role!='master')and(request.user.department!= dept_id)and(request.user.course!= course_id):
+        return redirect('illegalactivity')
+    department=get_object_or_404(Department,id=dept_id)
+    course = get_object_or_404(Course, id=course_id)
+    if request.method == 'POST':
+        course_code = request.POST.get('courseCode')
+        course_name = request.POST.get('courseName')
+        course_desc = request.POST.get('courseDescription')
+        course_image = request.FILES.get('courseImage')
+    if((request.user.role=='master')or(request.user.department== dept_id)):
+        if course_code:
+            course.course_code=course_code
+        if course_name:
+            course.course_name=course_name
+        if course_desc:
+            course.description=course_desc
+        if course_image:
+            course.image=course_image
+        course.save()
+    else:
+        print("request sent")
+    return redirect('deptcourses',department.id)
 
 def update_fac(request,dept_id,course_id,fac_id):
    return redirect('course_facs')

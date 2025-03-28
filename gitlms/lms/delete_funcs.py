@@ -16,7 +16,15 @@ def delete_dept(request,dept_id):
     return redirect('departments')
 
 def delete_course(request,dept_id,course_id):
-    return redirect('depa_course')
+    if (request.user.role!='master')and(request.user.department!= dept_id)and(request.user.course!= course_id):
+        return redirect('illegalactivity')
+    department=get_object_or_404(Department,id=dept_id)
+    course = get_object_or_404(Course, id=course_id)
+    if((request.user.role=='master')or(request.user.department== dept_id)):
+        course.delete()
+    else:
+        print("request sent")
+    return redirect('deptcourses',department.id)
 
 def delete_fac(request,dept_id,course_id,fac_id):
    return redirect('course_facs')

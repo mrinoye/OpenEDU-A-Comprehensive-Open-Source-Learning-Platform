@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from .models import *
 from accounts.models import User
 from django.http import HttpResponse
@@ -23,15 +23,26 @@ def add_dept(request):
     return redirect('departments')
 
 # Add Course
-def add_course(request, dept_id, course_id):
+def add_course(request, dept_id):
+    if (request.user.role!='master')and(request.user.department!= dept_id):
+        return redirect('illegalactivity')
+    department=get_object_or_404(Department,id=dept_id)
     if request.method == 'POST':
         course_code = request.POST.get('courseCode')
         course_name = request.POST.get('courseName')
         course_desc = request.POST.get('courseDescription')
-        # Save the new course (assuming you have a model for it)
-        Course.objects.create(code=course_code, name=course_name, description=course_desc, department_id=dept_id)
-        return redirect('depa_course')
-    return render(request, 'courseModal.html')
+        course_image = request.FILES.get('courseImage')
+        if(course_code and course_name):
+            course=Course.objects.create(course_code=course_code, course_name=course_name,department=department)
+            if course_desc:
+                course.description=course_desc
+            if course_image:
+                course.image=course_image
+        course.save()
+        
+    return redirect('deptcourses',department.id)
+
+
 
 # Add Faculty
 def add_fac(request, dept_id, course_id, fac_id):
