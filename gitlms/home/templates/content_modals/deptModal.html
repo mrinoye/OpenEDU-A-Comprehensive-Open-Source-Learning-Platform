@@ -4,7 +4,12 @@
 >
   <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
     <h2 class="text-xl font-semibold mb-4">Add New Department</h2>
-    <form>
+    <form
+      method="POST"
+      enctype="multipart/form-data"
+      action="{% url 'add_dept' %}"
+    >
+      {% csrf_token %}
       <div class="mb-4">
         <label
           for="departmentName"
@@ -31,6 +36,20 @@
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
           placeholder="Enter department description"
         ></textarea>
+      </div>
+      <div class="mb-4">
+        <label
+          for="departmentImage"
+          class="block text-sm font-medium text-gray-700"
+          >Upload Department Image</label
+        >
+        <input
+          type="file"
+          id="departmentImage"
+          name="departmentImage"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+          accept="image/*"
+        />
       </div>
       <div class="flex justify-end">
         <button

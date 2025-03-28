@@ -8,7 +8,8 @@ from .delete_funcs import *
 urlpatterns = []
 
 navigatelms=[
-    path('', departments, name='departments'),
+    path('', departments, name=''),
+    path('departments', departments, name='departments'),
     path('department=<int:id>/', deptcourses, name='deptcourses'),
     path('department=<int:dept_id>/course=<int:course_id>', course_facs, name='course_facs'),
     path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>',fac_lecs, name='fac_lecs'),
@@ -24,21 +25,21 @@ path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectu
 ]
 
 addUrl = [
-    path('delete/<int:dept_id>', add_dept, name='add_dept'),
-    path('department=<int:dept_id>/delete/<int:course_id>', add_course, name='add_course'),
-    path('department=<int:dept_id>/course=<int:course_id>/delete/<int:fac_id>', add_fac, name='add_fac'),
-    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/delete/<int:slide_id>', add_slide, name='add_slide'),
-    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/videos/delete/<int:video_id>', add_video, name='add_video'),
-    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/notes/delete/<int:note_id>', add_note, name='add_note'),
+    path('add', add_dept, name='add_dept'),
+    path('department=<int:dept_id>/add', add_course, name='add_course'),
+    path('department=<int:dept_id>/course=<int:course_id>/add', add_fac, name='add_fac'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/add', add_slide, name='add_slide'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/videos/add', add_video, name='add_video'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/notes/add', add_note, name='add_note'),
 ]
 
 updateUrl = [
-    path('delete/<int:dept_id>', update_dept, name='update_dept'),
-    path('department=<int:dept_id>/delete/<int:course_id>', update_course, name='update_course'),
-    path('department=<int:dept_id>/course=<int:course_id>/delete/<int:fac_id>', update_fac, name='update_fac'),
-    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/delete/<int:slide_id>', update_slide, name='update_slide'),
-    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/videos/delete/<int:video_id>', update_video, name='update_video'),
-    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/notes/delete/<int:note_id>', update_note, name='update_note'),
+    path('update/<int:dept_id>', update_dept, name='update_dept'),
+    path('department=<int:dept_id>/update/<int:course_id>', update_course, name='update_course'),
+    path('department=<int:dept_id>/course=<int:course_id>/update/<int:fac_id>', update_fac, name='update_fac'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/update/<int:slide_id>', update_slide, name='update_slide'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/videos/update/<int:video_id>', update_video, name='update_video'),
+    path('department=<int:dept_id>/course=<int:course_id>/faculty=<int:fac_id>/Lectures/notes/update/<int:note_id>', update_note, name='update_note'),
 ]
 
 deleteUrl = [

@@ -4,7 +4,8 @@
 >
   <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
     <h2 class="text-xl font-semibold mb-4">Add New Faculty</h2>
-    <form>
+    <form enctype="multipart/form-data">
+      <!-- Added enctype for file uploads -->
       <div class="mb-4">
         <label for="facultyName" class="block text-sm font-medium text-gray-700"
           >Faculty Name</label
@@ -27,6 +28,22 @@
           name="position"
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
           placeholder="Enter position"
+        />
+      </div>
+
+      <!-- Picture Upload Field -->
+      <div class="mb-4">
+        <label
+          for="facultyImage"
+          class="block text-sm font-medium text-gray-700"
+          >Upload Image</label
+        >
+        <input
+          type="file"
+          id="facultyImage"
+          name="facultyImage"
+          accept="image/*"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
         />
       </div>
 

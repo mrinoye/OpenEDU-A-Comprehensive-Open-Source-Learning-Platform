@@ -2,9 +2,10 @@
 const openUpdateModalBtns =
   document.getElementsByClassName("openUpdateModalBtn");
 
-// Get the update modal and close button
+// Get the update modal, close button, and form
 const update_modal = document.getElementById("update_modal");
 const closeUpdateModalBtn = document.getElementById("closeUpdateModalBtn");
+const updateForm = update_modal.querySelector("form"); // Get the form element
 
 // Add event listener to each "Update" button
 for (let button of openUpdateModalBtns) {
@@ -33,7 +34,13 @@ for (let button of openUpdateModalBtns) {
       entityDescriptionField.value = ""; // Clear or set default value if necessary
     }
 
-    // Optionally: You can add AJAX calls here to populate entity details like name, description, etc.
+    // Dynamically update the form action URL with the department ID
+    if (updateForm) {
+      // Ensure department.id is appended as the last part of the action URL
+      const formAction =
+        updateForm.action.split("/").slice(0, -1).join("/") + `/${entityId}`;
+      updateForm.action = formAction;
+    }
 
     // Show the modal
     update_modal.classList.remove("hidden");

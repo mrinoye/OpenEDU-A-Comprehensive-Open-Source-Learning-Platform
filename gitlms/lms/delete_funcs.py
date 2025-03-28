@@ -1,7 +1,16 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect,redirect, get_object_or_404
+from .models import *
+from accounts.models import User
+
+
 
 def delete_dept(request,dept_id):
-    return redirect('department')
+    if (request.user.role!='master'):
+        return redirect('illegalactivity')
+    department = Department.objects.get(id=dept_id)
+    department.delete()
+    
+    return redirect('departments')
 
 def delete_course(request,dept_id,course_id):
     return redirect('depa_course')
