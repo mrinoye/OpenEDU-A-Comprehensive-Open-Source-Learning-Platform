@@ -7,15 +7,15 @@ from accounts.models import User
 
 
 def update_dept(request, dept_id):
-    if (request.user.role!='master'):
+    if (request.user.role!='master')&(request.user.department!=dept_id):
         return redirect('illegalactivity')
     department = get_object_or_404(Department, id=dept_id)
-    print("hi")
+    
     if request.method == 'POST':
         dept_name = request.POST.get('departmentName')
         dept_desc = request.POST.get('departmentDescription')
         dept_image = request.FILES.get('departmentImage')
-        print(dept_name,dept_desc, dept_image)
+    if request.user.role=='master':   
         if dept_name:
             department.name = dept_name
         if dept_desc:
@@ -24,9 +24,10 @@ def update_dept(request, dept_id):
             department.image= dept_image
 
         department.save()
-
+      
         return redirect('departments')
-    
+    else:
+        print("request sent")
     return redirect('departments')
 
 

@@ -11,13 +11,13 @@ def add_dept(request):
         dept_name = request.POST.get('departmentName')
         dept_desc = request.POST.get('departmentDescription')
         dept_image = request.FILES.get('departmentImage')
-        print(dept_image)
-        if(dept_name and dept_desc ):
-            department=Department.objects.create( name=dept_name,  description=dept_desc  )
+        if(dept_name  ):
+            department=Department.objects.create( name=dept_name   )
             if(dept_image):
-                
                 department.image=dept_image
-                department.save()
+            if( dept_desc):
+                department.description=dept_desc
+        department.save()
         return redirect('departments')
     
     return redirect('departments')

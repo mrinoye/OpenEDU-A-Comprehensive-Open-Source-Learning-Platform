@@ -5,10 +5,13 @@ from accounts.models import User
 
 
 def delete_dept(request,dept_id):
-    if (request.user.role!='master'):
+    if (request.user.role!='master')&(request.user.department!=dept_id):
         return redirect('illegalactivity')
-    department = Department.objects.get(id=dept_id)
-    department.delete()
+    if request.user.role=='master':
+        department = Department.objects.get(id=dept_id)
+        department.delete()
+    else:
+        print("request sent")
     
     return redirect('departments')
 
