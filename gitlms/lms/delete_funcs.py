@@ -32,7 +32,14 @@ def delete_course(request,dept_id,course_id):
 
 
 def delete_fac(request,dept_id,course_id,fac_id):
-   return redirect('course_facs')
+    if (request.user.role!='master')and(request.user.department!= dept_id)and(request.user.course!= course_id):
+         return redirect('illegalactivity')
+    faculty=get_object_or_404(Faculty,id=fac_id)
+    faculty.delete()
+    messages.success(request, "Course has been deleted")
+    return redirect('course_facs',dept_id,course_id)
+
+
 
 def delete_slide(request,dept_id,course_id,fac_id,slide_id):
     return redirect('lec_slides')

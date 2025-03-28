@@ -48,17 +48,26 @@ def add_course(request, dept_id):
 
 
 # Add Faculty
-def add_fac(request, dept_id, course_id, fac_id):
+def add_fac(request, dept_id, course_id):
+    if (request.user.role!='master')and(request.user.department!= dept_id)and(request.user.course!= course_id):
+        return redirect('illegalactivity')
+    course = get_object_or_404(Course, id=course_id)
     if request.method == 'POST':
         faculty_name = request.POST.get('facultyName')
         position = request.POST.get('position')
-        # Save the new faculty (assuming you have a model for it)
-        Faculty.objects.create(name=faculty_name, position=position, department_id=dept_id, course_id=course_id)
-        return redirect('course_facs')
-    return render(request, 'facultyModal.html')
-
+        image= request.FILES.get('facultyImage')
+        if(faculty_name and position):
+            faculty=Faculty.objects.create(name=faculty_name, position=position,course=course)
+            if image:
+                faculty.image=image
+            faculty.save()
+        
+    return redirect('course_facs',dept_id,course_id)
+    
+ 
 # Add Slide
 def add_slide(request, dept_id, course_id, fac_id, slide_id):
+    
     if request.method == 'POST':
         slide_name = request.POST.get('slideName')
         slide_content = request.FILES.get('slideContent')

@@ -60,7 +60,22 @@ def update_course(request,dept_id,course_id):
 
 
 def update_fac(request,dept_id,course_id,fac_id):
-   return redirect('course_facs')
+    faculty=get_object_or_404(Faculty, id=fac_id)
+    if (request.user.role!='master')and(request.user.department!= dept_id)and(request.user.course!= course_id):
+         return redirect('illegalactivity')
+    if request.method == 'POST':
+        faculty_name = request.POST.get('facultyName')
+        position = request.POST.get('position')
+        image= request.FILES.get('facultyImage')
+    if faculty_name:
+        faculty.name = faculty_name
+    if position:
+        faculty.position = position
+    if image:
+        faculty.image = image
+    faculty.save()
+    messages.success(request, "Faculty has been updated")
+    return redirect('course_facs',dept_id,course_id)
 
 def update_slide(request,dept_id,course_id,fac_id,slide_id):
     return redirect('lec_slides')
