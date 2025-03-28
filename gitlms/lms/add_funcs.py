@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect,get_object_or_404
 from .models import *
 from accounts.models import User
 from django.http import HttpResponse
+from django.contrib import messages
+
 
 # Add Department
 def add_dept(request):
@@ -18,6 +20,7 @@ def add_dept(request):
             if( dept_desc):
                 department.description=dept_desc
         department.save()
+        messages.success(request, "Department has been added")
         return redirect('departments')
     
     return redirect('departments')
@@ -39,7 +42,7 @@ def add_course(request, dept_id):
             if course_image:
                 course.image=course_image
         course.save()
-        
+        messages.success(request, "Course has been added")
     return redirect('deptcourses',department.id)
 
 

@@ -1,7 +1,7 @@
 from django.shortcuts import redirect,redirect, get_object_or_404
 from .models import *
 from accounts.models import User
-
+from django.contrib import messages
 
 
 def delete_dept(request,dept_id):
@@ -10,6 +10,7 @@ def delete_dept(request,dept_id):
     if request.user.role=='master':
         department = Department.objects.get(id=dept_id)
         department.delete()
+        messages.success(request, "Department has been deleted")
     else:
         print("request sent")
     
@@ -22,9 +23,13 @@ def delete_course(request,dept_id,course_id):
     course = get_object_or_404(Course, id=course_id)
     if((request.user.role=='master')or(request.user.department== dept_id)):
         course.delete()
+        messages.success(request, "Course has been deleted")
     else:
         print("request sent")
     return redirect('deptcourses',department.id)
+
+
+
 
 def delete_fac(request,dept_id,course_id,fac_id):
    return redirect('course_facs')

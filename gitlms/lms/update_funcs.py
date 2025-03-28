@@ -1,7 +1,7 @@
 from django.shortcuts import redirect ,redirect, get_object_or_404
 from .models import *
 from accounts.models import User
-
+from django.contrib import messages
 
 
 
@@ -24,7 +24,7 @@ def update_dept(request, dept_id):
             department.image= dept_image
 
         department.save()
-      
+        messages.success(request, "Department has been updated")
         return redirect('departments')
     else:
         print("request sent")
@@ -51,9 +51,13 @@ def update_course(request,dept_id,course_id):
         if course_image:
             course.image=course_image
         course.save()
+        messages.success(request, "Course has been updated")
     else:
         print("request sent")
     return redirect('deptcourses',department.id)
+
+
+
 
 def update_fac(request,dept_id,course_id,fac_id):
    return redirect('course_facs')
