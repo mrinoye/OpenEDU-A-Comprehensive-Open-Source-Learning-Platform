@@ -66,15 +66,18 @@ def add_fac(request, dept_id, course_id):
     
  
 # Add Slide
-def add_slide(request, dept_id, course_id, fac_id, slide_id):
-    
+def add_slide(request, dept_id, course_id, fac_id):
+    faculty=get_object_or_404(Faculty, id=fac_id)
     if request.method == 'POST':
         slide_name = request.POST.get('slideName')
         slide_content = request.FILES.get('slideContent')
-        # Save the new slide (assuming you have a model for it)
-        Slide.objects.create(name=slide_name, content=slide_content, faculty_id=fac_id)
-        return redirect('lec_slides')
-    return render(request, 'slideModal.html')
+        if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
+            Slide.objects.create(name=slide_name, content=slide_content, faculty=faculty)
+            messages.success(request, "Slide has been added")
+        else:
+            messages.success(request, "Request sent")
+    return redirect('lec_slides',dept_id, course_id, fac_id)
+    
 
 # Add Note
 def add_note(request, dept_id, course_id, fac_id, note_id):

@@ -42,7 +42,13 @@ def delete_fac(request,dept_id,course_id,fac_id):
 
 
 def delete_slide(request,dept_id,course_id,fac_id,slide_id):
-    return redirect('lec_slides')
+    slide=get_object_or_404(Slide, id=slide_id)
+    if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
+        slide.delete()
+        messages.success(request, "Slide has been deleted")
+    else:
+        messages.success(request, "Request Sent")
+    return redirect('lec_slides',dept_id, course_id, fac_id)
 
 def delete_note(request,dept_id,course_id,fac_id,note_id):
     return redirect('lec_notes')

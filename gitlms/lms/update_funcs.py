@@ -78,7 +78,21 @@ def update_fac(request,dept_id,course_id,fac_id):
     return redirect('course_facs',dept_id,course_id)
 
 def update_slide(request,dept_id,course_id,fac_id,slide_id):
-    return redirect('lec_slides')
+    slide=get_object_or_404(Slide, id=slide_id)
+    if request.method == 'POST':
+        slide_name = request.POST.get('slideName')
+        slide_content = request.FILES.get('slideContent')
+        if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
+            if slide_name:
+                slide.name= slide_name
+            if slide_content:
+                slide.content=slide_content
+            slide.save()
+            messages.success(request, "Slide has been updated")
+        else:
+            messages.success(request, "Request sent")
+    return redirect('lec_slides',dept_id, course_id, fac_id)
+   
 
 def update_note(request,dept_id,course_id,fac_id,note_id):
     return redirect('lec_notes')

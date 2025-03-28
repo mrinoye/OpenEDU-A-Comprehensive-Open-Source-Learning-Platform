@@ -10,13 +10,14 @@
   <!-- Card for each Slide -->
   <div
     class="bg-white rounded-lg shadow p-4 flex justify-between items-center hover:shadow-md transition-shadow relative"
-    onclick="window.location.href='{% url 'show_pdf' department.id course.id faculty.id slide.id %}';"
   >
     <div class="flex items-center space-x-4">
       <div class="text-blue-500">
         <i class="fas fa-slides fa-2x"></i>
       </div>
-      <div>
+      <div
+        onclick="window.location.href='{% url 'show_pdf' department.id course.id faculty.id slide.id %}';"
+      >
         <h3 class="font-semibold text-lg text-gray-800">{{ slide.name }}</h3>
         <p class="text-sm text-gray-500">
           Last updated: {{ slide.last_updated }}
@@ -75,6 +76,7 @@
           Update
         </button>
         <button
+          onclick="window.location.href='{% url 'delete_slide' department.id course.id faculty.id slide.id %}';"
           class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100 flex items-center"
         >
           <svg
