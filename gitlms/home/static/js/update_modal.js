@@ -13,26 +13,8 @@ for (let button of openUpdateModalBtns) {
     event.stopPropagation(); // Prevent event propagation to parent elements
 
     // Get the type of entity (department, course, or any other entity) and ID from data attributes
-    const entityType = button.getAttribute("data-type"); // e.g., "department", "course", etc.
+
     const entityId = button.getAttribute("data-id"); // The ID of the entity
-
-    // Find the corresponding input fields for the modal based on entity type
-    const entityIdField = document.getElementById(`${entityType}_id_field`);
-    const entityNameField = document.getElementById(`${entityType}_name_field`);
-    const entityDescriptionField = document.getElementById(
-      `${entityType}_description_field`
-    );
-
-    // Clear existing values and set new ones for the modal
-    if (entityIdField) {
-      entityIdField.value = entityId;
-    }
-    if (entityNameField) {
-      entityNameField.value = ""; // Clear or set default value if necessary
-    }
-    if (entityDescriptionField) {
-      entityDescriptionField.value = ""; // Clear or set default value if necessary
-    }
 
     // Dynamically update the form action URL with the department ID
     if (updateForm) {
