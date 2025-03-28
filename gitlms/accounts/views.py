@@ -8,6 +8,7 @@ from .decorators import log_activity
 from .singleton import UserSingleton
 from .strategies import RegularUserRegistration
 from .observers import UserProfileUpdatedObserver
+from .facade import RegistrationFacade 
 
 
 
@@ -55,10 +56,10 @@ def signup(request):
         password = data.get('passw')
         rpassword = data.get('rpassw')
         username = f"{Firstname}_{Lastname}"
-        
+
         if checkvalidity(request, passw=password, rpassw=rpassword, username=username, email=Email):
-            registration_strategy = RegularUserRegistration()  # Strategy to use for registration
-            user = registration_strategy.register(data)
+            registration_facade = RegistrationFacade()  # Use the facade for registration
+            user = registration_facade.register(data)  # Call the facade's register method
             messages.success(request, "Registration successful. You can now log in.")
             return redirect('/accounts/login/')
         
