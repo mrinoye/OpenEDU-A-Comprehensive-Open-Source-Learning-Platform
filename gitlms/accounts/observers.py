@@ -1,5 +1,5 @@
+from django.contrib import messages
 # observers.py
 class UserProfileUpdatedObserver:
-    def update(self, user):
-        # Here you can send an email, log the update, or notify the system
-        print(f"Profile updated for {user.username}")
+    def update(self,request, user):
+        messages.success(request,"{{user.username}}'s profile has been updated")
