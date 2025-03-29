@@ -4,5 +4,7 @@ from .views import *
 urlpatterns = [
     
     path('', notifications, name='notifications'),
+    path('approve/<int:not_id>', approve_not, name='approve_not'),
+    path('reject/<int:not_id>', reject_not, name='reject_not'),
    
 ]

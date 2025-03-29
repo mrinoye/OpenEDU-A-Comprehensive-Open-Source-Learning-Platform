@@ -66,7 +66,7 @@ class TempSlideUploadStrategy(UploadStrategy):
         else:
             # If 'real' is not linked, use a default upload path
             return os.path.join(
-                'content', 
+                'contents', 
                 'temp', 
                 'slides',  # Default folder for slides
                 filename
