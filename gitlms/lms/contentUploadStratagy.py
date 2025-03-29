@@ -46,20 +46,33 @@ class NoteUploadStrategy(UploadStrategy):
             filename
         )
 
-# Strategy for Temporary Slide model
+import os
+
 class TempSlideUploadStrategy(UploadStrategy):
     def get_upload_to(self, instance, filename):
         if hasattr(instance, 'real') and instance.real:
+            try:
+                # Construct the file upload path using the 'real' instance
+                return os.path.join(
+                    'contents',
+                    instance.real.faculty.course.department.name,
+                    instance.real.faculty.course.course_name,
+                    instance.real.faculty.name,
+                    'temp_slides',  # Temporary folder for slides
+                    filename
+                )
+            except AttributeError:
+                raise ValueError("Real instance is not linked properly for temp_Slide.")
+        else:
+            # If 'real' is not linked, use a default upload path
             return os.path.join(
-                'contents',
-                instance.real.faculty.course.department.name,
-                instance.real.faculty.course.course_name,
-                instance.real.faculty.name,
-                'temp_slides',  # Temporary folder for slides
+                'content', 
+                'temp', 
+                'slides',  # Default folder for slides
                 filename
             )
-        else:
-            raise ValueError("Real instance is not linked properly for temp_Slide.")
+
+
 
 # Strategy for Temporary Video model
 class TempVideoUploadStrategy(UploadStrategy):
@@ -74,7 +87,13 @@ class TempVideoUploadStrategy(UploadStrategy):
                 filename
             )
         else:
-            raise ValueError("Real instance is not linked properly for temp_Video.")
+            # Default path when 'real' is not linked
+            return os.path.join(
+                'contents', 
+                'temp', 
+                'videos',  # Default folder for videos
+                filename
+            )
 
 # Strategy for Temporary Note model
 class TempNoteUploadStrategy(UploadStrategy):
@@ -89,4 +108,10 @@ class TempNoteUploadStrategy(UploadStrategy):
                 filename
             )
         else:
-            raise ValueError("Real instance is not linked properly for temp_Note.")
+            # Default path when 'real' is not linked
+            return os.path.join(
+                'contents', 
+                'temp', 
+                'notes',  # Default folder for notes
+                filename
+            )

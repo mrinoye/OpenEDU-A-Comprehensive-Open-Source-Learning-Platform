@@ -4,6 +4,8 @@ from accounts.models import User
 from django.http import HttpResponse
 from django.contrib import messages
 from .Observer import Subject ,MessageObserver
+from notifications.models import Notification
+from django.db.models import Q
 
 messageObserver=MessageObserver()
 subject=Subject()
@@ -71,42 +73,75 @@ def add_fac(request, dept_id, course_id):
  
 # Add Slide
 def add_slide(request, dept_id, course_id, fac_id):
-    faculty=get_object_or_404(Faculty, id=fac_id)
+    faculty = get_object_or_404(Faculty, id=fac_id)
     if request.method == 'POST':
         slide_name = request.POST.get('slideName')
         slide_content = request.FILES.get('slideContent')
-        if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
+        if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
             Slide.objects.create(name=slide_name, content=slide_content, faculty=faculty)
             subject.notify(request, "Slide has been added")
         else:
+            temp_slide = temp_Slide.objects.create(name=slide_name, content=slide_content, faculty=faculty)
+            notification = Notification.objects.create(
+                message=f"{request.user.first_name} {request.user.last_name} wants to add a slide",
+                sender=request.user,
+                type="add",
+                content_type="slide",
+                content_id=temp_slide.id
+            )
+            receivers = User.objects.filter(Q(role='master') | Q(department=dept_id) | Q(course=course_id))
+            print(receivers)
+            notification.recievers.add(*receivers)
+            notification.save()
             subject.notify(request, "Request sent")
-    return redirect('lec_slides',dept_id, course_id, fac_id)
-    
+    return redirect('lec_slides', dept_id, course_id, fac_id)
+
 
 # Add Note
 def add_note(request, dept_id, course_id, fac_id):
-    if request.method == 'POST':
-        faculty=get_object_or_404(Faculty, id=fac_id)
+    faculty = get_object_or_404(Faculty, id=fac_id)
     if request.method == 'POST':
         note_name = request.POST.get('noteName')
         note_content = request.FILES.get('noteContent')
-        if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
+        if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
             Note.objects.create(name=note_name, content=note_content, faculty=faculty)
             subject.notify(request, "Note has been added")
         else:
+            temp_note = temp_Note.objects.create(name=note_name, content=note_content, faculty=faculty)
+            notification = Notification.objects.create(
+                message=f"{request.user.first_name} {request.user.last_name} wants to add a note",
+                sender=request.user,
+                type="add",
+                content_type="note",
+                content_id=temp_note.id
+            )
+            receivers = User.objects.filter(Q(role='master') | Q(department=dept_id) | Q(course=course_id))
+            notification.recievers.add(*receivers)
+            notification.save()
             subject.notify(request, "Request sent")
-    return redirect('lec_notes',dept_id, course_id,fac_id)
+    return redirect('lec_notes', dept_id, course_id, fac_id)
+
 
 # Add Video
-def add_video(request, dept_id, course_id,fac_id):
-    if request.method == 'POST':
-        faculty=get_object_or_404(Faculty, id=fac_id)
+def add_video(request, dept_id, course_id, fac_id):
+    faculty = get_object_or_404(Faculty, id=fac_id)
     if request.method == 'POST':
         video_name = request.POST.get('videoName')
         video_content = request.FILES.get('videoContent')
-        if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
+        if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
             Video.objects.create(name=video_name, content=video_content, faculty=faculty)
             subject.notify(request, "Video has been added")
         else:
+            temp_video = temp_Video.objects.create(name=video_name, content=video_content, faculty=faculty)
+            notification = Notification.objects.create(
+                message=f"{request.user.first_name} {request.user.last_name} wants to add a video",
+                sender=request.user,
+                type="add",
+                content_type="video",
+                content_id=temp_video.id
+            )
+            receivers = User.objects.filter(Q(role='master') | Q(department=dept_id) | Q(course=course_id))
+            notification.recievers.add(*receivers)
+            notification.save()
             subject.notify(request, "Request sent")
-    return redirect('lec_videos',dept_id, course_id,fac_id)
+    return redirect('lec_videos', dept_id, course_id, fac_id)
