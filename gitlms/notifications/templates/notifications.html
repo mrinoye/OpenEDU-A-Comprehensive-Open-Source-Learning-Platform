@@ -22,20 +22,21 @@
     <div class="overflow-y-auto max-h-[70vh]">
       <div class="space-y-4">
         <!-- Sample Notification 1 -->
+        {%if notifications%} {% for notification in notifications %}
+        <!-- Emnei disi    -->
+        {%if notification.type != 'inf'%}
         <div
           class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-blue-500 w-full mx-auto"
         >
           <div class="flex justify-between items-start">
             <div class="flex-1">
               <h3 class="font-medium text-gray-900">
-                New Registration Request
+                New {{notification.type}} Request
               </h3>
-              <p class="text-gray-600 mt-1">
-                John Doe has requested to join your organization.
-              </p>
+              <p class="text-gray-600 mt-1">{{notification.message}}</p>
               <div class="flex items-center mt-3 text-sm text-gray-500">
                 <i class="far fa-clock mr-1"></i>
-                <span>10 minutes ago</span>
+                <span>{{notification.created_at}}</span>
               </div>
             </div>
             <div class="ml-4 flex space-x-2">
@@ -53,37 +54,7 @@
           </div>
         </div>
 
-        <!-- Sample Notification 2 -->
-        <div
-          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-blue-500 w-full mx-auto"
-        >
-          <div class="flex justify-between items-start">
-            <div class="flex-1">
-              <h3 class="font-medium text-gray-900">
-                Document Approval Needed
-              </h3>
-              <p class="text-gray-600 mt-1">
-                Quarterly report needs your review and approval.
-              </p>
-              <div class="flex items-center mt-3 text-sm text-gray-500">
-                <i class="far fa-clock mr-1"></i>
-                <span>2 hours ago</span>
-              </div>
-            </div>
-            <div class="ml-4 flex space-x-2">
-              <button
-                class="px-4 py-2 bg-green-100 text-green-800 rounded-md hover:bg-green-200 transition-colors"
-              >
-                Approve
-              </button>
-              <button
-                class="px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors"
-              >
-                Reject
-              </button>
-            </div>
-          </div>
-        </div>
+        {% else %}
 
         <!-- Sample Notification 3 -->
         <div
@@ -103,93 +74,7 @@
           </div>
         </div>
 
-        <!-- Sample Notification 4 -->
-        <div
-          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-transparent w-full mx-auto"
-        >
-          <div class="flex justify-between items-start">
-            <div class="flex-1">
-              <h3 class="font-medium text-gray-900">Payment Request</h3>
-              <p class="text-gray-600 mt-1">
-                Invoice #INV-2023-0456 requires your approval.
-              </p>
-              <div class="flex items-center mt-3 text-sm text-gray-500">
-                <i class="far fa-clock mr-1"></i>
-                <span>3 days ago</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Sample Notification 3 -->
-        <div
-          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-transparent w-full mx-auto"
-        >
-          <div class="flex justify-between items-start">
-            <div class="flex-1">
-              <h3 class="font-medium text-gray-900">Leave Application</h3>
-              <p class="text-gray-600 mt-1">
-                Sarah Smith has applied for leave from 15-20 June.
-              </p>
-              <div class="flex items-center mt-3 text-sm text-gray-500">
-                <i class="far fa-clock mr-1"></i>
-                <span>1 day ago</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sample Notification 4 -->
-        <div
-          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-transparent w-full mx-auto"
-        >
-          <div class="flex justify-between items-start">
-            <div class="flex-1">
-              <h3 class="font-medium text-gray-900">Payment Request</h3>
-              <p class="text-gray-600 mt-1">
-                Invoice #INV-2023-0456 requires your approval.
-              </p>
-              <div class="flex items-center mt-3 text-sm text-gray-500">
-                <i class="far fa-clock mr-1"></i>
-                <span>3 days ago</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Sample Notification 3 -->
-        <div
-          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-transparent w-full mx-auto"
-        >
-          <div class="flex justify-between items-start">
-            <div class="flex-1">
-              <h3 class="font-medium text-gray-900">Leave Application</h3>
-              <p class="text-gray-600 mt-1">
-                Sarah Smith has applied for leave from 15-20 June.
-              </p>
-              <div class="flex items-center mt-3 text-sm text-gray-500">
-                <i class="far fa-clock mr-1"></i>
-                <span>1 day ago</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sample Notification 4 -->
-        <div
-          class="bg-white rounded-lg shadow-xl p-6 border-l-4 border-transparent w-full mx-auto"
-        >
-          <div class="flex justify-between items-start">
-            <div class="flex-1">
-              <h3 class="font-medium text-gray-900">Payment Request</h3>
-              <p class="text-gray-600 mt-1">
-                Invoice #INV-2023-0456 requires your approval.
-              </p>
-              <div class="flex items-center mt-3 text-sm text-gray-500">
-                <i class="far fa-clock mr-1"></i>
-                <span>3 days ago</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        {%endif%} {%endfor%}{%endif%}
 
         <!-- Additional Sample Notifications -->
         <!-- Repeat the above structure for more notifications if needed -->
