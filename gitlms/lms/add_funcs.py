@@ -3,7 +3,11 @@ from .models import *
 from accounts.models import User
 from django.http import HttpResponse
 from django.contrib import messages
+from .Observer import Subject ,MessageObserver
 
+messageObserver=MessageObserver()
+subject=Subject()
+subject.attach(messageObserver)
 
 # Add Department
 def add_dept(request):
@@ -20,7 +24,7 @@ def add_dept(request):
             if( dept_desc):
                 department.description=dept_desc
         department.save()
-        messages.success(request, "Department has been added")
+        subject.notify(request, "Department has been added")
         return redirect('departments')
     
     return redirect('departments')
@@ -42,7 +46,7 @@ def add_course(request, dept_id):
             if course_image:
                 course.image=course_image
         course.save()
-        messages.success(request, "Course has been added")
+        subject.notify(request, "Course has been added")
     return redirect('deptcourses',department.id)
 
 
@@ -61,7 +65,7 @@ def add_fac(request, dept_id, course_id):
             if image:
                 faculty.image=image
             faculty.save()
-        messages.success(request, "Faculty has been added")
+        subject.notify(request, "Faculty has been added")
     return redirect('course_facs',dept_id,course_id)
     
  
@@ -73,9 +77,9 @@ def add_slide(request, dept_id, course_id, fac_id):
         slide_content = request.FILES.get('slideContent')
         if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
             Slide.objects.create(name=slide_name, content=slide_content, faculty=faculty)
-            messages.success(request, "Slide has been added")
+            subject.notify(request, "Slide has been added")
         else:
-            messages.success(request, "Request sent")
+            subject.notify(request, "Request sent")
     return redirect('lec_slides',dept_id, course_id, fac_id)
     
 
@@ -88,9 +92,9 @@ def add_note(request, dept_id, course_id, fac_id):
         note_content = request.FILES.get('noteContent')
         if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
             Note.objects.create(name=note_name, content=note_content, faculty=faculty)
-            messages.success(request, "Note has been added")
+            subject.notify(request, "Note has been added")
         else:
-            messages.success(request, "Request sent")
+            subject.notify(request, "Request sent")
     return redirect('lec_notes',dept_id, course_id,fac_id)
 
 # Add Video
@@ -102,7 +106,7 @@ def add_video(request, dept_id, course_id,fac_id):
         video_content = request.FILES.get('videoContent')
         if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
             Video.objects.create(name=video_name, content=video_content, faculty=faculty)
-            messages.success(request, "Video has been added")
+            subject.notify(request, "Video has been added")
         else:
-            messages.success(request, "Request sent")
+            subject.notify(request, "Request sent")
     return redirect('lec_videos',dept_id, course_id,fac_id)

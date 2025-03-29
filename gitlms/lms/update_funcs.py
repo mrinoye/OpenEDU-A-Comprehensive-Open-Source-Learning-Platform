@@ -2,9 +2,13 @@ from django.shortcuts import redirect ,redirect, get_object_or_404
 from .models import *
 from accounts.models import User
 from django.contrib import messages
+from .Observer import Subject ,MessageObserver
 
 
 
+messageObserver=MessageObserver()
+subject=Subject()
+subject.attach(messageObserver)
 
 def update_dept(request, dept_id):
     if (request.user.role!='master')&(request.user.department!=dept_id):
@@ -24,10 +28,10 @@ def update_dept(request, dept_id):
             department.image= dept_image
 
         department.save()
-        messages.success(request, "Department has been updated")
+        subject.notify(request, "Department has been updated")
         return redirect('departments')
     else:
-        print("request sent")
+        subject.notify(request, "Request sent")
     return redirect('departments')
 
 
@@ -51,9 +55,9 @@ def update_course(request,dept_id,course_id):
         if course_image:
             course.image=course_image
         course.save()
-        messages.success(request, "Course has been updated")
+        subject.notify(request, "Course has been updated")
     else:
-        print("request sent")
+        subject.notify(request, "Request sent")
     return redirect('deptcourses',department.id)
 
 
@@ -74,7 +78,7 @@ def update_fac(request,dept_id,course_id,fac_id):
     if image:
         faculty.image = image
     faculty.save()
-    messages.success(request, "Faculty has been updated")
+    subject.notify(request, "Faculty has been updated")
     return redirect('course_facs',dept_id,course_id)
 
 def update_slide(request,dept_id,course_id,fac_id,slide_id):
@@ -88,9 +92,9 @@ def update_slide(request,dept_id,course_id,fac_id,slide_id):
             if slide_content:
                 slide.content=slide_content
             slide.save()
-            messages.success(request, "Slide has been updated")
+            subject.notify(request, "Slide has been updated")
         else:
-            messages.success(request, "Request sent")
+            subject.notify(request, "Request sent")
     return redirect('lec_slides',dept_id, course_id, fac_id)
    
 
@@ -105,9 +109,9 @@ def update_note(request,dept_id,course_id,fac_id,note_id):
             if note_content:
                 note.content=note_content
             note.save()
-            messages.success(request, "Note has been updated")
+            subject.notify(request, "Note has been updated")
         else:
-            messages.success(request, "Request sent")
+            subject.notify(request, "Request sent")
     return redirect('lec_notes',dept_id, course_id, fac_id)
 
 
@@ -122,9 +126,9 @@ def update_video(request,dept_id,course_id,fac_id,video_id):
             if video_content:
                 video.content=video_content
             video.save()
-            messages.success(request, "Video has been updated")
+            subject.notify(request, "Video has been updated")
         else:
-            messages.success(request, "Request sent")
+            subject.notify(request, "Request sent")
     return redirect('lec_videos',dept_id, course_id, fac_id)
 
 
