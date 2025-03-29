@@ -11,3 +11,12 @@ class NotificationsConfig(AppConfig):
 
     def ready(self):
         import notifications.signals  
+
+        
+
+
+class LmsConfig(AppConfig):
+    name = 'lms'
+
+    def ready(self):
+        import lms.signals  # Reuse the same signals from accounts
