@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-qr=3%@kzz46u(0ltxo%p1b%qbptcrnqh-^-^-hp!mrcbeuh@qh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -140,3 +140,11 @@ AUTH_USER_MODEL = 'accounts.User'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
+
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://6963-103-58-73-191.ngrok-free.app',
+    'http://6963-103-58-73-191.ngrok-free.app',
+]
