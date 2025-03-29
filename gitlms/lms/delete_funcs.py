@@ -50,11 +50,26 @@ def delete_slide(request,dept_id,course_id,fac_id,slide_id):
         messages.success(request, "Request Sent")
     return redirect('lec_slides',dept_id, course_id, fac_id)
 
-def delete_note(request,dept_id,course_id,fac_id,note_id):
-    return redirect('lec_notes')
 
-def delete_video(request,dept_id,course_id,video_id):
-    return redirect('lec_videos')
+
+def delete_note(request,dept_id,course_id,fac_id,note_id):
+    note=get_object_or_404(Note, id=note_id)
+    if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
+        note.delete()
+        messages.success(request, "Note has been deleted")
+    else:
+        messages.success(request, "Request Sent")
+    return redirect('lec_notes',dept_id, course_id, fac_id)
+
+
+def delete_video(request,dept_id,course_id,fac_id,video_id):
+    video=get_object_or_404(Video, id=video_id)
+    if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
+        video.delete()
+        messages.success(request, "Video has been deleted")
+    else:
+        messages.success(request, "Request Sent")
+    return redirect('lec_videos',dept_id, course_id, fac_id)
 
 
 

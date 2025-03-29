@@ -10,19 +10,21 @@
   <!-- Card for each Video -->
   <div
     class="bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow relative"
-    onclick="window.location.href='{% url 'show_video' department.id course.id faculty.id video.id %}';"
   >
-    <video class="w-full rounded" controls>
-      <source src="{{ video.content.url }}" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-    <div class="mt-2">
-      <h3 class="font-semibold text-lg text-gray-800">{{ video.name }}</h3>
-      <p class="text-sm text-gray-500">
-        Last updated: {{ video.last_updated }}
-      </p>
+    <div
+      onclick="window.location.href='{% url 'show_video' department.id course.id faculty.id video.id %}';"
+    >
+      <video class="w-full rounded" controls>
+        <source src="{{ video.content.url }}" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="mt-2">
+        <h3 class="font-semibold text-lg text-gray-800">{{ video.name }}</h3>
+        <p class="text-sm text-gray-500">
+          Last updated: {{ video.last_updated }}
+        </p>
+      </div>
     </div>
-
     <!-- Three-dot menu for each video -->
     <div class="absolute top-5 right-5">
       <button
@@ -74,6 +76,7 @@
           Update
         </button>
         <button
+          onclick="window.location.href='{% url 'delete_video' department.id course.id faculty.id video.id %}';"
           class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100 flex items-center"
         >
           <svg

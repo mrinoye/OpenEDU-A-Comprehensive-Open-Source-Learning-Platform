@@ -95,9 +95,36 @@ def update_slide(request,dept_id,course_id,fac_id,slide_id):
    
 
 def update_note(request,dept_id,course_id,fac_id,note_id):
-    return redirect('lec_notes')
+    note=get_object_or_404(Note, id=note_id)
+    if request.method == 'POST':
+        note_name = request.POST.get('noteName')
+        note_content = request.FILES.get('noteContent')
+        if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
+            if note_name:
+                note.name= note_name
+            if note_content:
+                note.content=note_content
+            note.save()
+            messages.success(request, "Note has been updated")
+        else:
+            messages.success(request, "Request sent")
+    return redirect('lec_notes',dept_id, course_id, fac_id)
 
-def update_video(request,dept_id,course_id,video_id):
-    return redirect('lec_videos')
+
+def update_video(request,dept_id,course_id,fac_id,video_id):
+    video=get_object_or_404(Video, id=video_id)
+    if request.method == 'POST':
+        video_name = request.POST.get('videoName')
+        video_content = request.FILES.get('videoContent')
+        if (request.user.role=='master')or(request.user.department== dept_id)or(request.user.course== course_id):
+            if video_name:
+                video.name= video_name
+            if video_content:
+                video.content=video_content
+            video.save()
+            messages.success(request, "Video has been updated")
+        else:
+            messages.success(request, "Request sent")
+    return redirect('lec_videos',dept_id, course_id, fac_id)
 
 

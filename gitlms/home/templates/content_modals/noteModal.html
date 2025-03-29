@@ -4,7 +4,12 @@
 >
   <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
     <h2 class="text-xl font-semibold mb-4">Add New Note</h2>
-    <form>
+    <form
+      enctype="multipart/form-data"
+      action="{% url 'add_note' department.id  course.id faculty.id%}"
+      method="POST"
+    >
+      {% csrf_token %}
       <div class="mb-4">
         <label for="noteName" class="block text-sm font-medium text-gray-700"
           >Note Name</label

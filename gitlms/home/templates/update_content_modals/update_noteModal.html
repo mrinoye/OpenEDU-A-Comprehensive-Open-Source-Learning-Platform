@@ -7,7 +7,13 @@
     <h2 class="text-xl font-semibold mb-4">Update Note</h2>
 
     <!-- Hidden fields for the note, course, department, and faculty -->
-    <form id="updateNoteForm" method="POST" enctype="multipart/form-data">
+    <form
+      id="updateNoteForm"
+      method="POST"
+      enctype="multipart/form-data"
+      action="notes/update/"
+    >
+      {%csrf_token%}
       <input type="hidden" id="note_id_field" name="note_id" value="" />
       <input type="hidden" id="course_id_field" name="course_id" value="" />
       <input
