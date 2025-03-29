@@ -12,6 +12,8 @@ def notifications(request):
 
 
 def reject_not(request, not_id):
+    if (request.user.role!= 'master')and (request.user.role!= 'admin') and (request.user.role!= 'mod'):
+        return redirect('illegalactivity')
     # Get the notification instance
     print(f"Fetching notification with id {not_id}")
     notification = get_object_or_404(Notification, id=not_id)
@@ -73,6 +75,8 @@ def reject_not(request, not_id):
 
 
 def approve_not(request, not_id):
+    if (request.user.role!= 'master')and (request.user.role!= 'admin') and (request.user.role!= 'mod'):
+        return redirect('illegalactivity')
     # Get the notification instance
     notification = get_object_or_404(Notification, id=not_id)
 

@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from lms.models import Department, Course
 from accounts.models import User
+from django.shortcuts import redirect
 
 def get_courses_by_department(request, department_id):
     department = Department.objects.get(id=department_id)
@@ -20,6 +21,8 @@ import json
 @csrf_exempt
 def appoint_user(request):
     # Check if the request is a POST
+    if (request.user.role!= 'master')and (request.user.role!= 'admin'):
+        return redirect('illegalactivity')
     if request.method == 'POST':
         try:
             # Parse the incoming JSON data
