@@ -148,3 +148,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://6963-103-58-73-191.ngrok-free.app',
     'http://6963-103-58-73-191.ngrok-free.app',
 ]
+
+
+
+
+X_FRAME_OPTIONS = 'ALLOWALL'
