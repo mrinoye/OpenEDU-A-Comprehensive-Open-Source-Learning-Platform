@@ -6,6 +6,8 @@ from django.contrib import messages
 from .Observer import Subject ,MessageObserver
 from notifications.models import Notification
 from django.db.models import Q
+from .contentFactory import *
+
 
 messageObserver=MessageObserver()
 subject=Subject()
@@ -78,7 +80,7 @@ def add_slide(request, dept_id, course_id, fac_id):
         slide_name = request.POST.get('slideName')
         slide_content = request.FILES.get('slideContent')
         if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
-            Slide.objects.create(name=slide_name, content=slide_content, faculty=faculty)
+            ContentModelFactory.create_content_model("slide", faculty, slide_name, slide_content)
             subject.notify(request, "Slide has been added")
         else:
             temp_slide = temp_Slide.objects.create(name=slide_name, content=slide_content, faculty=faculty)
@@ -104,7 +106,7 @@ def add_note(request, dept_id, course_id, fac_id):
         note_name = request.POST.get('noteName')
         note_content = request.FILES.get('noteContent')
         if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
-            Note.objects.create(name=note_name, content=note_content, faculty=faculty)
+            ContentModelFactory.create_content_model("note", faculty, note_name, note_content)
             subject.notify(request, "Note has been added")
         else:
             temp_note = temp_Note.objects.create(name=note_name, content=note_content, faculty=faculty)
@@ -129,7 +131,7 @@ def add_video(request, dept_id, course_id, fac_id):
         video_name = request.POST.get('videoName')
         video_content = request.FILES.get('videoContent')
         if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
-            Video.objects.create(name=video_name, content=video_content, faculty=faculty)
+            ContentModelFactory.create_content_model("video", faculty, video_name, video_content)
             subject.notify(request, "Video has been added")
         else:
             temp_video = temp_Video.objects.create(name=video_name, content=video_content, faculty=faculty)
