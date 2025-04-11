@@ -83,7 +83,7 @@ def add_slide(request, dept_id, course_id, fac_id):
             ContentModelFactory.create_content_model("slide", faculty, slide_name, slide_content)
             subject.notify(request, "Slide has been added")
         else:
-            temp_slide = temp_Slide.objects.create(name=slide_name, content=slide_content, faculty=faculty)
+            temp_slide=TemporaryContentFactory.create_temp_model("temp_slide", real_instance=None, faculty=faculty, name=slide_name, content_file=slide_content)
             notification = Notification.objects.create(
                 message=f"{request.user.first_name} {request.user.last_name} wants to add a slide",
                 sender=request.user,
@@ -109,7 +109,7 @@ def add_note(request, dept_id, course_id, fac_id):
             ContentModelFactory.create_content_model("note", faculty, note_name, note_content)
             subject.notify(request, "Note has been added")
         else:
-            temp_note = temp_Note.objects.create(name=note_name, content=note_content, faculty=faculty)
+            temp_note=TemporaryContentFactory.create_temp_model("temp_note", real_instance=None, faculty=faculty, name=note_name, content_file=note_content)
             notification = Notification.objects.create(
                 message=f"{request.user.first_name} {request.user.last_name} wants to add a note",
                 sender=request.user,
@@ -134,7 +134,7 @@ def add_video(request, dept_id, course_id, fac_id):
             ContentModelFactory.create_content_model("video", faculty, video_name, video_content)
             subject.notify(request, "Video has been added")
         else:
-            temp_video = temp_Video.objects.create(name=video_name, content=video_content, faculty=faculty)
+            temp_video=TemporaryContentFactory.create_temp_model("temp_video", real_instance=None, faculty=faculty, name=video_name, content_file=video_content)
             notification = Notification.objects.create(
                 message=f"{request.user.first_name} {request.user.last_name} wants to add a video",
                 sender=request.user,
