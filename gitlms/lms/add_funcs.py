@@ -80,10 +80,10 @@ def add_slide(request, dept_id, course_id, fac_id):
         slide_name = request.POST.get('slideName')
         slide_content = request.FILES.get('slideContent')
         if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
-            ContentModelFactory.create_content_model("slide", faculty, slide_name, slide_content)
+            SlideFactory.create_slide(faculty, slide_name, slide_content)
             subject.notify(request, "Slide has been added")
         else:
-            temp_slide=TemporaryContentFactory.create_temp_model("temp_slide", real_instance=None, faculty=faculty, name=slide_name, content_file=slide_content)
+            temp_slide=TemporarySlideFactory.create_temp_slide(real_instance=None, faculty=faculty, name=slide_name, content_file=slide_content)
             notification = Notification.objects.create(
                 message=f"{request.user.first_name} {request.user.last_name} wants to add a slide",
                 sender=request.user,
@@ -106,10 +106,10 @@ def add_note(request, dept_id, course_id, fac_id):
         note_name = request.POST.get('noteName')
         note_content = request.FILES.get('noteContent')
         if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
-            ContentModelFactory.create_content_model("note", faculty, note_name, note_content)
+            NoteFactory.create_note( faculty, note_name, note_content)
             subject.notify(request, "Note has been added")
         else:
-            temp_note=TemporaryContentFactory.create_temp_model("temp_note", real_instance=None, faculty=faculty, name=note_name, content_file=note_content)
+            temp_note=TemporaryNoteFactory.create_temp_note( real_instance=None, faculty=faculty, name=note_name, content_file=note_content)
             notification = Notification.objects.create(
                 message=f"{request.user.first_name} {request.user.last_name} wants to add a note",
                 sender=request.user,
@@ -131,10 +131,10 @@ def add_video(request, dept_id, course_id, fac_id):
         video_name = request.POST.get('videoName')
         video_content = request.FILES.get('videoContent')
         if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
-            ContentModelFactory.create_content_model("video", faculty, video_name, video_content)
+            VideoFactory.create_video( faculty, video_name, video_content)
             subject.notify(request, "Video has been added")
         else:
-            temp_video=TemporaryContentFactory.create_temp_model("temp_video", real_instance=None, faculty=faculty, name=video_name, content_file=video_content)
+            temp_video=TemporaryVideoFactory.create_temp_video( real_instance=None, faculty=faculty, name=video_name, content_file=video_content)
             notification = Notification.objects.create(
                 message=f"{request.user.first_name} {request.user.last_name} wants to add a video",
                 sender=request.user,
