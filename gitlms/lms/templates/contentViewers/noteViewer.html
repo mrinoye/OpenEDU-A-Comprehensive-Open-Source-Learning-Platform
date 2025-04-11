@@ -31,14 +31,8 @@
     </iframe>
     {% elif note.content.url|slice:"-4:" == '.docx' %}
     <!-- Word Document Viewer (Microsoft Office Online) -->
-    <iframe
-      id="content-iframe"
-      src="https://view.officeapps.live.com/op/embed.aspx?src={{ note.content.url | urlencode }}"
-      width="100%"
-      height="100%"
-      frameborder="0"
-    >
-      Your browser does not support displaying DOCX files.
+    <iframe id="slide-iframe" src="https://docs.google.com/gview?url={{ note.content.url | urlencode }}&embedded=true" width="100%" height="100%" frameborder="0">
+      Your browser does not support displaying PPTX files.
     </iframe>
     {% else %}
     <p class="text-center text-red-500">Unsupported file format.</p>

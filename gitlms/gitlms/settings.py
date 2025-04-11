@@ -126,6 +126,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# settings.py
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -137,16 +142,11 @@ AUTH_USER_MODEL = 'accounts.User'
 
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-
 
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://6963-103-58-73-191.ngrok-free.app',
-    'http://6963-103-58-73-191.ngrok-free.app',
+    'https://2d0b-103-58-73-171.ngrok-free.app',
+    'http://2d0b-103-58-73-171.ngrok-free.app',
 ]
 
 

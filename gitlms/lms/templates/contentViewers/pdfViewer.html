@@ -30,13 +30,7 @@
     </iframe>
     {% elif slide.content.url|slice:"-5:" == '.pptx' %}
     <!-- PowerPoint Viewer (Microsoft Office Online) -->
-    <iframe
-      id="content-iframe"
-      src="https://view.officeapps.live.com/op/embed.aspx?src={{ slide.content.url | urlencode }}"
-      width="100%"
-      height="100%"
-      frameborder="0"
-    >
+     <iframe id="slide-iframe" src="https://docs.google.com/gview?url={{ MEDIA_URL }}{{ slide.content.url | urlencode }}&embedded=true" width="100%" height="100%" frameborder="0">
       Your browser does not support displaying PPTX files.
     </iframe>
     {% else %}
