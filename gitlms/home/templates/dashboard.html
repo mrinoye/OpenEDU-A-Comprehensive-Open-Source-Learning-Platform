@@ -7,7 +7,6 @@
     <title>OpenEdu - LMS Dashboard</title>
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
     <script src="https://cdn.tailwindcss.com"></script>
-
     <script src="{% static 'js/sidebar.js' %}"></script>
   </head>
   <body class="bg-gray-100 flex">
@@ -15,19 +14,26 @@
     {% include 'inc/navbar.html' %}
 
     <!-- Main Content -->
-    <div id="content" class="flex-1 flex flex-col min-h-screen ml-0">
+    <div id="content" class="flex-1 flex flex-col min-h-screen ml-0 shifted">
       <!-- Header -->
-      {% include 'inc/header.html' %} {% block content %}
+      {% include 'inc/header.html' %}
+      {% block content %}
 
       <!-- Content Section -->
       {% endblock %}
+
+      <!-- Floating Ad Section (Above Footer) -->
+      <div class="bg-gray-800 text-white p-4 text-center shadow-lg hidden">
+        <p class="text-lg">This is your floating ad section</p>
+      </div>
 
       <!-- Footer -->
       {% include 'inc/footer.html' %}
     </div>
 
     <!-- Always Visible Side Popup (Smaller Card) -->
-    {% include 'inc/popup.html' %} {% if showAddButton %}
+    {% include 'inc/popup.html' %} 
+    {% if showAddButton %}
     <!-- Modal Button -->
     <button
       id="openModalBtn"
@@ -57,13 +63,9 @@
     {% elif showUpdateNoteModal %} {% include 'update_content_modals/update_noteModal.html' %} {%endif%} 
     {% include 'content_modals/deptModal.html' %}
 
-
-    
-
     <!-- JavaScript to Toggle Modal -->
     <script src="{% static 'js/update_modal.js' %}"></script>
     <script src="{% static 'js/modal.js' %}"></script>
-
     <script src="{% static 'js/popup.js' %}"></script>
   </body>
 </html>

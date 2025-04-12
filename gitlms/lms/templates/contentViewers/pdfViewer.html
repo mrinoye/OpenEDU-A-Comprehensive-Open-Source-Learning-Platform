@@ -1,61 +1,77 @@
- {% extends 'dashboard.html' %} {% load static %}{% block content %}
-<!-- Slide Display Block -->
-<div
-  class="flex flex-col items-center justify-center p-6 bg-white shadow-lg rounded-lg"
->
-  <!-- Back Button -->
-  <button
-    onclick="window.history.back()"
-    class="mb-4 bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-  >
-    &larr; Back
-  </button>
-
-  <!-- Slide Information -->
-  <div class="w-full h-96 overflow-hidden">
-    <h2 class="text-xl font-bold mb-4">{{ slide.name }}</h2>
-
-    <!-- Display content (either PDF, PPTX, or other) -->
-    {% if slide.content.url|slice:"-4:" == '.pdf' %}
-    <!-- PDF Viewer -->
-    <iframe
-      id="content-iframe"
-      src="{{ slide.content.url }}"
-      width="100%"
-      height="100%"
-      frameborder="0"
-      type="application/pdf"
-    >
-      Your browser does not support displaying PDF files.
-    </iframe>
-    {% elif slide.content.url|slice:"-5:" == '.pptx' %}
-    <!-- PowerPoint Viewer (Microsoft Office Online) -->
-     <iframe id="slide-iframe" src="https://docs.google.com/gview?url={{ MEDIA_URL }}{{ slide.content.url | urlencode }}&embedded=true" width="100%" height="100%" frameborder="0">
-      Your browser does not support displaying PPTX files.
-    </iframe>
-    {% else %}
-    <p class="text-center text-red-500">Unsupported file format.</p>
-    {% endif %}
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block content %}
+<!-- Wrapper for content and ads -->
+<div class="relative w-full">
+  <!-- Left Ad Section (20%) -->
+  <div class="absolute left-0 top-0 w-1/5 h-full bg-gray-200 hidden">
+    <!-- Place your Google Ad code here -->
+    <p class="text-center">Left Ad Section</p>
   </div>
 
-  <!-- Fullscreen Button -->
-  <button
-    id="fullscreen-button"
-    class="mt-4 bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-    onclick="toggleFullscreen()"
-  >
-    Go Fullscreen
-  </button>
+  <!-- Right Ad Section (20%) -->
+  <div class="absolute right-0 top-0 w-1/5 h-full bg-gray-200 hidden">
+    <!-- Place your Google Ad code here -->
+    <p class="text-center">Right Ad Section</p>
+  </div>
 
-  <!-- Download Link -->
-  <div class="mt-4">
-    <a
-      href="{{ slide.content.url }}"
-      download
-      class="text-blue-600 hover:text-blue-800"
+  <!-- Main Container -->
+  <div class="flex flex-col items-center justify-center p-6 bg-white shadow-lg rounded-lg mx-auto w-3/5 relative z-20 pb-20">
+    <!-- Back Button -->
+    <button
+      onclick="window.history.back()"
+      class="mb-4 bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
     >
-      Download Slide
-    </a>
+      &larr; Back
+    </button>
+
+    <!-- Slide Information -->
+    <div class="w-full h-96 overflow-hidden">
+      <h2 class="text-xl font-bold mb-4">{{ slide.name }}</h2>
+
+      <!-- Display content (either PDF, PPTX, or other) -->
+      {% if slide.content.url|slice:"-4:" == '.pdf' %}
+      <!-- PDF Viewer -->
+      <iframe
+        id="content-iframe"
+        src="{{ slide.content.url }}"
+        width="100%"
+        height="100%"
+        frameborder="0"
+        type="application/pdf"
+        style="max-width: 100%; margin: 0 auto; display: block;"
+      >
+        Your browser does not support displaying PDF files.
+      </iframe>
+      {% elif slide.content.url|slice:"-5:" == '.pptx' %}
+      <!-- PowerPoint Viewer (Microsoft Office Online) -->
+      <iframe id="slide-iframe" src="https://docs.google.com/gview?url={{ MEDIA_URL }}{{ slide.content.url | urlencode }}&embedded=true" width="100%" height="100%" frameborder="0" style="max-width: 100%; margin: 0 auto; display: block;">
+        Your browser does not support displaying PPTX files.
+      </iframe>
+      {% else %}
+      <p class="text-center text-red-500">Unsupported file format.</p>
+      {% endif %}
+    </div>
+
+    <!-- Fullscreen Button -->
+    <button
+      id="fullscreen-button"
+      class="mt-4 bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+      onclick="toggleFullscreen()"
+    >
+      Go Fullscreen
+    </button>
+
+    <!-- Download Link -->
+    <div class="mt-4">
+      <a
+        href="{{ slide.content.url }}"
+        download
+        class="text-blue-600 hover:text-blue-800"
+      >
+        Download Slide
+      </a>
+    </div>
   </div>
 </div>
 
