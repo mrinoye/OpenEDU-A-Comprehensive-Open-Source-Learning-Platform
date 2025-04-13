@@ -181,7 +181,7 @@ def view_not(request,not_id):
         real_content=content.objects.get(id=notification.real_content_id)
     elif(notification.type == "add"):
         update_content=temp_content.objects.get(id=notification.content_id)
-    context={'real_content':real_content,'updatecontent':update_content}
+    context={'real_content':real_content,'update_content':update_content,'notification':notification}
     print("context",context)
     if notification.content_type =="video":
         return render(request,'viewNotificationDetailsVideo.html',context)

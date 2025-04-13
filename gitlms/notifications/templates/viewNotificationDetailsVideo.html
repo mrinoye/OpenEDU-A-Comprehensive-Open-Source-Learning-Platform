@@ -1,10 +1,19 @@
-{% extends 'dashboard.html' %}{%load static%} {% block content %}
+{% extends 'dashboard.html' %} {% load static %} {% block content %}
 <!-- Wrapper for content -->
 <div class="relative w-full">
   <!-- Main Container -->
   <div
     class="flex flex-col items-center justify-center p-6 bg-white shadow-xl rounded-lg max-w-6xl mx-auto mt-10 relative z-20"
   >
+    <!-- Message Display (Title and Message) -->
+    <div
+      id="message-top"
+      class="w-full bg-yellow-200 p-4 text-center text-lg font-semibold mb-6"
+    >
+      <h2>Video Content Overview</h2>
+      <p>{{ notification.message }}</p>
+    </div>
+
     <!-- Back Button -->
     <button
       onclick="window.history.back()"
@@ -24,14 +33,15 @@
 
     <!-- Two Video Sections in Flexbox -->
     <div class="flex w-full space-x-6">
+      {%if real_content %}
       <!-- Real Video Section -->
       <div class="flex-1">
         <!-- Video Information Box for Real Content -->
         <div class="w-full bg-blue-100 p-4 mb-4 rounded-lg text-center">
           <h3 class="text-lg font-semibold">Real Video Information</h3>
           <p class="text-sm">
-            This is the original video titled <strong>{{ video.name }}</strong>.
-            Watch it below.
+            This is the original video titled
+            <strong>{{ real_content.name }}</strong>. Watch it below.
           </p>
         </div>
 
@@ -39,14 +49,14 @@
 
         <!-- Video Content (Real Video) -->
         <div class="w-full max-h-[600px] overflow-hidden rounded-lg shadow-md">
-          {% if video.content.url|slice:"-4:" == '.mp4' %}
+          {% if real_content.content.url|slice:"-4:" == '.mp4' %}
           <video
             width="100%"
             height="auto"
             controls
             class="rounded-lg shadow-lg"
           >
-            <source src="{{ video.content.url }}" type="video/mp4" />
+            <source src="{{ real_content.content.url }}" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           {% else %}
@@ -54,7 +64,7 @@
           {% endif %}
         </div>
       </div>
-
+      {%endif%} {%if update_content %}
       <!-- Update Video Section -->
       <div class="flex-1">
         <!-- Video Information Box for Update Content -->
@@ -62,7 +72,7 @@
           <h3 class="text-lg font-semibold">Update Video Information</h3>
           <p class="text-sm">
             This is the updated video titled
-            <strong>{{ update_video.name }}</strong>. Watch it below.
+            <strong>{{ update_content.name }}</strong>. Watch it below.
           </p>
         </div>
 
@@ -70,14 +80,14 @@
 
         <!-- Video Content (Update Video) -->
         <div class="w-full max-h-[600px] overflow-hidden rounded-lg shadow-md">
-          {% if update_video.content.url|slice:"-4:" == '.mp4' %}
+          {% if update_content.content.url|slice:"-4:" == '.mp4' %}
           <video
             width="100%"
             height="auto"
             controls
             class="rounded-lg shadow-lg"
           >
-            <source src="{{ update_video.content.url }}" type="video/mp4" />
+            <source src="{{ update_content.content.url }}" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           {% else %}
@@ -85,6 +95,7 @@
           {% endif %}
         </div>
       </div>
+      {%endif%}
     </div>
 
     <!-- Fullscreen Button -->
@@ -99,7 +110,7 @@
     <!-- Download Link for both videos -->
     <div class="mt-6 text-center space-x-6">
       <a
-        href="{{ video.content.url }}"
+        href="{{ real_content.content.url }}"
         download
         class="text-blue-600 hover:text-blue-800 text-lg font-semibold transition duration-300 ease-in-out hover:underline"
       >
@@ -107,12 +118,30 @@
       </a>
 
       <a
-        href="{{ update_video.content.url }}"
+        href="{{ update_content.content.url }}"
         download
         class="text-blue-600 hover:text-blue-800 text-lg font-semibold transition duration-300 ease-in-out hover:underline"
       >
         Download Update Video
       </a>
+    </div>
+
+    <!-- Approve and Reject Buttons -->
+    <div class="flex justify-center mt-6 space-x-6">
+      <button
+        id="approve-button"
+        class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-500"
+        onclick="window.location.href='{% url 'approve_not' notification.id %}';"
+      >
+        Approve
+      </button>
+      <button
+        id="reject-button"
+        class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-500"
+        onclick="window.location.href='{% url 'reject_not' notification.id %}';"
+      >
+        Reject
+      </button>
     </div>
   </div>
 </div>
