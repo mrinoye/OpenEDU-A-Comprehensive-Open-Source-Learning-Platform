@@ -77,6 +77,13 @@
         {% else %}
         <p class="text-center text-red-500">Unsupported file format.</p>
         {% endif %}
+
+        <!-- Download Real Content Button -->
+        <div class="text-center mt-4">
+          <a href="{{ real_content.content.url }}" download class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-500">
+            Download Real Content
+          </a>
+        </div>
       </div>
       {% endif %}
 
@@ -122,6 +129,13 @@
         {% else %}
         <p class="text-center text-red-500">Unsupported file format.</p>
         {% endif %}
+
+        <!-- Download Update Content Button -->
+        <div class="text-center mt-4">
+          <a href="{{ update_content.content.url }}" download class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-500">
+            Download Update Content
+          </a>
+        </div>
       </div>
       {% endif %}
     </div>

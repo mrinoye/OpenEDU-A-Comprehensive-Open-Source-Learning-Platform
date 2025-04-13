@@ -1,4 +1,6 @@
-{% extends 'dashboard.html' %} {% load static %} {% block content %}
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block content %}
 <!-- Wrapper for content -->
 <div class="relative w-full">
   <!-- Main Container -->
@@ -33,7 +35,7 @@
 
     <!-- Two Video Sections in Flexbox -->
     <div class="flex w-full space-x-6">
-      {%if real_content %}
+      {% if real_content %}
       <!-- Real Video Section -->
       <div class="flex-1">
         <!-- Video Information Box for Real Content -->
@@ -64,7 +66,9 @@
           {% endif %}
         </div>
       </div>
-      {%endif%} {%if update_content %}
+      {% endif %}
+      
+      {% if update_content %}
       <!-- Update Video Section -->
       <div class="flex-1">
         <!-- Video Information Box for Update Content -->
@@ -95,11 +99,12 @@
           {% endif %}
         </div>
       </div>
-      {%endif%}
+      {% endif %}
     </div>
 
     <!-- Download Link for both videos -->
     <div class="mt-6 text-center space-x-6">
+      {% if real_content %}
       <a
         href="{{ real_content.content.url }}"
         download
@@ -107,7 +112,9 @@
       >
         Download Real Video
       </a>
+      {% endif %}
 
+      {% if update_content %}
       <a
         href="{{ update_content.content.url }}"
         download
@@ -115,6 +122,7 @@
       >
         Download Update Video
       </a>
+      {% endif %}
     </div>
 
     <!-- Approve and Reject Buttons -->
