@@ -165,3 +165,7 @@ def approve_not(request, not_id):
 
     # Redirect back to the notifications page
     return redirect("notifications")
+
+def view_not(request,not_id):
+    content = get_object_or_404(Notification, id=not_id)
+    pass
