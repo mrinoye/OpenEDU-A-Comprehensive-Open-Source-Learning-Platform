@@ -167,5 +167,12 @@ def approve_not(request, not_id):
     return redirect("notifications")
 
 def view_not(request,not_id):
-    content = get_object_or_404(Notification, id=not_id)
-    pass
+    notification = get_object_or_404(Notification, id=not_id)
+    real_content=None
+    update_content=None
+    if notification.content_type is "slide":
+        if notification.type is "update":
+            real_content=Slide.objects.get(id=Notification.real_content_id)
+            update_content=Slide.objects.get(id=Notification.content_id)
+            context={'real_content':real_content,'updatecontent':update_content}
+    return render(request,"viewNotificationDetailsSlide.html")
