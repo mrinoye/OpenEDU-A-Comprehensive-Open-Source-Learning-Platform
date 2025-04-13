@@ -1,0 +1,122 @@
+{% extends 'dashboard.html' %}{%load static%} {% block content %}
+<!-- Wrapper for content -->
+<div class="relative w-full">
+  <!-- Main Container -->
+  <div
+    class="flex flex-col items-center justify-center p-6 bg-white shadow-xl rounded-lg max-w-6xl mx-auto mt-10 relative z-20"
+  >
+    <!-- Back Button -->
+    <button
+      onclick="window.history.back()"
+      class="mb-6 bg-blue-900 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105"
+    >
+      &larr; Back
+    </button>
+
+    <!-- Info Above Both Videos -->
+    <div class="w-full text-center mb-6">
+      <h3 class="text-xl font-semibold">Content Overview</h3>
+      <p class="text-lg">
+        Here you can find the original video and the latest updates. Check both
+        sections below for detailed information.
+      </p>
+    </div>
+
+    <!-- Two Video Sections in Flexbox -->
+    <div class="flex w-full space-x-6">
+      <!-- Real Video Section -->
+      <div class="flex-1">
+        <!-- Video Information Box for Real Content -->
+        <div class="w-full bg-blue-100 p-4 mb-4 rounded-lg text-center">
+          <h3 class="text-lg font-semibold">Real Video Information</h3>
+          <p class="text-sm">
+            This is the original video titled <strong>{{ video.name }}</strong>.
+            Watch it below.
+          </p>
+        </div>
+
+        <h3 class="text-xl font-bold mb-4 text-center">Real Video</h3>
+
+        <!-- Video Content (Real Video) -->
+        <div class="w-full max-h-[600px] overflow-hidden rounded-lg shadow-md">
+          {% if video.content.url|slice:"-4:" == '.mp4' %}
+          <video
+            width="100%"
+            height="auto"
+            controls
+            class="rounded-lg shadow-lg"
+          >
+            <source src="{{ video.content.url }}" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          {% else %}
+          <p class="text-center text-red-500 mt-4">Unsupported video format.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Update Video Section -->
+      <div class="flex-1">
+        <!-- Video Information Box for Update Content -->
+        <div class="w-full bg-green-100 p-4 mb-4 rounded-lg text-center">
+          <h3 class="text-lg font-semibold">Update Video Information</h3>
+          <p class="text-sm">
+            This is the updated video titled
+            <strong>{{ update_video.name }}</strong>. Watch it below.
+          </p>
+        </div>
+
+        <h3 class="text-xl font-bold mb-4 text-center">Update Video</h3>
+
+        <!-- Video Content (Update Video) -->
+        <div class="w-full max-h-[600px] overflow-hidden rounded-lg shadow-md">
+          {% if update_video.content.url|slice:"-4:" == '.mp4' %}
+          <video
+            width="100%"
+            height="auto"
+            controls
+            class="rounded-lg shadow-lg"
+          >
+            <source src="{{ update_video.content.url }}" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          {% else %}
+          <p class="text-center text-red-500 mt-4">Unsupported video format.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Fullscreen Button -->
+    <button
+      id="fullscreen-button"
+      class="mt-4 bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+      onclick="toggleFullscreen()"
+    >
+      Go Fullscreen
+    </button>
+
+    <!-- Download Link for both videos -->
+    <div class="mt-6 text-center space-x-6">
+      <a
+        href="{{ video.content.url }}"
+        download
+        class="text-blue-600 hover:text-blue-800 text-lg font-semibold transition duration-300 ease-in-out hover:underline"
+      >
+        Download Real Video
+      </a>
+
+      <a
+        href="{{ update_video.content.url }}"
+        download
+        class="text-blue-600 hover:text-blue-800 text-lg font-semibold transition duration-300 ease-in-out hover:underline"
+      >
+        Download Update Video
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/contentFullScreen.js' %}"></script>
+
+{% endblock %}

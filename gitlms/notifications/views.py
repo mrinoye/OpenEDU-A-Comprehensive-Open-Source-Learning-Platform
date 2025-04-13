@@ -168,11 +168,21 @@ def approve_not(request, not_id):
 
 def view_not(request,not_id):
     notification = get_object_or_404(Notification, id=not_id)
+    content_map={'video':Video,'slide':Slide,'note':Note}
+    temp_content_map={'video':temp_Video,'slide':temp_Slide,'note':temp_Note}
+    content=content_map[notification.content_type]
+    temp_content=temp_content_map[notification.content_type]
     real_content=None
     update_content=None
-    if notification.content_type is "slide":
-        if notification.type is "update":
-            real_content=Slide.objects.get(id=Notification.real_content_id)
-            update_content=Slide.objects.get(id=Notification.content_id)
-            context={'real_content':real_content,'updatecontent':update_content}
-    return render(request,"viewNotificationDetailsSlide.html")
+    if notification.type == "update":
+        real_content=content.objects.get(id=notification.real_content_id)
+        update_content=temp_content.objects.get(id=notification.content_id)
+    elif(notification.type == "delete"):
+        real_content=content.objects.get(id=notification.real_content_id)
+    elif(notification.type == "add"):
+        update_content=temp_content.objects.get(id=notification.content_id)
+    context={'real_content':real_content,'updatecontent':update_content}
+    print("context",context)
+    if notification.content_type =="video":
+        return render(request,'viewNotificationDetailsVideo.html',context)
+    return render(request,"viewNotificationDetailsSlide.html",context)

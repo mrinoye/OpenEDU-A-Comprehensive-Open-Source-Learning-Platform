@@ -1,0 +1,182 @@
+{% extends 'dashboard.html' %} {% load static %} {% block content %}
+<!-- Wrapper for content -->
+<div class="relative w-full">
+  <!-- Main Container -->
+  <div
+    class="flex flex-col items-center justify-center p-6 bg-white shadow-lg rounded-lg mx-auto w-3.5/5 relative z-20 pb-20"
+  >
+    <!-- Message Display (Optional) -->
+    <div
+      id="message-top"
+      class="w-full bg-yellow-200 p-4 text-center text-lg font-semibold"
+    >
+      <p>Important: Please check the latest updates below.</p>
+    </div>
+
+    <!-- Back Button -->
+    <button
+      onclick="window.history.back()"
+      class="mb-4 bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+    >
+      &larr; Back
+    </button>
+
+    <!-- Info Above Both Iframes -->
+    <div class="w-full text-center mb-6">
+      <h3 class="text-xl font-semibold">Content Overview</h3>
+      <p class="text-lg">
+        Here you can find the original content and the latest updates. Check
+        both sections below for detailed information.
+      </p>
+    </div>
+    {%if real_content %}
+    <!-- Real Content Info Box -->
+    <div class="w-full bg-blue-100 p-4 mb-4 rounded-lg text-center">
+      <h3 class="text-lg font-semibold">Real Content Information</h3>
+      <p class="text-sm">
+        Name: {{real_content.name}} </br>id:{{real_content.id}} 
+      </p>
+    </div>
+
+    <!-- Real Content -->
+    <h3 class="text-xl font-bold mb-4">Real Content</h3>
+    {% if real_content.content.url|slice:"-4:" == '.pdf' %}
+    <!-- PDF Viewer -->
+    <iframe
+      class="w-3/5 h-500"
+      id="content-iframe"
+      src="{{ real_content.content.url }}"
+      width="100%"
+      height="100%"
+      frameborder="0"
+      type="application/pdf"
+      style="max-width: 100%; margin: 0 auto; display: block"
+    >
+      Your browser does not support displaying PDF files.
+    </iframe>
+    {% elif real_content.content.url|slice:"-5:" == '.pptx' %}
+    <!-- PowerPoint Viewer for real content -->
+    <iframe
+      id="real-content-iframe"
+      src="https://docs.google.com/gview?url={{ MEDIA_URL }}{{ real_content.content.url | urlencode }}&embedded=true"
+      width="100%"
+      height="500px"
+      frameborder="0"
+      style="max-width: 100%; margin: 0 auto; display: block"
+    >
+      Your browser does not support displaying PPTX files.
+    </iframe>
+    {% else %}
+    <p class="text-center text-red-500">Unsupported file format.</p>
+    {% endif %}
+    {%endif%}
+    {%if update_content%}
+    <!-- Update Content Info Box -->
+    <div class="w-full bg-green-100 p-4 mb-4 rounded-lg text-center">
+      <h3 class="text-lg font-semibold">Update Content Information</h3>
+      <p class="text-sm">
+        {{update_content.content.url}}
+      </p>
+    </div>
+
+    <!-- Update Content -->
+    <h3 class="text-xl font-bold mb-4">Update Content</h3>
+    {% if update_content.content.url|slice:"-4:" == '.pdf' %}
+    <!-- PDF Viewer for update content -->
+    <iframe
+      id="update-content-iframe"
+      src="{{ update_content.content.url }}"
+      width="100%"
+      height="500px"
+      frameborder="0"
+      type="application/pdf"
+      style="max-width: 100%; margin: 0 auto; display: block"
+    >
+      Your browser does not support displaying PDF files.
+    </iframe>
+    {% elif slide.update_content.url|slice:"-5:" == '.pptx' %}
+    <!-- PowerPoint Viewer for update content -->
+    <iframe
+      id="update-content-iframe"
+      src="https://docs.google.com/gview?url={{ MEDIA_URL }}{{ update_content.content.url | urlencode }}&embedded=true"
+      width="100%"
+      height="500px"
+      frameborder="0"
+      style="max-width: 100%; margin: 0 auto; display: block"
+    >
+      Your browser does not support displaying PPTX files.
+    </iframe>
+    {% else %}
+    <p class="text-center text-red-500">Unsupported file format.</p>
+    {% endif %}
+    {%endif%}
+    <!-- Fullscreen Button -->
+    <button
+      id="fullscreen-button"
+      class="mt-4 bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+      onclick="toggleFullscreen()"
+    >
+      Go Fullscreen
+    </button>
+
+    <!-- Download Links for Both Slides -->
+     {%if real_content%}
+    <div class="mt-4 text-center space-x-6">
+      <!-- Download Link for Real Content -->
+      <a
+        href="{{ slide.content.url }}"
+        download
+        class="text-blue-600 hover:text-blue-800 text-lg font-semibold transition duration-300 ease-in-out hover:underline"
+      >
+        Download Real Content
+      </a>
+      {%endif%}
+      {%if update_content%}
+      <!-- Download Link for Update Content -->
+      <a
+        href="{{ slide.update_content.url }}"
+        download
+        class="text-blue-600 hover:text-blue-800 text-lg font-semibold transition duration-300 ease-in-out hover:underline"
+      >
+        Download Update Content
+      </a>
+      {%endif%}
+    </div>
+  </div>
+
+  <!-- Approve and Reject Buttons Outside of Main Content -->
+  <div class="flex justify-center mt-6 space-x-6">
+    <button
+      id="approve-button"
+      class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-500"
+      onclick="approveAction()"
+    >
+      Approve
+    </button>
+    <button
+      id="reject-button"
+      class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-500"
+      onclick="rejectAction()"
+    >
+      Reject
+    </button>
+  </div>
+</div>
+
+<script src="{% static 'js/contentFullScreen.js' %}"></script>
+
+<script>
+  // Approve button action
+  function approveAction() {
+    alert("Content Approved!");
+    // Add further logic for approval
+  }
+
+  // Reject button action
+  function rejectAction() {
+    alert("Content Rejected!");
+    // Add further logic for rejection
+  }
+</script>
+
+{% endblock %}
