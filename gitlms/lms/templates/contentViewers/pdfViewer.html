@@ -28,7 +28,7 @@
     <!-- Slide Information -->
     <div class="w-full h-96 overflow-hidden">
       <h2 class="text-xl font-bold mb-4">{{ slide.name }}</h2>
-
+      
       <!-- Display content (either PDF, PPTX, or other) -->
       {% if slide.content.url|slice:"-4:" == '.pdf' %}
       <!-- PDF Viewer -->

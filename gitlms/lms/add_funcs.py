@@ -89,7 +89,7 @@ def add_slide(request, dept_id, course_id, fac_id):
         else:
             temp_slide=TemporarySlideFactory.create_temp_slide(real_instance=None, faculty=faculty, name=slide_name, content_file=slide_content)
             notification = Notification.objects.create(
-                message=f"{request.user.first_name} {request.user.last_name} wants to add a slide",
+                message=f"{request.user.first_name} {request.user.last_name} wants to add a slide in {temp_slide.faculty.course.department.name}/{temp_slide.faculty.course.course_name}/{temp_slide.faculty.name}",
                 sender=request.user,
                 type="add",
                 content_type="slide",
@@ -116,7 +116,7 @@ def add_note(request, dept_id, course_id, fac_id):
         else:
             temp_note=TemporaryNoteFactory.create_temp_note( real_instance=None, faculty=faculty, name=note_name, content_file=note_content)
             notification = Notification.objects.create(
-                message=f"{request.user.first_name} {request.user.last_name} wants to add a note",
+                message=f"{request.user.first_name} {request.user.last_name} wants to add a note in {temp_note.faculty.course.department.name}/{temp_note.faculty.course.course_name}/{temp_note.faculty.name}",
                 sender=request.user,
                 type="add",
                 content_type="note",
@@ -142,7 +142,7 @@ def add_video(request, dept_id, course_id, fac_id):
         else:
             temp_video=TemporaryVideoFactory.create_temp_video( real_instance=None, faculty=faculty, name=video_name, content_file=video_content)
             notification = Notification.objects.create(
-                message=f"{request.user.first_name} {request.user.last_name} wants to add a video",
+                message=f"{request.user.first_name} {request.user.last_name} wants to add a video in {temp_video.faculty.course.department.name}/{temp_video.faculty.course.course_name}/{temp_video.faculty.name}",
                 sender=request.user,
                 type="add",
                 content_type="video",

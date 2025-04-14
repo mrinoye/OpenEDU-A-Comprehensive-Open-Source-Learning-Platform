@@ -61,7 +61,7 @@ def delete_slide(request, dept_id, course_id, fac_id, slide_id):
     else:
        
         notification = Notification.objects.create(
-            message=f"{request.user.first_name} {request.user.last_name} wants to delete a slide",
+            message=f"{request.user.first_name} {request.user.last_name} wants to delete a slide in {slide.faculty.course.department.name}/{slide.faculty.course.course_name}/{slide.faculty.name}",
             sender=request.user,
             type="delete",
             content_type="slide",
@@ -84,7 +84,7 @@ def delete_note(request, dept_id, course_id, fac_id, note_id):
     else:
        
         notification = Notification.objects.create(
-            message=f"{request.user.first_name} {request.user.last_name} wants to delete a note",
+            message=f"{request.user.first_name} {request.user.last_name} wants to delete a note in {note.faculty.course.department.name}/{note.faculty.course.course_name}/{note.faculty.name}",
             sender=request.user,
             type="delete",
             content_type="note",
@@ -107,7 +107,7 @@ def delete_video(request, dept_id, course_id, fac_id, video_id):
     else:
         
         notification = Notification.objects.create(
-            message=f"{request.user.first_name} {request.user.last_name} wants to delete a video",
+            message=f"{request.user.first_name} {request.user.last_name} wants to delete a video in {video.faculty.course.department.name}/{video.faculty.course.course_name}/{video.faculty.name}",
             sender=request.user,
             type="delete",
             content_type="video",

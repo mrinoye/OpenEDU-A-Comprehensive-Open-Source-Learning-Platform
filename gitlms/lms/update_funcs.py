@@ -101,7 +101,7 @@ def update_slide(request, dept_id, course_id, fac_id, slide_id):
             # Creating a temporary Slide and sending notification
             temp_slide = temp_Slide.objects.create(name=slide_name, content=slide_content, faculty=slide.faculty)
             notification = Notification.objects.create(
-                message=f"{request.user.first_name} {request.user.last_name} wants to update a slide",
+                message=f"{request.user.first_name} {request.user.last_name} wants to update a slide in {temp_slide.faculty.course.department.name}/{temp_slide.faculty.course.course_name}/{temp_slide.faculty.name}",
                 sender=request.user,
                 type="update",
                 content_type="slide",
@@ -133,7 +133,7 @@ def update_note(request, dept_id, course_id, fac_id, note_id):
             # Creating a temporary Note and sending notification
             temp_note = temp_Note.objects.create(name=note_name, content=note_content, faculty=note.faculty)
             notification = Notification.objects.create(
-                message=f"{request.user.first_name} {request.user.last_name} wants to update a note",
+                message=f"{request.user.first_name} {request.user.last_name} wants to update a note in {temp_note.faculty.course.department.name}/{temp_note.faculty.course.course_name}/{temp_note.faculty.name}",
                 sender=request.user,
                 type="update",
                 content_type="note",
@@ -165,7 +165,7 @@ def update_video(request, dept_id, course_id, fac_id, video_id):
             # Creating a temporary Video and sending notification
             temp_video = temp_Video.objects.create(name=video_name, content=video_content, faculty=video.faculty)
             notification = Notification.objects.create(
-                message=f"{request.user.first_name} {request.user.last_name} wants to update a video",
+                message=f"{request.user.first_name} {request.user.last_name} wants to update a video in {temp_video.faculty.course.department.name}/{temp_video.faculty.course.course_name}/{temp_video.faculty.name}",
                 sender=request.user,
                 type="update",
                 content_type="video",
