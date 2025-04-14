@@ -1,8 +1,11 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from .models import Notification
 from lms.models import *
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
+@login_required
 def notifications(request):
     notifications = Notification.objects.filter(recievers=request.user)
     context={'notifications':notifications}
@@ -10,14 +13,11 @@ def notifications(request):
 
 
 
-
+@login_required
 def reject_not(request, not_id):
-    if (request.user.role!= 'master')and (request.user.role!= 'admin') and (request.user.role!= 'mod'):
-        return redirect('illegalactivity')
-    # Get the notification instance
-    print(f"Fetching notification with id {not_id}")
     notification = get_object_or_404(Notification, id=not_id)
-
+    if request.user not in notification.recievers.all():
+         return redirect('illegalactivity')
     # Ensure the notification type is 'add' or 'update'
     print(f"Notification type: {notification.type}, Content type: {notification.content_type}")
     if notification.type in ['add', 'update']:
@@ -73,12 +73,12 @@ def reject_not(request, not_id):
     return redirect("notifications")
 
 
-
+@login_required
 def approve_not(request, not_id):
-    if (request.user.role!= 'master')and (request.user.role!= 'admin') and (request.user.role!= 'mod'):
-        return redirect('illegalactivity')
-    # Get the notification instance
+    
     notification = get_object_or_404(Notification, id=not_id)
+    if request.user not in notification.recievers.all():
+         return redirect('illegalactivity')
 
     # Ensure the notification type is 'add', 'update', or 'delete'
     if notification.type in ['add', 'update', 'delete']:
@@ -166,8 +166,11 @@ def approve_not(request, not_id):
     # Redirect back to the notifications page
     return redirect("notifications")
 
+@login_required
 def view_not(request,not_id):
     notification = get_object_or_404(Notification, id=not_id)
+    if request.user not in notification.recievers.all():
+         return redirect('illegalactivity')
     content_map={'video':Video,'slide':Slide,'note':Note}
     temp_content_map={'video':temp_Video,'slide':temp_Slide,'note':temp_Note}
     content=content_map[notification.content_type]

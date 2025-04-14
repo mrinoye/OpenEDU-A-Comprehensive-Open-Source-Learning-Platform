@@ -5,12 +5,13 @@ from django.contrib import messages
 from .Observer import Subject ,MessageObserver
 from notifications.models import Notification
 from django.db.models import Q
-
+from django.contrib.auth.decorators import login_required
 
 messageObserver=MessageObserver()
 subject=Subject()
 subject.attach(messageObserver)
 
+@login_required
 def update_dept(request, dept_id):
     if (request.user.role!='master')&(request.user.department!=dept_id):
         return redirect('illegalactivity')
@@ -35,7 +36,7 @@ def update_dept(request, dept_id):
         subject.notify(request, "Request sent")
     return redirect('departments')
 
-
+@login_required
 def update_course(request,dept_id,course_id):
     if (request.user.role!='master')and(request.user.department!= dept_id)and(request.user.course!= course_id):
         return redirect('illegalactivity')
@@ -63,7 +64,7 @@ def update_course(request,dept_id,course_id):
 
 
 
-
+@login_required
 def update_fac(request,dept_id,course_id,fac_id):
     faculty=get_object_or_404(Faculty, id=fac_id)
     if (request.user.role!='master')and(request.user.department!= dept_id)and(request.user.course!= course_id):
@@ -83,6 +84,7 @@ def update_fac(request,dept_id,course_id,fac_id):
     return redirect('course_facs',dept_id,course_id)
 
 # Update Slide
+@login_required
 def update_slide(request, dept_id, course_id, fac_id, slide_id):
     slide = get_object_or_404(Slide, id=slide_id)
     if request.method == 'POST':
@@ -114,6 +116,7 @@ def update_slide(request, dept_id, course_id, fac_id, slide_id):
 
 
 # Update Note
+@login_required
 def update_note(request, dept_id, course_id, fac_id, note_id):
     note = get_object_or_404(Note, id=note_id)
     if request.method == 'POST':
@@ -145,6 +148,7 @@ def update_note(request, dept_id, course_id, fac_id, note_id):
 
 
 # Update Video
+@login_required
 def update_video(request, dept_id, course_id, fac_id, video_id):
     video = get_object_or_404(Video, id=video_id)
     if request.method == 'POST':

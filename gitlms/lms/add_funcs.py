@@ -7,13 +7,14 @@ from .Observer import Subject ,MessageObserver
 from notifications.models import Notification
 from django.db.models import Q
 from .contentFactory import *
-
+from django.contrib.auth.decorators import login_required
 
 messageObserver=MessageObserver()
 subject=Subject()
 subject.attach(messageObserver)
 
 # Add Department
+@login_required
 def add_dept(request):
     if (request.user.role!='master'):
         return redirect('illegalactivity')
@@ -34,6 +35,7 @@ def add_dept(request):
     return redirect('departments')
 
 # Add Course
+@login_required
 def add_course(request, dept_id):
     if (request.user.role!='master')and(request.user.department!= dept_id):
         return redirect('illegalactivity')
@@ -56,6 +58,7 @@ def add_course(request, dept_id):
 
 
 # Add Faculty
+@login_required
 def add_fac(request, dept_id, course_id):
     if (request.user.role!='master')and(request.user.department!= dept_id)and(request.user.course!= course_id):
         return redirect('illegalactivity')
@@ -74,6 +77,7 @@ def add_fac(request, dept_id, course_id):
     
  
 # Add Slide
+@login_required
 def add_slide(request, dept_id, course_id, fac_id):
     faculty = get_object_or_404(Faculty, id=fac_id)
     if request.method == 'POST':
@@ -100,6 +104,7 @@ def add_slide(request, dept_id, course_id, fac_id):
 
 
 # Add Note
+@login_required
 def add_note(request, dept_id, course_id, fac_id):
     faculty = get_object_or_404(Faculty, id=fac_id)
     if request.method == 'POST':
@@ -125,6 +130,7 @@ def add_note(request, dept_id, course_id, fac_id):
 
 
 # Add Video
+@login_required
 def add_video(request, dept_id, course_id, fac_id):
     faculty = get_object_or_404(Faculty, id=fac_id)
     if request.method == 'POST':
