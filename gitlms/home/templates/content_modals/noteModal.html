@@ -8,6 +8,7 @@
       enctype="multipart/form-data"
       action="{% url 'add_note' department.id  course.id faculty.id%}"
       method="POST"
+      id="addNoteForm"
     >
       {% csrf_token %}
       <div class="mb-4">
@@ -52,3 +53,22 @@
     </form>
   </div>
 </div>
+
+<script>
+  document
+    .getElementById("addNoteForm")
+    .addEventListener("submit", function (event) {
+      var fileInput = document.getElementById("noteContent");
+      var filePath = fileInput.value;
+      var allowedExtensions =
+        /(\.pdf|\.docx|\.pptx|\.txt|\.xls|\.xlsx|\.ppt|\.odt)$/i;
+
+      // Check if the uploaded file matches the allowed extensions
+      if (!allowedExtensions.exec(filePath)) {
+        alert(
+          "Invalid file type. Please upload a PDF, DOCX, PPTX, TXT, XLS, XLSX, PPT, or ODT file."
+        );
+        event.preventDefault(); // Prevent form submission
+      }
+    });
+</script>
