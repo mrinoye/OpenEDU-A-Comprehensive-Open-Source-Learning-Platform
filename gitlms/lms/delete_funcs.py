@@ -56,6 +56,7 @@ def delete_fac(request,dept_id,course_id,fac_id):
 def delete_slide(request, dept_id, course_id, fac_id, slide_id):
     slide = get_object_or_404(Slide, id=slide_id)
     if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
+        Notification.objects.filter(Q(real_content_id=slide.id)&Q(content_type="slide")).delete()
         slide.delete()
         subject.notify(request, "Slide has been deleted")
     else:
@@ -71,6 +72,7 @@ def delete_slide(request, dept_id, course_id, fac_id, slide_id):
         notification.recievers.add(*receivers)
         notification.save()
         subject.notify(request, "Request sent")
+
     return redirect('lec_slides', dept_id, course_id, fac_id)
 
 
@@ -79,6 +81,7 @@ def delete_slide(request, dept_id, course_id, fac_id, slide_id):
 def delete_note(request, dept_id, course_id, fac_id, note_id):
     note = get_object_or_404(Note, id=note_id)
     if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
+        Notification.objects.filter(Q(real_content_id=note.id)&Q(content_type="note")).delete()
         note.delete()
         subject.notify(request, "Note has been deleted")
     else:
@@ -102,6 +105,7 @@ def delete_note(request, dept_id, course_id, fac_id, note_id):
 def delete_video(request, dept_id, course_id, fac_id, video_id):
     video = get_object_or_404(Video, id=video_id)
     if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
+        Notification.objects.filter(Q(real_content_id=video.id)&Q(content_type="video")).delete()
         video.delete()
         subject.notify(request, "Video has been deleted")
     else:
