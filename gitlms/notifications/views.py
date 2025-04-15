@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required
 def notifications(request):
-    notifications = Notification.objects.filter(recievers=request.user)
+    notifications = Notification.objects.filter(recievers=request.user).order_by('-created_at')
+
     context={'notifications':notifications}
     return render(request,"notifications.html",context)
 
@@ -138,15 +139,14 @@ def approve_not(request, not_id):
                 content.delete()
 
                 # Set the real_content_id to null (since it's deleted)
-                notification.real_content_id = None
-                notification.save()
-
+                Notification.objects.filter(real_content_id=notification.real_content_id).delete()
+                
             
             except content_model.DoesNotExist:
                 # Handle case if the content to be deleted does not exist
                 
                 return redirect("notifications")
-
+            
         # Create an approval notification for the user who requested it
         Not = Notification.objects.create(
             sender=request.user,
@@ -158,11 +158,11 @@ def approve_not(request, not_id):
         # Fix: Add the receiver properly
         reciever = [notification.sender]
         Not.recievers.add(*reciever)  # Use *reciever to unpack the list and add to the ManyToMany field
-        Not.save()
 
-    # Delete the original notification after approval
+    
+    
     notification.delete()
-
+    
     # Redirect back to the notifications page
     return redirect("notifications")
 
