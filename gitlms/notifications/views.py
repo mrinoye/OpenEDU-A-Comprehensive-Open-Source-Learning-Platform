@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect, get_object_or_404
 from .models import Notification
 from lms.models import *
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
 
 # Create your views here.
 @login_required
@@ -139,7 +139,7 @@ def approve_not(request, not_id):
                 content.delete()
 
                 # Set the real_content_id to null (since it's deleted)
-                Notification.objects.filter(real_content_id=notification.real_content_id).delete()
+                Notification.objects.filter(Q(real_content_id=notification.real_content_id) & Q(content_type=notification.content_type)).delete()
                 
             
             except content_model.DoesNotExist:
