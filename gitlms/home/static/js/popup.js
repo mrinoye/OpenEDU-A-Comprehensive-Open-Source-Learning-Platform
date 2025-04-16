@@ -10,5 +10,9 @@ const closeSidePopup = document.getElementById("closeSidePopup");
 closeSidePopup.addEventListener("click", function () {
   const sidePopup = document.getElementById("side-popup");
   sidePopup.classList.remove("translate-x-0");
-  sidePopup.classList.add("translate-x-full"); // Slide it out
+  sidePopup.classList.add("translate-x-full");
+  // Add a small delay before fully hiding
+  setTimeout(() => {
+    sidePopup.classList.add("hidden");
+  }, 1000);
 });

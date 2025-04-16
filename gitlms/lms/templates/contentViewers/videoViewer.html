@@ -34,7 +34,13 @@
       <!-- Display content (video file) -->
       {% if video.content.url|slice:"-4:" == '.mp4' %}
       <!-- Video Viewer -->
-      <video width="100%" height="auto" controls class="rounded-lg shadow-lg">
+      <video
+        width="100%"
+        height="auto"
+        controls
+        class="rounded-lg shadow-lg"
+        loading="lazy"
+      >
         <source src="{{ video.content.url }}" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
