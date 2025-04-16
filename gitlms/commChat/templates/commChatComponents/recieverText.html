@@ -1,0 +1,20 @@
+<div class="flex items-start justify-end">
+  <div class="ml-4 flex flex-col items-end">
+    <div class="flex items-center space-x-2">
+      <span class="text-lg font-semibold text-gray-800"
+        >{{request.user.first_name}} {{request.user.last_name}}</span
+      >
+      <span class="text-xs text-gray-400">10:31 AM </span>
+    </div>
+    <p class="text-sm text-blue-600 mt-1 leading-relaxed">
+      I'm doing great, thanks for asking! How about you?
+    </p>
+  </div>
+  <div class="flex-shrink-0">
+    <img
+      src="{{request.user.profilepicture.url}}"
+      alt="Receiver Avatar"
+      class="h-12 w-12 rounded-full border-2 border-blue-500"
+    />
+  </div>
+</div>

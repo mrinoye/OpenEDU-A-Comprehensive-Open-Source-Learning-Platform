@@ -1,0 +1,39 @@
+<form class="input-section" onsubmit="sendMessage(event)">
+  <div class="flex items-center w-full">
+    <input
+      type="text"
+      placeholder="Type your message..."
+      class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm placeholder-gray-500"
+      required
+    />
+    <!-- Attachment Button -->
+    <label for="file-upload" class="cursor-pointer">
+      <svg
+        class="h-6 w-6 text-gray-600 hover:text-blue-500"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M3 3v18h18V3H3zm14 4h2v10H7V7h2m0 0V5h2v2h2V5h2v2m-4 6v2h-2v-2h2z"
+        />
+      </svg>
+    </label>
+    <input
+      id="file-upload"
+      type="file"
+      class="hidden"
+      accept="image/*, .pdf, .doc, .txt, .mp3"
+    />
+    <button
+      type="submit"
+      class="ml-4 bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out shadow-md"
+    >
+      Send
+    </button>
+  </div>
+</form>
