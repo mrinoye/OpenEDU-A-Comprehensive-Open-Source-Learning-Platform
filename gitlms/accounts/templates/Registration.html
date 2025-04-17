@@ -3,64 +3,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
 </head>
-<body>
-    <div class="container" id="Sign Up">
-        {% block 'signup' %}
-        <h1 class="form-tittle">Register</h1>
-        <form method="post" action="{% url 'signup' %}">
-            {% csrf_token %}
-		  {% if messages %}
-		  <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4" role="alert">
-			 <ul class="messages">
-			  {% for message in messages %}
-					  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-			  {% endfor %}
-			  </ul>
-			</div>
-		   {% endif %}
-            <div class="input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" name="fname" id="fname" placeholder="First Name" required>
-                <label for="fname">First Name</label>
-            </div>
+<body class="bg-blue-50 font-sans min-h-screen flex flex-col">
 
-            <div class="input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" name="lname" id="lname" placeholder="Last Name" required>
-                <label for="lname">Last Name</label>
-            </div>
-
-            <div class="input-group">
-                <i class="fas fa-envelope"></i>
-                <input type="email" name="email" id="email" placeholder="Email" required>
-                <label for="email">Email</label>
-            </div>
-
-            <div class="input-group">
-                <i class="fas fa-lock"></i>
-                <input type="password" name="passw" id="password" placeholder="Password" required>
-                <label for="password">Password</label>
-            </div>
-            <div class="input-group">
-                <i class="fas fa-lock"></i>
-                <input type="password" name="rpassw" id="password" placeholder="Password" required>
-                <label for="password">Retype Password</label>
-            </div>
-
-            <input type="submit" class="btn" value="Sign Up" name="signup">
-        </form>
-        
-        <p class="or">-------or--------</p>
-        <div class="links">
-            <p>Already Have An Account ?</p>
-            <a href="{% url 'login' %}"><button id="signInButton">Sign In</button></a>
+    <!-- Header Section with Logo -->
+    <div class="w-full p-4 bg-white shadow-md flex justify-between items-center">
+        <div class="flex items-center">
+            <!-- OpenEDU Logo -->
+            <i class="fas fa-book-open text-indigo-900 text-2xl mr-2"></i>
+            <h1 class="text-2xl font-semibold text-indigo-800">OpenEDU</h1>
         </div>
-        {% endblock %}
+        <div>
+            <a href="{% url 'welcome' %}" class="text-indigo-600 font-medium hover:text-indigo-800">Welcome</a>
+        </div>
     </div>
+
+    <!-- Main Content Section -->
+    <div class="flex-grow flex items-center justify-center py-8">
+        <div class="bg-white p-12 rounded-3xl shadow-xl w-full max-w-md">
+            {% block 'signup' %}
+            <h1 class="text-4xl font-extrabold text-center text-indigo-800 mb-8">Register</h1>
+            <form method="post" action="{% url 'signup' %}">
+                {% csrf_token %}
+
+                {% if messages %}
+                <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 rounded-lg shadow-md" role="alert">
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <!-- First Name Input -->
+                <div class="mb-6">
+                    <label for="fname" class="block text-sm font-medium text-gray-700">First Name</label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-3 top-3 text-gray-400"></i>
+                        <input type="text" name="fname" id="fname" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="First Name" required>
+                    </div>
+                </div>
+
+                <!-- Last Name Input -->
+                <div class="mb-6">
+                    <label for="lname" class="block text-sm font-medium text-gray-700">Last Name</label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-3 top-3 text-gray-400"></i>
+                        <input type="text" name="lname" id="lname" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Last Name" required>
+                    </div>
+                </div>
+
+                <!-- Email Input -->
+                <div class="mb-6">
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <div class="relative">
+                        <i class="fas fa-envelope absolute left-3 top-3 text-gray-400"></i>
+                        <input type="email" name="email" id="email" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Email" required>
+                    </div>
+                </div>
+
+                <!-- Password Input -->
+                <div class="mb-6">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <div class="relative">
+                        <i class="fas fa-lock absolute left-3 top-3 text-gray-400"></i>
+                        <input type="password" name="passw" id="password" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Password" required>
+                    </div>
+                </div>
+
+                <!-- Retype Password Input -->
+                <div class="mb-6">
+                    <label for="rpassword" class="block text-sm font-medium text-gray-700">Retype Password</label>
+                    <div class="relative">
+                        <i class="fas fa-lock absolute left-3 top-3 text-gray-400"></i>
+                        <input type="password" name="rpassw" id="rpassword" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Retype Password" required>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full py-3 px-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer mb-6">Sign Up</button>
+
+            </form>
+
+            <p class="text-center text-gray-600 mt-4">-------or--------</p>
+            <div class="text-center mt-4">
+                <p class="text-sm text-gray-600">Already Have An Account?</p>
+                <a href="{% url 'login' %}">
+                    <button id="signInButton" class="w-full py-3 px-4 mt-2 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 cursor-pointer">
+                        Sign In
+                    </button>
+                </a>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+
+    {% include 'inc/footer.html' %}
+
 </body>
 </html>

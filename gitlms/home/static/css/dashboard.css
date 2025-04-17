@@ -75,4 +75,7 @@ footer {
   #sideBarButton {
     display: block; /* Show the sidebar button */
   }
+  #content {
+    width: 100dvh;
+  }
 }
