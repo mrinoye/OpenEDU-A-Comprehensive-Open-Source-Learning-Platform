@@ -99,9 +99,8 @@ def edit_profile(request):
         
         # Notify observers about the profile update
         observer = UserProfileUpdatedObserver()
-        observer.update(user)
+        observer.update(request,user)
 
-        messages.success(request, "Changes successful")
         return redirect('/')
     
     return render(request, "editprofile.html", context={'users': user})
