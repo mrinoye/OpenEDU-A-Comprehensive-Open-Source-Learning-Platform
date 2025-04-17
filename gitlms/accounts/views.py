@@ -78,6 +78,7 @@ def edit_profile(request):
         password = data.get('psw')
         rpassword = data.get('psw-repeat')
         picture = request.FILES.get('editpp')
+        print(picture)
 
         if password and rpassword:
             if password == rpassword:
@@ -92,15 +93,15 @@ def edit_profile(request):
         if Email:
             user.email = Email
         if picture:
-            user.picture = picture
+            user.profilepicture = picture
 
         user.save()
         
         # Notify observers about the profile update
         observer = UserProfileUpdatedObserver()
-        observer.update(request,user)
+        observer.update(user)
 
-        
+        messages.success(request, "Changes successful")
         return redirect('/')
     
     return render(request, "editprofile.html", context={'users': user})
@@ -117,3 +118,17 @@ def logout_view(request):
 # Views
 def welcome(request):
     return render(request, "welcome.html")
+
+@login_required
+def view_profile(request):
+    user = request.user
+    
+    context = {
+        'user': user,
+        'full_name': user.get_full_name() if user.get_full_name() else user.username,
+        'email': user.email,
+        'role': user.role,
+        'profile_picture': user.profilepicture.url if user.profilepicture else 'https://via.placeholder.com/150'
+    }
+    
+    return render(request, 'viewprofile.html', context)

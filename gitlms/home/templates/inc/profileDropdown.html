@@ -5,10 +5,18 @@
   <ul class="py-2">
     <li>
       <a
-        href="/profile"
+        href="{% url 'viewprofile' %}"
         class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-900 rounded-md transition duration-200 ease-in-out"
       >
         View Profile
+      </a>
+    </li>
+    <li>
+      <a
+        href="{% url 'editprofile' %}"
+        class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-900 rounded-md transition duration-200 ease-in-out"
+      >
+        Edit Profile
       </a>
     </li>
     <li>

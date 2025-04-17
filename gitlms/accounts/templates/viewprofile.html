@@ -1,0 +1,53 @@
+{% extends 'dashboard.html' %}
+{%block content %}
+
+        <!-- Profile Header -->
+        <div class="p-6 text-center">
+            <h1 class="text-2xl font-bold text-black">Profile Information</h1>
+        </div>
+        
+        <!-- Profile Content -->
+        <div class="p-6">
+            <!-- Profile Image -->
+            <div class="flex justify-center mb-6">
+                <div class="relative">
+                    <img id="profileImage" src="{{ profile_picture }}" alt="Profile" 
+                         class="w-32 h-32 rounded-full border-4 border-white shadow-lg">
+                </div>
+            </div>
+            
+            <!-- Profile Details -->
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-1">Full Name</label>
+                    <div id="nameDisplay" class="text-gray-900 font-medium p-2 bg-gray-50 rounded">{{ full_name }}</div>
+                    <input id="nameInput" type="text" class="hidden w-full p-2 border rounded" value="{{ full_name }}">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-1">Email</label>
+                    <div id="emailDisplay" class="text-gray-900 font-medium p-2 bg-gray-50 rounded">{{ email }}</div>
+                    <input id="emailInput" type="email" class="hidden w-full p-2 border rounded" value="{{ email }}">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-1">Role</label>
+                    <div id="roleDisplay" class="text-gray-900 font-medium p-2 bg-gray-50 rounded">{{ role }}</div>
+                </div>
+            </div>
+            
+        </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Display elements
+            const nameDisplay = document.getElementById('nameDisplay');
+            const emailDisplay = document.getElementById('emailDisplay');
+            const roleDisplay = document.getElementById('roleDisplay');
+            
+            // Input elements
+            const nameInput = document.getElementById('nameInput');
+            const emailInput = document.getElementById('emailInput');
+            const profileImage = document.getElementById('profileImage');
+        });
+    </script>
+{% endblock %}

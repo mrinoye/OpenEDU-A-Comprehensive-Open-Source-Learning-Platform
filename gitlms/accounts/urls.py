@@ -7,5 +7,6 @@ urlpatterns = [
     path('login/', login, name='login'),
     path('signup/', signup, name='signup'),  # Already included
     path('logout/', logout_view, name='logout'),
+    path('viewprofile/', view_profile, name='viewprofile'),
     path('editprofile/', edit_profile, name='editprofile'),
 ]
