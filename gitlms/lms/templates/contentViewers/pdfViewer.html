@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <!-- Wrapper for content and ads -->
-<div class="relative w-full">
+<div class="relative w-full mt-20">
   <!-- Left Ad Section (20%) -->
   <div class="absolute left-0 top-0 w-1/5 h-full bg-gray-200 hidden">
     <!-- Place your Google Ad code here -->
@@ -26,7 +26,7 @@
     </button>
 
     <!-- Slide Information -->
-    <div class="w-full h-96 overflow-hidden">
+    <div class="w-full h-96 overflow-hidden w-full sm:w-4/5 md:w-1/1 lg:w-1/1">
       <h2 class="text-xl font-bold mb-4">{{ slide.name }}</h2>
       
       <!-- Display content (either PDF, PPTX, or other) -->
@@ -41,6 +41,7 @@
         type="application/pdf"
         style="max-width: 100%; margin: 0 auto; display: block;"
         loading="lazy"
+        class="w-full sm:w-4/5 md:w-1/1 lg:w-1/1"
       >
         Your browser does not support displaying PDF files.
       </iframe>
