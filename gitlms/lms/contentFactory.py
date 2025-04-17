@@ -2,23 +2,18 @@ from .models import Slide, Video, Note, temp_Slide, temp_Video, temp_Note
 from .contentUploadStratagy import SlideUploadStrategy, VideoUploadStrategy, NoteUploadStrategy, TempSlideUploadStrategy, TempVideoUploadStrategy, TempNoteUploadStrategy
 
 
-class SlideFactory:
-    """
-    Concrete Factory class to handle the creation of Slide model instances.
-    """
-    @staticmethod
-    def create_slide(faculty, name, content_file):
-        """
-        Creates and returns an instance of the Slide model.
+from abc import ABC, abstractmethod
 
-        Args:
-            faculty (Faculty): The Faculty instance related to the content.
-            name (str): The name of the content.
-            content_file (File): The file associated with the content.
+class AbstractContentFactory(ABC):
+    
+    @abstractmethod
+    def create_content(self, faculty, name, content_file):
+        pass
 
-        Returns:
-            Slide: The created Slide instance.
-        """
+
+class SlideFactory(AbstractContentFactory):
+    
+    def create_content( faculty, name, content_file):
         # Create the Slide model instance
         slide_instance = Slide(
             name=name,
@@ -35,23 +30,9 @@ class SlideFactory:
         return slide_instance
 
 
-class VideoFactory:
-    """
-    Concrete Factory class to handle the creation of Video model instances.
-    """
-    @staticmethod
-    def create_video(faculty, name, content_file):
-        """
-        Creates and returns an instance of the Video model.
-
-        Args:
-            faculty (Faculty): The Faculty instance related to the content.
-            name (str): The name of the content.
-            content_file (File): The file associated with the content.
-
-        Returns:
-            Video: The created Video instance.
-        """
+class VideoFactory(AbstractContentFactory):
+    
+    def create_content( faculty, name, content_file):
         # Create the Video model instance
         video_instance = Video(
             name=name,
@@ -68,23 +49,9 @@ class VideoFactory:
         return video_instance
 
 
-class NoteFactory:
-    """
-    Concrete Factory class to handle the creation of Note model instances.
-    """
-    @staticmethod
-    def create_note(faculty, name, content_file):
-        """
-        Creates and returns an instance of the Note model.
-
-        Args:
-            faculty (Faculty): The Faculty instance related to the content.
-            name (str): The name of the content.
-            content_file (File): The file associated with the content.
-
-        Returns:
-            Note: The created Note instance.
-        """
+class NoteFactory(AbstractContentFactory):
+    
+    def create_content(faculty, name, content_file):
         # Create the Note model instance
         note_instance = Note(
             name=name,
@@ -101,24 +68,17 @@ class NoteFactory:
         return note_instance
 
 
-class TemporarySlideFactory:
-    """
-    Concrete Factory class to handle the creation of temp_Slide model instances.
-    """
-    @staticmethod
-    def create_temp_slide(real_instance, faculty, name, content_file):
-        """
-        Creates and returns an instance of the temp_Slide model.
 
-        Args:
-            real_instance (Slide): The real instance that the temporary slide is related to.
-            faculty (Faculty): The Faculty instance related to the content.
-            name (str): The name of the content.
-            content_file (File): The file associated with the content.
+class AbstractTemporaryContentFactory(ABC):
 
-        Returns:
-            temp_Slide: The created temp_Slide instance.
-        """
+    @abstractmethod
+    def create_temp_content( real_instance, faculty, name, content_file):
+        pass
+
+
+class TemporarySlideFactory(AbstractTemporaryContentFactory):
+    
+    def create_temp_content( real_instance, faculty, name, content_file):
         # Create the temp_Slide model instance
         temp_slide_instance = temp_Slide(
             name=name,
@@ -136,24 +96,9 @@ class TemporarySlideFactory:
         return temp_slide_instance
 
 
-class TemporaryVideoFactory:
-    """
-    Concrete Factory class to handle the creation of temp_Video model instances.
-    """
-    @staticmethod
-    def create_temp_video(real_instance, faculty, name, content_file):
-        """
-        Creates and returns an instance of the temp_Video model.
-
-        Args:
-            real_instance (Video): The real instance that the temporary video is related to.
-            faculty (Faculty): The Faculty instance related to the content.
-            name (str): The name of the content.
-            content_file (File): The file associated with the content.
-
-        Returns:
-            temp_Video: The created temp_Video instance.
-        """
+class TemporaryVideoFactory(AbstractTemporaryContentFactory):
+    
+    def create_temp_content( real_instance, faculty, name, content_file):
         # Create the temp_Video model instance
         temp_video_instance = temp_Video(
             name=name,
@@ -171,24 +116,9 @@ class TemporaryVideoFactory:
         return temp_video_instance
 
 
-class TemporaryNoteFactory:
-    """
-    Concrete Factory class to handle the creation of temp_Note model instances.
-    """
-    @staticmethod
-    def create_temp_note(real_instance, faculty, name, content_file):
-        """
-        Creates and returns an instance of the temp_Note model.
-
-        Args:
-            real_instance (Note): The real instance that the temporary note is related to.
-            faculty (Faculty): The Faculty instance related to the content.
-            name (str): The name of the content.
-            content_file (File): The file associated with the content.
-
-        Returns:
-            temp_Note: The created temp_Note instance.
-        """
+class TemporaryNoteFactory(AbstractTemporaryContentFactory):
+    
+    def create_temp_content( real_instance, faculty, name, content_file):
         # Create the temp_Note model instance
         temp_note_instance = temp_Note(
             name=name,
