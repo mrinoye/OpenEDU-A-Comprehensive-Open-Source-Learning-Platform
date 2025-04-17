@@ -145,8 +145,8 @@ AUTH_USER_MODEL = 'accounts.User'
 
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://2d0b-103-58-73-171.ngrok-free.app',
-    'http://2d0b-103-58-73-171.ngrok-free.app',
+    'https://7d0e-103-58-73-168.ngrok-free.app',
+    'https://7d0e-103-58-73-168.ngrok-free.app',
 ]
 
 
