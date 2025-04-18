@@ -8,7 +8,11 @@ from .decorators import log_activity
 from .singleton import UserSingleton
 from .strategies import RegularUserRegistration
 from .observers import UserProfileUpdatedObserver
-from .facade import RegistrationFacade 
+from .facade import RegistrationFacade
+# from .observers import SessionLogger, SessionAnalytics
+from .factory import SessionDisplayFactory 
+from django.contrib.sessions.models import Session
+from django.utils import timezone
 
 
 
@@ -131,3 +135,22 @@ def view_profile(request):
     }
     
     return render(request, 'viewprofile.html', context)
+
+@login_required
+def settings_view(request):
+    return render(request, 'settings.html')
+
+@login_required
+def login_sessions(request):
+    active_sessions = []
+    for session in Session.objects.filter(expire_date__gte=timezone.now()):
+        session_data = session.get_decoded()
+        if str(request.user.id) == session_data.get('_auth_user_id'):
+            # Create display data
+            display = SessionDisplayFactory.create_display('detailed', session, request)
+            session_info = display.get_display_data()
+            active_sessions.append(session_info)
+    
+    return render(request, 'loginsessions.html', {
+        'active_sessions': sorted(active_sessions, key=lambda x: x['last_activity'], reverse=True)
+    })

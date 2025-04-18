@@ -1,0 +1,51 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+    <div class="flex items-center mb-8">
+        <a href="{% url 'settings' %}" class="mr-4 text-gray-600 hover:text-indigo-600">
+            <i class="fas fa-arrow-left text-xl"></i>
+        </a>
+        <h1 class="text-3xl font-bold text-gray-800">Active Sessions</h1>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="p-6 border-b border-gray-200">
+            <h2 class="text-lg font-semibold text-gray-800">Your Active Sessions</h2>
+        </div>
+
+        <div class="divide-y divide-gray-200">
+            {% for session in active_sessions %}
+            <div class="p-4 flex items-center hover:bg-gray-50">
+                <div class="mr-4 text-gray-500">
+                    {% if "Windows" in session.device %}
+                    <i class="fab fa-windows text-2xl"></i>
+                    {% elif "Mac" in session.device %}
+                    <i class="fab fa-apple text-2xl"></i>
+                    {% else %}
+                    <i class="fas fa-desktop text-2xl"></i>
+                    {% endif %}
+                </div>
+                <div>
+                    <p class="font-medium">
+                        {{ session.device }}
+                        {% if session.current %}
+                        <span class="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Current</span>
+                        {% endif %}
+                    </p>
+                    <p class="text-sm text-gray-500">
+                        {{ session.location }} · {{ session.last_activity|timesince }} ago
+                    </p>
+                </div>
+            </div>
+            {% empty %}
+            <div class="p-6 text-center text-gray-500">
+                <i class="fas fa-user-lock text-4xl mb-2"></i>
+                <p>No active sessions found</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
