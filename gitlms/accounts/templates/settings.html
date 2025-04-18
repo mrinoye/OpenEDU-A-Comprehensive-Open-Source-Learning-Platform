@@ -1,116 +1,150 @@
-{% extends 'dashboard.html' %}
-{% load static %}
-
-{% block content %}
+{% extends 'dashboard.html' %} {% load static %} {% block content %}
 <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-gray-800 mb-8">Account Settings</h1>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Card 1: Edit Profile -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <div class="p-6">
-                <div class="flex items-center mb-4">
-                    <div class="bg-indigo-100 p-3 rounded-full">
-                        <i class="fas fa-user-edit text-indigo-600 text-xl"></i>
-                    </div>
-                    <h2 class="text-xl font-semibold text-gray-800 ml-4">Edit Profile</h2>
-                </div>
-                <p class="text-gray-600 mb-6">Update your personal information, profile picture, and contact details.</p>
-                <a href="{% url 'editprofile' %}" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-300">
-                    Manage
-                    <i class="fas fa-chevron-right ml-2"></i>
-                </a>
-            </div>
-        </div>
+  <h1 class="text-3xl font-bold text-gray-800 mb-8">Account Settings</h1>
 
-        <!-- Card 2: Account Deletion -->
-        {% comment %} <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <div class="p-6">
-                <div class="flex items-center mb-4">
-                    <div class="bg-red-100 p-3 rounded-full">
-                        <i class="fas fa-trash-alt text-red-600 text-xl"></i>
-                    </div>
-                    <h2 class="text-xl font-semibold text-gray-800 ml-4">Account Deletion</h2>
-                </div>
-                <p class="text-gray-600 mb-6">Permanently delete your account and all associated data.</p>
-                <button onclick="openDeleteModal()" class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-300">
-                    Delete Account
-                    <i class="fas fa-exclamation-triangle ml-2"></i>
-                </button>
-            </div>
-        </div> {% endcomment %}
-
-        <!-- Card 2: Login Security -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <div class="p-6">
-                <div class="flex items-center mb-4">
-                    <div class="bg-green-100 p-3 rounded-full">
-                        <i class="fas fa-shield-alt text-green-600 text-xl"></i>
-                    </div>
-                    <h2 class="text-xl font-semibold text-gray-800 ml-4">Login Sessions</h2>
-                </div>
-                <p class="text-gray-600 mb-6"> Active sessions.</p>
-                <a href="{% url 'loginsessions' %}" class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-300">
-                    Check Sessions
-                    <i class="fas fa-lock ml-2"></i>
-                </a>
-            </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Card 1: Edit Profile -->
+    <div
+      class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+    >
+      <div class="p-6">
+        <div class="flex items-center mb-4">
+          <div class="bg-indigo-100 p-3 rounded-full">
+            <i class="fas fa-user-edit text-indigo-600 text-xl"></i>
+          </div>
+          <h2 class="text-xl font-semibold text-gray-800 ml-4">Edit Profile</h2>
         </div>
+        <p class="text-gray-600 mb-6">
+          Update your personal information, profile picture, and contact
+          details.
+        </p>
+        <a
+          href="{% url 'editprofile' %}"
+          class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-300"
+        >
+          Manage
+          <i class="fas fa-chevron-right ml-2"></i>
+        </a>
+      </div>
     </div>
+
+    <div
+      class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+    >
+      <div class="p-6">
+        <div class="flex items-center mb-4">
+          <div class="bg-red-100 p-3 rounded-full">
+            <i class="fas fa-trash-alt text-red-600 text-xl"></i>
+          </div>
+          <h2 class="text-xl font-semibold text-gray-800 ml-4">
+            Account Deletion
+          </h2>
+        </div>
+        <p class="text-gray-600 mb-6">
+          Permanently delete your account and all associated data.
+        </p>
+        <button
+          onclick="openDeleteModal()"
+          class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-300"
+        >
+          Delete Account
+          <i class="fas fa-exclamation-triangle ml-2"></i>
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+    >
+      <div class="p-6">
+        <div class="flex items-center mb-4">
+          <div class="bg-green-100 p-3 rounded-full">
+            <i class="fas fa-shield-alt text-green-600 text-xl"></i>
+          </div>
+          <h2 class="text-xl font-semibold text-gray-800 ml-4">
+            Login Sessions
+          </h2>
+        </div>
+        <p class="text-gray-600 mb-6">Active sessions.</p>
+        <a
+          href="{% url 'loginsessions' %}"
+          class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-300"
+        >
+          Check Sessions
+          <i class="fas fa-lock ml-2"></i>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Delete Account Modal -->
-<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-    <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-bold text-red-600">Confirm Account Deletion</h3>
-            <button onclick="closeDeleteModal()" class="text-gray-500 hover:text-gray-700">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <p class="text-gray-700 mb-6">This action will permanently delete your account and all associated data. This cannot be undone.</p>
-        <div class="flex justify-end space-x-4">
-            <button onclick="closeDeleteModal()" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                Cancel
-            </button>
-            <form method="POST" action="{% url 'deleteaccount' %}">
-                {% csrf_token %}
-                <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-300">
-                    Delete My Account
-                </button>
-            </form>
-        </div>
+<div
+  id="deleteModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+>
+  <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-bold text-red-600">Confirm Account Deletion</h3>
+      <button
+        onclick="closeDeleteModal()"
+        class="text-gray-500 hover:text-gray-700"
+      >
+        <i class="fas fa-times"></i>
+      </button>
     </div>
+    <p class="text-gray-700 mb-6">
+      This action will permanently delete your account and all associated data.
+      This cannot be undone.
+    </p>
+    <div class="flex justify-end space-x-4">
+      <button
+        onclick="closeDeleteModal()"
+        class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors duration-300"
+      >
+        Cancel
+      </button>
+      <form method="POST" action="#">
+        {% csrf_token %}
+        <button
+          type="submit"
+          class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-300"
+        >
+          Delete My Account
+        </button>
+      </form>
+    </div>
+  </div>
 </div>
 
 <script>
-    // Modal functions
-    function openDeleteModal() {
-        document.getElementById('deleteModal').classList.remove('hidden');
-    }
+  // Modal functions
+  function openDeleteModal() {
+    document.getElementById("deleteModal").classList.remove("hidden");
+  }
 
-    function closeDeleteModal() {
-        document.getElementById('deleteModal').classList.add('hidden');
-    }
+  function closeDeleteModal() {
+    document.getElementById("deleteModal").classList.add("hidden");
+  }
 
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-        const modal = document.getElementById('deleteModal');
-        if (event.target === modal) {
-            closeDeleteModal();
-        }
+  // Close modal when clicking outside
+  window.onclick = function (event) {
+    const modal = document.getElementById("deleteModal");
+    if (event.target === modal) {
+      closeDeleteModal();
     }
+  };
 </script>
 
 <style>
-    /* Custom animations */
-    .hover\:shadow-lg {
-        transition: box-shadow 0.3s ease;
-    }
-    .transition-colors {
-        transition-property: background-color, border-color, color, fill, stroke;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        transition-duration: 0.3s;
-    }
+  /* Custom animations */
+  .hover\:shadow-lg {
+    transition: box-shadow 0.3s ease;
+  }
+  .transition-colors {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.3s;
+  }
 </style>
 {% endblock %}

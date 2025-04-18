@@ -4,19 +4,29 @@ from django.contrib.auth.decorators import login_required
 from .models import Department,Course,Faculty,Slide,Video,Note
 from django.conf import settings
 from .contentViewers import *
-
+from .queryProxy import QueryCacheProxy
 
 @login_required
-# Create your views here.
 def departments(request):
-    departments=Department.objects.all().order_by('name')
-    showDeptModal=(request.user.role=='master')
-    showUpdateDeptModal=(request.user.role=='master')
-    showAddButton=(request.user.role=='master')
-    context={'name':request.user.username,'departments':departments,
-             'showDeptModal':showDeptModal,'showUpdateDeptModal':showUpdateDeptModal,'showAddButton':showAddButton}
+    department_proxy = QueryCacheProxy(request.user)
+    departments = department_proxy.get_departments()  # Fetch departments via the proxy
+    
+    # Determine the visibility of the modal and button based on the user's role
+    showDeptModal = (request.user.role == 'master')
+    showUpdateDeptModal = (request.user.role == 'master')
+    showAddButton = (request.user.role == 'master')
+    
+    # Prepare the context with user and departments information
+    context = {
+        'name': request.user.username,
+        'departments': departments,
+        'showDeptModal': showDeptModal,
+        'showUpdateDeptModal': showUpdateDeptModal,
+        'showAddButton': showAddButton
+    }
 
-    return render(request,"lms/departments.html",context)
+    # Render the departments page with the context
+    return render(request, "lms/departments.html", context)
 
 @login_required
 def courses(request):
@@ -31,14 +41,16 @@ def courses(request):
 #for Courses inside a Department
 @login_required
 def deptcourses(request,id):
-    department=Department.objects.get(id=id)
-    courses = Course.objects.filter(department=department).order_by('course_name')
+    course_proxy = QueryCacheProxy(request.user)
+    department = Department.objects.get(id=id)
+    courses = course_proxy.get_courses(department)  # Fetch departments via the pr
     showAddButton=(request.user.role=='master')or(request.user.department==department.id)
     showUpdateCourseModal=(request.user.role=='master')or(request.user.department==department.id)
     showCourseModal=(request.user.role=='master')or(request.user.department==department.id)
     context={'name':request.user.username,'courses':courses , 'department': department,
              'showCourseModal':showCourseModal,'showUpdateCourseModal':showUpdateCourseModal,'showAddButton':showAddButton}
     return render(request,'lms/deptcourses.html',context)
+
 
 
 
