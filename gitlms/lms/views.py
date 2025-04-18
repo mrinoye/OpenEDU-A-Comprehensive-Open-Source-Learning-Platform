@@ -72,10 +72,8 @@ def course_facs(request, dept_id, course_id):
 #for lectures inside a Faculty
 @login_required
 def fac_lecs(request, dept_id, course_id,fac_id):
-    department = Department.objects.get(id=dept_id)
-    course = Course.objects.get(id=course_id)
-    faculty = Faculty.objects.get(id=fac_id)
-    context = {'department': department, 'faculty': faculty,'course':course,'MEDIA_URL':settings.MEDIA_URL}
+    
+    context = {'department': dept_id, 'faculty': fac_id,'course':course_id,'MEDIA_URL':settings.MEDIA_URL}
     return render(request, 'lms/lectures.html', context)
 
 #for slides inside a lecture
