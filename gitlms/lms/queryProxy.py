@@ -48,3 +48,53 @@ class QueryCacheProxy:
             cache.set(faculties_cache_key, faculties, timeout=60*15)  # Cache for 15 minutes
             
         return faculties,department,course
+    
+    @login_required
+    def get_LecSlides(self,dept_id,course_id,fac_id):
+        department=Department.objects.get(id=dept_id)
+        course=Course.objects.get(id=course_id)
+        faculty=Faculty.objects.get(id=fac_id)
+        Slides_cache_key = f'department?{department.id}/course?{course.id}/faculty?{faculty.id}/Lectures/Slides'
+        slides = cache.get(Slides_cache_key)
+        print(slides)
+        if not slides:
+            print("not cached yet")
+            # If departments are not cached, fetch from DB and cache them
+            slides = Slide.objects.filter(faculty=faculty).order_by('-id')
+            cache.set(Slides_cache_key, slides, timeout=60*15)  # Cache for 15 minutes
+            
+        return slides,department,course,faculty
+    
+    @login_required
+    def get_LecVideos(self,dept_id,course_id,fac_id):
+        department=Department.objects.get(id=dept_id)
+        course=Course.objects.get(id=course_id)
+        faculty=Faculty.objects.get(id=fac_id)
+        Videos_cache_key = f'department?{department.id}/course?{course.id}/faculty?{faculty.id}/Lectures/Videos'
+        videos = cache.get(Videos_cache_key)
+        print(videos)
+        if not videos:
+            print("not cached yet")
+            # If departments are not cached, fetch from DB and cache them
+            videos = Video.objects.filter(faculty=faculty).order_by('-id')
+            cache.set(Videos_cache_key, videos, timeout=60*15)  # Cache for 15 minutes
+            
+        return videos,department,course,faculty
+
+   
+    @login_required
+    def get_LecNotes(self,dept_id,course_id,fac_id):
+        department=Department.objects.get(id=dept_id)
+        course=Course.objects.get(id=course_id)
+        faculty=Faculty.objects.get(id=fac_id)
+        Notes_cache_key = f'department?{department.id}/course?{course.id}/faculty?{faculty.id}/Lectures/Notes'
+        notes = cache.get(Notes_cache_key)
+        print(notes)
+        if not notes:
+            print("not cached yet")
+            # If departments are not cached, fetch from DB and cache them
+            notes = Note.objects.filter(faculty=faculty).order_by('-id')
+            cache.set(Notes_cache_key, notes, timeout=60*15)  # Cache for 15 minutes
+            
+        return notes,department,course,faculty
+
