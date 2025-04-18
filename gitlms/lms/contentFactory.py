@@ -5,12 +5,12 @@ from abc import ABC, abstractmethod
 
 class AbstractContentFactory(ABC):
     @abstractmethod
-    def create_content(self, faculty, name, content_file):
+    def create_content( faculty, name, content_file):
         pass
 
 
 class SlideFactory(AbstractContentFactory):
-    def create_content(self, faculty, name, content_file):
+    def create_content( faculty, name, content_file):
         slide_instance = Slide(
             name=name,
             faculty=faculty,
@@ -24,7 +24,7 @@ class SlideFactory(AbstractContentFactory):
 
 
 class VideoFactory(AbstractContentFactory):
-    def create_content(self, faculty, name, content_file):
+    def create_content( faculty, name, content_file):
         video_instance = Video(
             name=name,
             faculty=faculty,
@@ -38,7 +38,7 @@ class VideoFactory(AbstractContentFactory):
 
 
 class NoteFactory(AbstractContentFactory):
-    def create_content(self, faculty, name, content_file):
+    def create_content( faculty, name, content_file):
         note_instance = Note(
             name=name,
             faculty=faculty,
@@ -53,12 +53,12 @@ class NoteFactory(AbstractContentFactory):
 
 class AbstractTemporaryContentFactory(ABC):
     @abstractmethod
-    def create_temp_content(self, real_instance, faculty, name, content_file):
+    def create_temp_content( real_instance, faculty, name, content_file):
         pass
 
 
 class TemporarySlideFactory(AbstractTemporaryContentFactory):
-    def create_temp_content(self, real_instance, faculty, name, content_file):
+    def create_temp_content( real_instance, faculty, name, content_file):
         temp_slide_instance = temp_Slide(
             name=name,
             real=real_instance,
@@ -73,7 +73,7 @@ class TemporarySlideFactory(AbstractTemporaryContentFactory):
 
 
 class TemporaryVideoFactory(AbstractTemporaryContentFactory):
-    def create_temp_content(self, real_instance, faculty, name, content_file):
+    def create_temp_content( real_instance, faculty, name, content_file):
         temp_video_instance = temp_Video(
             name=name,
             real=real_instance,
@@ -88,7 +88,7 @@ class TemporaryVideoFactory(AbstractTemporaryContentFactory):
 
 
 class TemporaryNoteFactory(AbstractTemporaryContentFactory):
-    def create_temp_content(self, real_instance, faculty, name, content_file):
+    def create_temp_content( real_instance, faculty, name, content_file):
         temp_note_instance = temp_Note(
             name=name,
             real=real_instance,
