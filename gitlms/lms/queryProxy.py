@@ -20,7 +20,8 @@ class QueryCacheProxy:
             
         return departments
     @login_required
-    def get_courses(self,department):
+    def get_courses(self,dept_id):
+        department=Department.objects.get(id=dept_id)
         # Check if departments are already cached
         coursess_cache_key = f'department?{department.id}'
         courses = cache.get(coursess_cache_key)
@@ -31,4 +32,4 @@ class QueryCacheProxy:
             courses = Course.objects.filter(department=department).order_by('course_name')
             cache.set(coursess_cache_key, courses, timeout=60*15)  # Cache for 15 minutes
             
-        return courses
+        return courses,department

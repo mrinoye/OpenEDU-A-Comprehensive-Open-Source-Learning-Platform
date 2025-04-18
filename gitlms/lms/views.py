@@ -42,8 +42,8 @@ def courses(request):
 @login_required
 def deptcourses(request,id):
     course_proxy = QueryCacheProxy(request.user)
-    department = Department.objects.get(id=id)
-    courses = course_proxy.get_courses(department)  # Fetch departments via the pr
+    
+    courses,department = course_proxy.get_courses(id)  # Fetch departments via the pr
     showAddButton=(request.user.role=='master')or(request.user.department==department.id)
     showUpdateCourseModal=(request.user.role=='master')or(request.user.department==department.id)
     showCourseModal=(request.user.role=='master')or(request.user.department==department.id)
