@@ -6,6 +6,7 @@ from django.conf import settings
 from .contentViewers import *
 from .queryProxy import QueryCacheProxy
 
+
 @login_required
 def departments(request):
     department_proxy = QueryCacheProxy(request.user)
@@ -43,7 +44,7 @@ def courses(request):
 def deptcourses(request,id):
     course_proxy = QueryCacheProxy(request.user)
     
-    courses,department = course_proxy.get_courses(id)  # Fetch departments via the pr
+    courses,department = course_proxy.get_deptCourses(id)  # Fetch departments via the pr
     showAddButton=(request.user.role=='master')or(request.user.department==department.id)
     showUpdateCourseModal=(request.user.role=='master')or(request.user.department==department.id)
     showCourseModal=(request.user.role=='master')or(request.user.department==department.id)
@@ -57,9 +58,8 @@ def deptcourses(request,id):
 #for faculties inside a Course
 @login_required
 def course_facs(request, dept_id, course_id):
-    department = Department.objects.get(id=dept_id)
-    course = Course.objects.get(id=course_id)
-    faculties = Faculty.objects.filter(course=course)
+    faculty_proxy = QueryCacheProxy(request.user)
+    faculties,department,course = faculty_proxy.get_courseFacs(dept_id,course_id)
     showFacultyModal=(request.user.role=='master')or(request.user.department==department.id)or(request.user.course==course.id)
     showUpdateFacultyModal=(request.user.role=='master')or(request.user.department==department.id)or(request.user.course==course.id)
     showAddButton=(request.user.role=='master')or(request.user.department==department.id)or(request.user.course==course.id)
