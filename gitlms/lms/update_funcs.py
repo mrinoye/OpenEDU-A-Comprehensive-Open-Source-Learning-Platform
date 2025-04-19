@@ -6,6 +6,7 @@ from .Observer import Subject ,MessageObserver
 from notifications.models import Notification
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from .queryProxy import QueryCacheProxy
 
 messageObserver=MessageObserver()
 subject=Subject()
@@ -30,6 +31,10 @@ def update_dept(request, dept_id):
             department.image= dept_image
 
         department.save()
+        proxy=QueryCacheProxy(request.user)
+        proxy.delete_departments_cache()
+        proxy=QueryCacheProxy(request.user)
+        proxy.delete_departments_cache()
         subject.notify(request, "Department has been updated")
         return redirect('departments')
     else:
@@ -57,6 +62,8 @@ def update_course(request,dept_id,course_id):
         if course_image:
             course.image=course_image
         course.save()
+        proxy=QueryCacheProxy(request.user)
+        proxy.delete_deptCourses_cache(department.id)
         subject.notify(request, "Course has been updated")
     else:
         subject.notify(request, "Request sent")
@@ -80,6 +87,8 @@ def update_fac(request,dept_id,course_id,fac_id):
     if image:
         faculty.image = image
     faculty.save()
+    proxy=QueryCacheProxy(request.user)
+    proxy.delete_courseFacs_cache(faculty.course.department.id,faculty.course.id)
     subject.notify(request, "Faculty has been updated")
     return redirect('course_facs',dept_id,course_id)
 
@@ -96,6 +105,8 @@ def update_slide(request, dept_id, course_id, fac_id, slide_id):
             if slide_content:
                 slide.content = slide_content
             slide.save()
+            proxy=QueryCacheProxy(request.user)
+            proxy.delete_LecSlides_cache(slide.faculty.course.department.id,slide.faculty.course.id,slide.faculty.id)
             subject.notify(request, "Slide has been updated")
         else:
             # Creating a temporary Slide and sending notification
@@ -128,6 +139,8 @@ def update_note(request, dept_id, course_id, fac_id, note_id):
             if note_content:
                 note.content = note_content
             note.save()
+            proxy=QueryCacheProxy(request.user)
+            proxy.delete_LecNotes_cache(note.faculty.course.department.id,note.faculty.course.id,note.faculty.id)
             subject.notify(request, "Note has been updated")
         else:
             # Creating a temporary Note and sending notification
@@ -160,6 +173,8 @@ def update_video(request, dept_id, course_id, fac_id, video_id):
             if video_content:
                 video.content = video_content
             video.save()
+            proxy=QueryCacheProxy(request.user)
+            proxy.delete_LecVideos_cache(video.faculty.course.department.id,video.faculty.course.id,video.faculty.id)
             subject.notify(request, "Video has been updated")
         else:
             # Creating a temporary Video and sending notification

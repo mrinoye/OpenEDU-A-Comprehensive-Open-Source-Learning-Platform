@@ -8,13 +8,13 @@ class QueryCacheProxy:
     
     @login_required
     def get_departments(self):
-        # Check if departments are already cached
+       
         departments_cache_key = 'all_departments'
         departments = cache.get(departments_cache_key)
         print(departments)
         if not departments:
             print("not cached yet")
-            # If departments are not cached, fetch from DB and cache them
+            
             departments = Department.objects.all().order_by('name')
             cache.set(departments_cache_key, departments, timeout=15)  # Cache for 15 minutes
             
@@ -22,7 +22,7 @@ class QueryCacheProxy:
     @login_required
     def get_deptCourses(self,dept_id):
         department=Department.objects.get(id=dept_id)
-        # Check if departments are already cached
+        
         coursess_cache_key = f'department?{department.id}'
         courses = cache.get(coursess_cache_key)
         print(courses)
@@ -43,7 +43,7 @@ class QueryCacheProxy:
         print(faculties)
         if not faculties:
             print("not cached yet")
-            # If departments are not cached, fetch from DB and cache them
+           
             faculties = Faculty.objects.filter(course=course).order_by('name')
             cache.set(faculties_cache_key, faculties, timeout=15)  # Cache for 15 minutes
             
@@ -61,8 +61,7 @@ class QueryCacheProxy:
             print("not cached yet")
             # If departments are not cached, fetch from DB and cache them
             slides = Slide.objects.filter(faculty=faculty).order_by('-id')
-            cache.set(Slides_cache_key, slides, timeout=10)  # Cache for 15 minutes
-            
+            cache.set(Slides_cache_key, slides, timeout=10)  # Cache for 15 minutes   
         return slides,department,course,faculty
     
     @login_required
@@ -75,7 +74,7 @@ class QueryCacheProxy:
         print(videos)
         if not videos:
             print("not cached yet")
-            # If departments are not cached, fetch from DB and cache them
+            
             videos = Video.objects.filter(faculty=faculty).order_by('-id')
             cache.set(Videos_cache_key, videos, timeout=10)  # Cache for 15 minutes
             
@@ -92,9 +91,45 @@ class QueryCacheProxy:
         print(notes)
         if not notes:
             print("not cached yet")
-            # If departments are not cached, fetch from DB and cache them
+            
             notes = Note.objects.filter(faculty=faculty).order_by('-id')
-            cache.set(Notes_cache_key, notes, timeout=10)  # Cache for 15 minutes
+            cache.set(Notes_cache_key, notes, timeout=10) 
             
         return notes,department,course,faculty
+    
+    @login_required
+    def delete_departments_cache(self):
+        departments_cache_key = 'all_departments'
+        cache.delete(departments_cache_key)
+        print(f"Deleted cache for: {departments_cache_key}")
+
+    @login_required
+    def delete_deptCourses_cache(self, dept_id):
+        coursess_cache_key = f'department?{dept_id}'
+        cache.delete(coursess_cache_key)
+        print(f"Deleted cache for: {coursess_cache_key}")
+
+    @login_required
+    def delete_courseFacs_cache(self, dept_id, course_id):
+        faculties_cache_key = f'department?{dept_id}/course?{course_id}'
+        cache.delete(faculties_cache_key)
+        print(f"Deleted cache for: {faculties_cache_key}")
+
+    @login_required
+    def delete_LecSlides_cache(self, dept_id, course_id, fac_id):
+        Slides_cache_key = f'department?{dept_id}/course?{course_id}/faculty?{fac_id}/Lectures/Slides'
+        cache.delete(Slides_cache_key)
+        print(f"Deleted cache for: {Slides_cache_key}")
+
+    @login_required
+    def delete_LecVideos_cache(self, dept_id, course_id, fac_id):
+        Videos_cache_key = f'department?{dept_id}/course?{course_id}/faculty?{fac_id}/Lectures/Videos'
+        cache.delete(Videos_cache_key)
+        print(f"Deleted cache for: {Videos_cache_key}")
+
+    @login_required
+    def delete_LecNotes_cache(self, dept_id, course_id, fac_id):
+        Notes_cache_key = f'department?{dept_id}/course?{course_id}/faculty?{fac_id}/Lectures/Notes'
+        cache.delete(Notes_cache_key)
+        print(f"Deleted cache for: {Notes_cache_key}")
 

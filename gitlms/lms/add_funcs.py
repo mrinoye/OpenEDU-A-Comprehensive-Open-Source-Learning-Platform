@@ -8,6 +8,7 @@ from notifications.models import Notification
 from django.db.models import Q
 from .contentFactory import *
 from django.contrib.auth.decorators import login_required
+from .queryProxy import QueryCacheProxy
 
 messageObserver=MessageObserver()
 subject=Subject()
@@ -29,6 +30,8 @@ def add_dept(request):
             if( dept_desc):
                 department.description=dept_desc
         department.save()
+        proxy=QueryCacheProxy(request.user)
+        proxy.delete_departments_cache()
         subject.notify(request, "Department has been added")
         return redirect('departments')
     
@@ -52,6 +55,8 @@ def add_course(request, dept_id):
             if course_image:
                 course.image=course_image
         course.save()
+        proxy=QueryCacheProxy(request.user)
+        proxy.delete_deptCourses_cache(department.id)
         subject.notify(request, "Course has been added")
     return redirect('deptcourses',department.id)
 
@@ -72,6 +77,8 @@ def add_fac(request, dept_id, course_id):
             if image:
                 faculty.image=image
             faculty.save()
+            proxy=QueryCacheProxy(request.user)
+            proxy.delete_courseFacs_cache(course.department.id,course.id)
         subject.notify(request, "Faculty has been added")
     return redirect('course_facs',dept_id,course_id)
     
@@ -85,6 +92,8 @@ def add_slide(request, dept_id, course_id, fac_id):
         slide_content = request.FILES.get('slideContent')
         if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
             SlideFactory.create_content(faculty, slide_name, slide_content)
+            proxy=QueryCacheProxy(request.user)
+            proxy.delete_LecSlides_cache(faculty.course.department.id,faculty.course.id,faculty.id)
             subject.notify(request, "Slide has been added")
         else:
             temp_slide=TemporarySlideFactory.create_temp_content(real_instance=None, faculty=faculty, name=slide_name, content_file=slide_content)
@@ -110,6 +119,8 @@ def add_note(request, dept_id, course_id, fac_id):
         note_content = request.FILES.get('noteContent')
         if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
             NoteFactory.create_content( faculty, note_name, note_content)
+            proxy=QueryCacheProxy(request.user)
+            proxy.delete_LecNotes_cache(faculty.course.department.id,faculty.course.id,faculty.id)
             subject.notify(request, "Note has been added")
         else:
             temp_note=TemporaryNoteFactory.create_temp_content( real_instance=None, faculty=faculty, name=note_name, content_file=note_content)
@@ -136,6 +147,8 @@ def add_video(request, dept_id, course_id, fac_id):
         video_content = request.FILES.get('videoContent')
         if (request.user.role == 'master') or (request.user.department == dept_id) or (request.user.course == course_id):
             VideoFactory.create_content( faculty, video_name, video_content)
+            proxy=QueryCacheProxy(request.user)
+            proxy.delete_LecVideos_cache(faculty.course.department.id,faculty.course.id,faculty.id)
             subject.notify(request, "Video has been added")
         else:
             temp_video=TemporaryVideoFactory.create_temp_content( real_instance=None, faculty=faculty, name=video_name, content_file=video_content)
