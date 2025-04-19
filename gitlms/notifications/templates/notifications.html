@@ -36,7 +36,7 @@
               <p class="text-gray-600 mt-1">{{notification.message}}</p>
               <div class="flex items-center mt-3 text-sm text-gray-500">
                 <i class="far fa-clock mr-1"></i>
-                <span>{{notification.created_at}}</span>
+                <span>{{notification.created_at|timesince}} ago</span>
               </div>
             </div>
             <div class="ml-4 flex flex-col items-end">
@@ -76,7 +76,7 @@
               <p class="text-gray-600 mt-1">{{notification.message}}</p>
               <div class="flex items-center mt-3 text-sm text-gray-500">
                 <i class="far fa-clock mr-1"></i>
-                <span>{{notification.created_at}}</span>
+                <span>{{notification.created_at|timesince}} ago </span>
               </div>
             </div>
           </div>
