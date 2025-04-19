@@ -12,11 +12,11 @@ class QueryCacheProxy:
         departments_cache_key = 'all_departments'
         departments = cache.get(departments_cache_key)
         print(departments)
-        if not departments:
+        if not departments:             
             print("not cached yet")
             
             departments = Department.objects.all().order_by('name')
-            cache.set(departments_cache_key, departments, timeout=15)  # Cache for 15 minutes
+            cache.set(departments_cache_key, departments, timeout=60*15)  # Cache for 15 minutes
             
         return departments
     @login_required
@@ -30,7 +30,7 @@ class QueryCacheProxy:
             print("not cached yet")
             # If departments are not cached, fetch from DB and cache them
             courses = Course.objects.filter(department=department).order_by('course_name')
-            cache.set(coursess_cache_key, courses, timeout=15)  # Cache for 15 minutes
+            cache.set(coursess_cache_key, courses, timeout=60*15)  # Cache for 15 minutes
             
         return courses,department
     @login_required
@@ -45,7 +45,7 @@ class QueryCacheProxy:
             print("not cached yet")
            
             faculties = Faculty.objects.filter(course=course).order_by('name')
-            cache.set(faculties_cache_key, faculties, timeout=15)  # Cache for 15 minutes
+            cache.set(faculties_cache_key, faculties, timeout=60*15)  # Cache for 15 minutes
             
         return faculties,department,course
     
@@ -61,7 +61,7 @@ class QueryCacheProxy:
             print("not cached yet")
             # If departments are not cached, fetch from DB and cache them
             slides = Slide.objects.filter(faculty=faculty).order_by('-id')
-            cache.set(Slides_cache_key, slides, timeout=10)  # Cache for 15 minutes   
+            cache.set(Slides_cache_key, slides, timeout=60*10)  # Cache for 15 minutes   
         return slides,department,course,faculty
     
     @login_required
@@ -76,7 +76,7 @@ class QueryCacheProxy:
             print("not cached yet")
             
             videos = Video.objects.filter(faculty=faculty).order_by('-id')
-            cache.set(Videos_cache_key, videos, timeout=10)  # Cache for 15 minutes
+            cache.set(Videos_cache_key, videos, timeout=60*10)  # Cache for 15 minutes
             
         return videos,department,course,faculty
 
@@ -93,7 +93,7 @@ class QueryCacheProxy:
             print("not cached yet")
             
             notes = Note.objects.filter(faculty=faculty).order_by('-id')
-            cache.set(Notes_cache_key, notes, timeout=10) 
+            cache.set(Notes_cache_key, notes, timeout=60*10) 
             
         return notes,department,course,faculty
     

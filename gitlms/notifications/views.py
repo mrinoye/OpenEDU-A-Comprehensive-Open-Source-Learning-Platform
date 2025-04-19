@@ -3,7 +3,7 @@ from .models import Notification
 from lms.models import *
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-
+from lms.queryProxy import QueryCacheProxy
 # Create your views here.
 @login_required
 def notifications(request):
@@ -80,19 +80,19 @@ def approve_not(request, not_id):
     notification = get_object_or_404(Notification, id=not_id)
     if request.user not in notification.recievers.all():
          return redirect('illegalactivity')
-
+    proxy=QueryCacheProxy(request.user)
     # Ensure the notification type is 'add', 'update', or 'delete'
     if notification.type in ['add', 'update', 'delete']:
         # Manually map the content_type to corresponding models
         content_map = {
-            'slide': (Slide, temp_Slide),
-            'video': (Video, temp_Video),
-            'note': (Note, temp_Note)
+            'slide': (Slide, temp_Slide,proxy.delete_LecSlides_cache),
+            'video': (Video, temp_Video,proxy.delete_LecVideos_cache),
+            'note': (Note, temp_Note,proxy.delete_LecNotes_cache)
         }
 
         # Check if the content_type is valid and retrieve the models
         if notification.content_type in content_map:
-            content_model, temp_content_model = content_map[notification.content_type]
+            content_model, temp_content_model,contenDeleteProxy = content_map[notification.content_type]
         else:
             raise ValueError(f"Invalid content type '{notification.content_type}' provided.")  # Handle invalid type
 
@@ -110,9 +110,11 @@ def approve_not(request, not_id):
             # Set the real_content_id in the notification
             notification.real_content_id = real_content.id
             notification.save()
-
             # Delete the temporary content instance after approval
             temp_content.delete()
+            contenDeleteProxy(real_content.faculty.course.department.id,real_content.faculty.course.id,real_content.faculty.id)
+            
+
 
         # Handle 'update' logic
         elif notification.type == 'update':
@@ -120,8 +122,10 @@ def approve_not(request, not_id):
 
             # Update the content fields using the name and content from the temporary content
             temp_content = get_object_or_404(temp_content_model, id=notification.content_id)  # Get associated temp content
-            content.name = temp_content.name  # Update the real content's name
-            content.content = temp_content.content  # Update the real content's content
+            if temp_content.name:
+                content.name = temp_content.name  # Update the real content's name
+            if temp_content:
+                content.content = temp_content.content  # Update the real content's content
             content.save()  # Save the updated real content to the database
 
             # Set the real_content_id to the updated content ID
@@ -130,14 +134,16 @@ def approve_not(request, not_id):
 
             # Delete the temporary content after updating
             temp_content.delete()
+            contenDeleteProxy(content.faculty.course.department.id,content.faculty.course.id,content.faculty.id)
 
         # Handle 'delete' logic
         elif notification.type == 'delete':
             try:
                 content = content_model.objects.get(id=notification.real_content_id)
+                contenDeleteProxy(content.faculty.course.department.id,content.faculty.course.id,content.faculty.id)
                 # Delete the real content instance
                 content.delete()
-
+   
                 # Set the real_content_id to null (since it's deleted)
                 Notification.objects.filter(Q(real_content_id=notification.real_content_id) & Q(content_type=notification.content_type)).delete()
                 
