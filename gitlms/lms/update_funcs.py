@@ -6,6 +6,7 @@ from .Observer import Subject ,MessageObserver
 from notifications.models import Notification
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from .queryProxy import QueryCacheProxy
 
 messageObserver=MessageObserver()
 subject=Subject()
@@ -30,6 +31,10 @@ def update_dept(request, dept_id):
             department.image= dept_image
 
         department.save()
+        proxy=QueryCacheProxy(request.user)
+        proxy.delete_departments_cache()
+        proxy=QueryCacheProxy(request.user)
+        proxy.delete_departments_cache()
         subject.notify(request, "Department has been updated")
         return redirect('departments')
     else:
@@ -57,6 +62,8 @@ def update_course(request,dept_id,course_id):
         if course_image:
             course.image=course_image
         course.save()
+        proxy=QueryCacheProxy(request.user)
+        proxy.delete_deptCourses_cache(department.id)
         subject.notify(request, "Course has been updated")
     else:
         subject.notify(request, "Request sent")
@@ -80,6 +87,8 @@ def update_fac(request,dept_id,course_id,fac_id):
     if image:
         faculty.image = image
     faculty.save()
+    proxy=QueryCacheProxy(request.user)
+    proxy.delete_courseFacs_cache(faculty.course.department.id,faculty.course.id)
     subject.notify(request, "Faculty has been updated")
     return redirect('course_facs',dept_id,course_id)
 
@@ -96,11 +105,14 @@ def update_slide(request, dept_id, course_id, fac_id, slide_id):
             if slide_content:
                 slide.content = slide_content
             slide.save()
+            proxy=QueryCacheProxy(request.user)
+            proxy.delete_LecSlides_cache(slide.faculty.course.department.id,slide.faculty.course.id,slide.faculty.id)
             subject.notify(request, "Slide has been updated")
         else:
+            if slide_name or slide_content:
             # Creating a temporary Slide and sending notification
-            temp_slide = temp_Slide.objects.create(name=slide_name, content=slide_content, faculty=slide.faculty)
-            notification = Notification.objects.create(
+                temp_slide = temp_Slide.objects.create(name=slide_name, content=slide_content, faculty=slide.faculty)
+                notification = Notification.objects.create(
                 message=f"{request.user.first_name} {request.user.last_name} wants to update a slide in {temp_slide.faculty.course.department.name}/{temp_slide.faculty.course.course_name}/{temp_slide.faculty.name}",
                 sender=request.user,
                 type="update",
@@ -108,10 +120,10 @@ def update_slide(request, dept_id, course_id, fac_id, slide_id):
                 content_id=temp_slide.id,
                 real_content_id=slide.id
             )
-            receivers = User.objects.filter(Q(role='master') | Q(department=dept_id) | Q(course=course_id))
-            notification.recievers.add(*receivers)
-            notification.save()
-            subject.notify(request, "Request sent")
+                receivers = User.objects.filter(Q(role='master') | Q(department=dept_id) | Q(course=course_id))
+                notification.recievers.add(*receivers)
+                notification.save()
+                subject.notify(request, "Request sent")
     return redirect('lec_slides', dept_id, course_id, fac_id)
 
 
@@ -128,11 +140,14 @@ def update_note(request, dept_id, course_id, fac_id, note_id):
             if note_content:
                 note.content = note_content
             note.save()
+            proxy=QueryCacheProxy(request.user)
+            proxy.delete_LecNotes_cache(note.faculty.course.department.id,note.faculty.course.id,note.faculty.id)
             subject.notify(request, "Note has been updated")
         else:
+            if note_name or note_content:
             # Creating a temporary Note and sending notification
-            temp_note = temp_Note.objects.create(name=note_name, content=note_content, faculty=note.faculty)
-            notification = Notification.objects.create(
+                temp_note = temp_Note.objects.create(name=note_name, content=note_content, faculty=note.faculty)
+                notification = Notification.objects.create(
                 message=f"{request.user.first_name} {request.user.last_name} wants to update a note in {temp_note.faculty.course.department.name}/{temp_note.faculty.course.course_name}/{temp_note.faculty.name}",
                 sender=request.user,
                 type="update",
@@ -140,10 +155,10 @@ def update_note(request, dept_id, course_id, fac_id, note_id):
                 content_id=temp_note.id,
                 real_content_id=note.id
             )
-            receivers = User.objects.filter(Q(role='master') | Q(department=dept_id) | Q(course=course_id))
-            notification.recievers.add(*receivers)
-            notification.save()
-            subject.notify(request, "Request sent")
+                receivers = User.objects.filter(Q(role='master') | Q(department=dept_id) | Q(course=course_id))
+                notification.recievers.add(*receivers)
+                notification.save()
+                subject.notify(request, "Request sent")
     return redirect('lec_notes', dept_id, course_id, fac_id)
 
 
@@ -160,11 +175,14 @@ def update_video(request, dept_id, course_id, fac_id, video_id):
             if video_content:
                 video.content = video_content
             video.save()
+            proxy=QueryCacheProxy(request.user)
+            proxy.delete_LecVideos_cache(video.faculty.course.department.id,video.faculty.course.id,video.faculty.id)
             subject.notify(request, "Video has been updated")
         else:
+            if video_name or video_content:
             # Creating a temporary Video and sending notification
-            temp_video = temp_Video.objects.create(name=video_name, content=video_content, faculty=video.faculty)
-            notification = Notification.objects.create(
+                temp_video = temp_Video.objects.create(name=video_name, content=video_content, faculty=video.faculty)
+                notification = Notification.objects.create(
                 message=f"{request.user.first_name} {request.user.last_name} wants to update a video in {temp_video.faculty.course.department.name}/{temp_video.faculty.course.course_name}/{temp_video.faculty.name}",
                 sender=request.user,
                 type="update",
@@ -172,8 +190,8 @@ def update_video(request, dept_id, course_id, fac_id, video_id):
                 content_id=temp_video.id,
                 real_content_id=video.id
             )
-            receivers = User.objects.filter(Q(role='master') | Q(department=dept_id) | Q(course=course_id))
-            notification.recievers.add(*receivers)
-            notification.save()
-            subject.notify(request, "Request sent")
+                receivers = User.objects.filter(Q(role='master') | Q(department=dept_id) | Q(course=course_id))
+                notification.recievers.add(*receivers)
+                notification.save()
+                subject.notify(request, "Request sent")
     return redirect('lec_videos', dept_id, course_id, fac_id)

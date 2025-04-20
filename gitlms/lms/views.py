@@ -4,19 +4,30 @@ from django.contrib.auth.decorators import login_required
 from .models import Department,Course,Faculty,Slide,Video,Note
 from django.conf import settings
 from .contentViewers import *
+from .queryProxy import QueryCacheProxy
 
 
 @login_required
-# Create your views here.
 def departments(request):
-    departments=Department.objects.all().order_by('name')
-    showDeptModal=(request.user.role=='master')
-    showUpdateDeptModal=(request.user.role=='master')
-    showAddButton=(request.user.role=='master')
-    context={'name':request.user.username,'departments':departments,
-             'showDeptModal':showDeptModal,'showUpdateDeptModal':showUpdateDeptModal,'showAddButton':showAddButton}
+    department_proxy = QueryCacheProxy(request.user)
+    departments = department_proxy.get_departments()  # Fetch departments via the proxy
+    
+    # Determine the visibility of the modal and button based on the user's role
+    showDeptModal = (request.user.role == 'master')
+    showUpdateDeptModal = (request.user.role == 'master')
+    showAddButton = (request.user.role == 'master')
+    
+    # Prepare the context with user and departments information
+    context = {
+        'name': request.user.username,
+        'departments': departments,
+        'showDeptModal': showDeptModal,
+        'showUpdateDeptModal': showUpdateDeptModal,
+        'showAddButton': showAddButton
+    }
 
-    return render(request,"lms/departments.html",context)
+    # Render the departments page with the context
+    return render(request, "lms/departments.html", context)
 
 @login_required
 def courses(request):
@@ -31,8 +42,9 @@ def courses(request):
 #for Courses inside a Department
 @login_required
 def deptcourses(request,id):
-    department=Department.objects.get(id=id)
-    courses = Course.objects.filter(department=department).order_by('course_name')
+    course_proxy = QueryCacheProxy(request.user)
+    
+    courses,department = course_proxy.get_deptCourses(id)  # Fetch departments via the pr
     showAddButton=(request.user.role=='master')or(request.user.department==department.id)
     showUpdateCourseModal=(request.user.role=='master')or(request.user.department==department.id)
     showCourseModal=(request.user.role=='master')or(request.user.department==department.id)
@@ -42,12 +54,12 @@ def deptcourses(request,id):
 
 
 
+
 #for faculties inside a Course
 @login_required
 def course_facs(request, dept_id, course_id):
-    department = Department.objects.get(id=dept_id)
-    course = Course.objects.get(id=course_id)
-    faculties = Faculty.objects.filter(course=course)
+    faculty_proxy = QueryCacheProxy(request.user)
+    faculties,department,course = faculty_proxy.get_courseFacs(dept_id,course_id)
     showFacultyModal=(request.user.role=='master')or(request.user.department==department.id)or(request.user.course==course.id)
     showUpdateFacultyModal=(request.user.role=='master')or(request.user.department==department.id)or(request.user.course==course.id)
     showAddButton=(request.user.role=='master')or(request.user.department==department.id)or(request.user.course==course.id)
@@ -60,20 +72,18 @@ def course_facs(request, dept_id, course_id):
 #for lectures inside a Faculty
 @login_required
 def fac_lecs(request, dept_id, course_id,fac_id):
-    department = Department.objects.get(id=dept_id)
-    course = Course.objects.get(id=course_id)
-    faculty = Faculty.objects.get(id=fac_id)
-    context = {'department': department, 'faculty': faculty,'course':course,'MEDIA_URL':settings.MEDIA_URL}
+    
+    context = {'department': dept_id, 'faculty': fac_id,'course':course_id,'MEDIA_URL':settings.MEDIA_URL}
     return render(request, 'lms/lectures.html', context)
 
 #for slides inside a lecture
 @login_required
 def lec_slides(request,dept_id, course_id,fac_id):
-    department = Department.objects.get(id=dept_id)
-    course = Course.objects.get(id=course_id)
-    faculty = Faculty.objects.get(id=fac_id)
-    slides=Slide.objects.filter(faculty=faculty)
-    context = {'department': department, 'faculty': faculty,'course':course,'slides':slides,'showSlideModal':True,'showUpdateSlideModal':True,'showAddButton':True}
+    slide_proxy = QueryCacheProxy(request.user)
+    slides,department,course,faculty = slide_proxy.get_LecSlides(dept_id,course_id,fac_id)
+    
+    
+    context = {'department': department, 'faculty': faculty ,'course':course,'slides':slides,'showSlideModal':True,'showUpdateSlideModal':True,'showAddButton':True}
     
     return render(request,"lms/slides.html",context)
 
@@ -82,10 +92,8 @@ def lec_slides(request,dept_id, course_id,fac_id):
 # For videos inside a lecture
 @login_required
 def lec_videos(request, dept_id, course_id, fac_id):
-    department = Department.objects.get(id=dept_id)
-    course = Course.objects.get(id=course_id)
-    faculty = Faculty.objects.get(id=fac_id)
-    videos = Video.objects.filter(faculty=faculty)
+    video_proxy = QueryCacheProxy(request.user)
+    videos,department,course,faculty = video_proxy.get_LecVideos(dept_id,course_id,fac_id)
     context = {'department': department, 'faculty': faculty, 'course': course, 'videos': videos,'showVideoModal':True,'showUpdateVideoModal':True,'showAddButton':True}
     return render(request, "lms/videos.html", context)
 
@@ -94,10 +102,8 @@ def lec_videos(request, dept_id, course_id, fac_id):
 # For notes inside a lecture
 @login_required
 def lec_notes(request, dept_id, course_id, fac_id):
-    department = Department.objects.get(id=dept_id)
-    course = Course.objects.get(id=course_id)
-    faculty = Faculty.objects.get(id=fac_id)
-    notes = Note.objects.filter(faculty=faculty)
+    note_proxy = QueryCacheProxy(request.user)
+    notes,department,course,faculty = note_proxy.get_LecNotes(dept_id,course_id,fac_id)
     context = {'department': department, 'faculty': faculty, 'course': course, 'notes': notes,'showNoteModal':True,'showUpdateNoteModal':True,'showAddButton':True}
     return render(request, "lms/notes.html", context)
 
